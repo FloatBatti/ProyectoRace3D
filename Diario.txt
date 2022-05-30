@@ -1,0 +1,4 @@
+29/5/2022
+Juan, Agus y Fran: Modularizacion y refectorizacion de un repositorio anterior.
+Fran: Primer intento de agregar una IA y tuenado del auto.
+Agus: Creado de clase usuario y princpios de la logica de persistencia.
