@@ -1,4 +1,4 @@
-package mygame;
+package main;
 
 import Entidades.Terreno;
 import com.jme3.app.SimpleApplication;
