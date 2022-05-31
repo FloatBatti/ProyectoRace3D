@@ -5,6 +5,7 @@
  */
 package main;
 
+import Entidades.Bots;
 import Entidades.Player;
 import Entidades.Terreno;
 import animations.particleAnimations;
@@ -42,7 +43,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     private static AssetManager assetManager;
     private static Node rootNode;
     private static Node localRootNode = new Node("Level 1");
-    private static  FlyByCamera flyByCamera;
+    private static FlyByCamera flyByCamera;
     private static Camera camera;
     private static InputManager inputManager;    
     private static BulletAppState bulletAppState = new BulletAppState();
@@ -54,9 +55,12 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     //GUI VARIABLES
     private GUI GUInterface;
- 
+    
+    private AI artificialInteligence = new AI();
+    
     Terreno terrPrincipal;
     Player player = new Player();
+    
     
     public Engine(SimpleApplication app) {
         assetManager = app.getAssetManager();
@@ -160,6 +164,12 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         
         player.buildPlayer();
         
+        for(int i = 0; i < Constant.BOT_COUNT; i++){
+            Bots temp = new Bots();
+            temp.buildBot();
+            artificialInteligence.attachBot(temp);
+        }
+        
         setUpLight();
         setupKeys();
         initializeHud();
@@ -170,6 +180,8 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     @Override
     public void update(float tpf) {
         GUInterface.UpdateHUD(player.getEndurance(), Player.getVehicle());
+        artificialInteligence.AIBehavior();
+        //artificialInteligence.updateBotsText();
     }
     
     @Override
@@ -182,13 +194,19 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
             player.modfEndurance(-impactDamage);
         }
         
-        if(player.getEndurance() <= 0){pAnimations.setOnFire((Node) Player.getVehicleNode().getChild("Engine"));}
+        if((player.getEndurance() <= 0) && !player.isGameOver()){
+            pAnimations.setOnFire((Node) Player.getVehicleNode().getChild("Engine"));
+            player.setGameOver(true);
+            Player.getVehicle().brake(player.getBrakeForce());
+        }
+        
+        artificialInteligence.checkCollision(event);
     }
     
     @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
         
-        if(player.getEndurance() >= 1){
+        if(!player.isGameOver()){
             if (name.equals("Lefts")) {
                 if (keyPressed) {
                         player.modfSteeringValue(.5f);

@@ -8,50 +8,57 @@ package Entidades;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.VehicleControl;
-import com.jme3.input.ChaseCamera;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import main.Engine;
-import statics.Constant;
 
 /**
  *
  * @author AgusGonza
  */
-public class Player {
+public class Bots {
     
-    private static  Node vehicleNode = new Node("vehicleNode");
+    private static int bIndex = 0;
+    private int personalIndex = 0;
+    private Node vehicleNode;
     private double endurance = 200;
-    private static VehicleControl vehicle;
+    private VehicleControl vehicle;
     private float accelerationForce = 500.0f;
     private float deaccelerationForce = 100.0f;
     private float brakeForce = 100.0f;
     private float steeringValue = 0;
     private float accelerationValue = 0;
     private float deaccelerationValue = 0;
+    private boolean destroyed = false;
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
-    private ChaseCamera chaseCam;
-    private boolean gameOver = false;
-   
-    public Player(){
+
+    public Bots(){
         
-        
-        
+        bIndex++;
+        personalIndex = bIndex;
+        vehicleNode = new Node("vehicleNode" + personalIndex);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters">
-    public static Node getVehicleNode() {
+    public VehicleControl getVehicle() {    
+        return vehicle;
+    }
+
+    public int getPersonalIndex() {
+        return personalIndex;
+    }
+
+    public Node getVehicleNode() {
         return vehicleNode;
     }
-
+    
     public double getEndurance() {
         return endurance;
-    }
-
-    public static VehicleControl getVehicle() {
-        return vehicle;
     }
 
     public float getAccelerationForce() {
@@ -82,9 +89,6 @@ public class Player {
         return jumpForce;
     }
 
-    public ChaseCamera getChaseCam() {
-        return chaseCam;
-    }
     
      //</editor-fold>
 
@@ -92,14 +96,14 @@ public class Player {
         this.steeringValue += steeringValue;
     }
 
-    public boolean isGameOver() {
-        return gameOver;
+    public boolean isDestroyed() {
+        return destroyed;
     }
 
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
     }
-    
+
     public void modfDeaccelerationValue(float deaccelerationForce) {
         this.deaccelerationValue += deaccelerationForce;
     }
@@ -112,8 +116,8 @@ public class Player {
         this.endurance += endurance;
     }
     
-  
-    public void buildPlayer() {
+    
+    public void buildBot() {
         
         //load the visible part of the cart
         Spatial carsito = Engine.getAssetManager().loadModel("Models/Autito.j3o");
@@ -137,18 +141,18 @@ public class Player {
         //making weels
         attachWeels(vehicleNode);
         
+        BitmapFont guiFont = Engine.getAssetManager().loadFont("Interface/fonts/DejaVuSansLight.fnt");
+        BitmapText ch = new BitmapText(guiFont, false);
+        ch.setSize(30);
+        ch.setText(vehicleNode.getName() + " / " + endurance); // crosshairs
+        ch.setColor(new ColorRGBA(1f,0.8f,0.3f,0.8f));
+        ch.setName("text" + personalIndex);
         //start up position
-        vehicle.setPhysicsLocation(new Vector3f(146, -100, 1));
+        vehicle.setPhysicsLocation(new Vector3f(146 + (personalIndex * 10), -100, 1 + (personalIndex * 10)));
         Engine.getRootNode().attachChild(vehicleNode);
 
         //i add this object to the physics enviroment
         Engine.getBulletAppState().getPhysicsSpace().add(vehicle);
-        
-        //set up the camera to the just created player
-        Engine.getFlyByCamera().setEnabled(false);
-        chaseCam = new ChaseCamera(Engine.getCamera(), vehicleNode, Engine.getInputManager());
-        chaseCam.setInvertVerticalAxis(true);
-        chaseCam.setDragToRotate(false);
     }
     
     private void attachWeels(Node vehicleNode){

@@ -27,7 +27,7 @@ import main.Engine;
  */
 public class Terreno {
     
-    private TerrainQuad terrain;
+    private static TerrainQuad terrain;
     private Material matRock;
     private Material matWire;
     private final boolean wireframe = false;
@@ -42,6 +42,10 @@ public class Terreno {
     public Terreno(BulletAppState bulletAppState, Camera camara) {
         this.bulletAppState = bulletAppState;
         this.camera = camara;
+    }
+
+    public static TerrainQuad getTerrain() {
+        return terrain;
     }
     
     
