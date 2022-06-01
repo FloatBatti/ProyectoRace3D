@@ -2,3 +2,8 @@
 Juan, Agus y Fran: Modularizacion y refectorizacion de un repositorio anterior.
 Fran: Primer intento de agregar una IA y tuenado del auto.
 Agus: Creado de clase usuario y princpios de la logica de persistencia.
+
+30/5/2022
+Juan: Investigacion y prototipo de interfaz de velocimetro
+Fran: Implementacion de librerias y mejora de la inteligencia artificial
+Agus: Creacion de genericos y clases para la persistencia de datos
