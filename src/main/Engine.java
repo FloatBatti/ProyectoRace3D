@@ -6,6 +6,7 @@
 package main;
 
 import Entidades.Player;
+import Entidades.Speedometer;
 import Entidades.Terreno;
 import animations.particleAnimations;
 import com.jme3.app.Application;
@@ -38,15 +39,25 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Matrix3f;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Quad;
+import com.jme3.texture.Texture;
+import com.jme3.ui.Picture;
 import sounds.Audio3D;
 import statics.Constant;
 import userInterface.GUI;
+import com.simsilica.lemur.Label;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 
 /**
  *
@@ -55,12 +66,14 @@ import userInterface.GUI;
 public class Engine extends AbstractAppState implements ActionListener, PhysicsCollisionListener   {
 
     private static AssetManager assetManager;
-    private static Node rootNode;
+    private static Node rootNode; 
     private static Node localRootNode = new Node("Level 1");
+    private static Node localGuiNode = new Node("speedo");
     private static  FlyByCamera flyByCamera;
     private static Camera camera;
     private static InputManager inputManager;    
     private static BulletAppState bulletAppState = new BulletAppState();
+    private Node aguja ;
     
     private final Audio3D audio;
     
@@ -69,19 +82,23 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     //GUI VARIABLES
     private GUI GUInterface;
+    private static Node guiNode ;
  
     Terreno terrPrincipal;
     Player player = new Player();
+    Speedometer speedo = new Speedometer();
     
     public Engine(SimpleApplication app) {
         assetManager = app.getAssetManager();
         rootNode = app.getRootNode();
+        guiNode = app.getGuiNode();
         camera = app.getCamera();
         flyByCamera = app.getFlyByCamera();
         inputManager = app.getInputManager();
         audio = new Audio3D(rootNode, assetManager);
         pAnimations = new particleAnimations(assetManager);
         GUInterface = new GUI(app.getGuiNode(), assetManager);
+        
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters">
@@ -120,6 +137,17 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     public static particleAnimations getpAnimations() {
         return pAnimations;
     }
+
+    public static  Node getGuiNode() {
+        return guiNode;
+    }
+
+    public static Node getLocalGuiNode() {
+        return localGuiNode;
+    }
+
+   
+    
     
      //</editor-fold>
     
@@ -159,6 +187,19 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         
        GUInterface.drawLife(ColorRGBA.Green, "LIFE: " + player.getEndurance(), 300, 0, 30);
        GUInterface.drawSpeed(ColorRGBA.Green, "Speed: " + (int)Player.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
+       Texture speedoNeedleTex = Engine.getAssetManager().loadTexture("Textures/speedo_needle_2.png");
+       Geometry speedoNeedleGeom = new Geometry("Speedometer Needle Geometry",
+       new Quad(speedoNeedleTex.getImage().getWidth(), speedoNeedleTex.getImage().getHeight()));
+
+        speedoNeedleGeom.setMaterial(new Material(Engine.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md"));
+        speedoNeedleGeom.getMaterial().setTexture("ColorMap", speedoNeedleTex);
+        speedoNeedleGeom.getMaterial().getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+        
+        aguja = new Node ("aguja");
+        aguja.attachChild(speedoNeedleGeom);
+        
+        Speedometer.getNode().attachChild(aguja);
+        aguja.setLocalTranslation(620, 57, 0);
     }
     
     @Override
@@ -172,19 +213,42 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         
         terrPrincipal = new Terreno(bulletAppState, camera);
         terrPrincipal.CrearTerreno();
+               
+        speedo.createSpeedoGeom();
         
         player.buildPlayer();
-        
+  
+
         setUpLight();
         setupKeys();
         initializeHud();
             
     }
     
+        private final Quaternion speedoRot = new Quaternion();
+        private float[] speedoAngles = new float[3];
+        private String speedFormatMph = "%03.0f";
+    
     
     @Override
     public void update(float tpf) {
         GUInterface.UpdateHUD(player.getEndurance(), Player.getVehicle());
+        float startStopAngle = 150;
+
+        // if we just deal with speed based on a positive integer from the start, everything works the same if we are reversing.
+
+        float speed = (float) Math.abs(player.getVehicle().getCurrentVehicleSpeedKmHour());
+        float speedUnit = speed / 130;
+
+        float rot = startStopAngle - ((startStopAngle * 2) * speedUnit);
+        rot = FastMath.clamp(rot, -startStopAngle, startStopAngle);
+        rot = rot * FastMath.DEG_TO_RAD;
+
+        speedoAngles[2] = rot;
+        speedoRot.fromAngles(speedoAngles);
+        aguja.setLocalRotation(speedoRot);
+   
+        
     }
     
     @Override

@@ -16,6 +16,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+
 import main.Engine;
 
 /**
@@ -35,6 +36,7 @@ public class Player {
     private float deaccelerationValue = 0;
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
     private ChaseCamera chaseCam;
+   
    
     public Player(){
         
@@ -85,8 +87,10 @@ public class Player {
         return chaseCam;
     }
     
+    
+    
      //</editor-fold>
-
+    
     public void modfSteeringValue(float steeringValue) {
         this.steeringValue += steeringValue;
     }
