@@ -7,22 +7,14 @@ package main;
 
 import Entidades.Bots;
 import Entidades.Player;
-import Entidades.Terreno;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
-import com.jme3.bullet.control.VehicleControl;
 import com.jme3.font.BitmapText;
 import com.jme3.math.FastMath;
-import static com.jme3.math.FastMath.pow;
 import com.jme3.math.Plane;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import com.jme3.renderer.RenderManager;
-import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
-import com.jme3.scene.control.AbstractControl;
 import java.util.ArrayList;
-import java.util.Set;
 import statics.Constant;
 
 /**
@@ -94,7 +86,6 @@ public class AI{
                 vector1.set(aux.getVehicle().getPhysicsLocation());
                 vector2.set(Player.getVehicle().getPhysicsLocation());
                 vector2.subtractLocal(vector1);
-
                 vector2.normalizeLocal();
 
                 aux.getVehicle().getForwardVector(vector3).normalizeLocal();
@@ -111,10 +102,18 @@ public class AI{
                 if (angle > FastMath.QUARTER_PI) {
                     angle = FastMath.QUARTER_PI;
                 }
+                
                 //left or right
                 if (plane.whichSide(Player.getVehicle().getPhysicsLocation()) == Plane.Side.Negative) {
                     anglemult *= -1;
                 }
+                
+                //backwards
+                if (dot > 1) {
+                    speedmult *= -1;
+                    anglemult *= -1;
+                }
+                
                 aux.getVehicle().steer(angle * anglemult);
                 aux.getVehicle().accelerate(speed * speedmult);
                 aux.getVehicle().brake(0);

@@ -12,6 +12,7 @@ import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
@@ -36,7 +37,8 @@ public class Bots {
     private float deaccelerationValue = 0;
     private boolean destroyed = false;
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
-
+    static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
+    
     public Bots(){
         
         bIndex++;
@@ -120,7 +122,7 @@ public class Bots {
     public void buildBot() {
         
         //load the visible part of the cart
-        Spatial carsito = Engine.getAssetManager().loadModel("Models/Autito.j3o");
+        Spatial carsito = Engine.getAssetManager().loadModel("Models/Police.j3o");
         Engine.getLocalRootNode().attachChild(carsito);
         Node carNode = (Node) Engine.getLocalRootNode().getChild("AutoRojo");
         vehicleNode.attachChild(carNode);
@@ -148,9 +150,12 @@ public class Bots {
         ch.setColor(new ColorRGBA(1f,0.8f,0.3f,0.8f));
         ch.setName("text" + personalIndex);
         //start up position
-        vehicle.setPhysicsLocation(new Vector3f(146 + (personalIndex * 10), -100, 1 + (personalIndex * 10)));
+        int zOffset;
+        if(personalIndex % 2 == 0) {zOffset = 10;}else{zOffset = 0;}
+        vehicle.setPhysicsLocation(new Vector3f(-70 - (personalIndex * 10), 0, 50 + zOffset));
+        vehicle.setPhysicsRotation(ROTATE_RIGHT);
         Engine.getRootNode().attachChild(vehicleNode);
-
+        
         //i add this object to the physics enviroment
         Engine.getBulletAppState().getPhysicsSpace().add(vehicle);
     }

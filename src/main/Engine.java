@@ -7,6 +7,7 @@ package main;
 
 import Entidades.Bots;
 import Entidades.Player;
+import Entidades.Scenario;
 import Entidades.Terreno;
 import animations.particleAnimations;
 import com.jme3.app.Application;
@@ -146,8 +147,9 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     private void initializeHud(){
         
-       GUInterface.drawLife(ColorRGBA.Green, "LIFE: " + player.getEndurance(), 300, 0, 30);
-       GUInterface.drawSpeed(ColorRGBA.Green, "Speed: " + (int)Player.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
+       GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 300, 0, 30);
+       //GUInterface.drawSpeed(ColorRGBA.blue, "Speed: " + (int)Player.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
+       GUInterface.drawSpeed(ColorRGBA.Blue, Player.getVehicle().getPhysicsLocation().getX() + " / " + Player.getVehicle().getPhysicsLocation().getY() + " / " + Player.getVehicle().getPhysicsLocation().getY() , 500, 0, 30);
     }
     
     @Override
@@ -159,8 +161,11 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         bulletAppState.setDebugEnabled(false);
         getPhysicsSpace().addCollisionListener(this);
         
-        terrPrincipal = new Terreno(bulletAppState, camera);
-        terrPrincipal.CrearTerreno();
+        Scenario scenarioCity = new Scenario(bulletAppState);
+                 scenarioCity.CargarEscenario();
+//        terrPrincipal = new Terreno(bulletAppState, camera);
+//        terrPrincipal.CrearTerreno();
+
         
         player.buildPlayer();
         
@@ -181,7 +186,10 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     public void update(float tpf) {
         GUInterface.UpdateHUD(player.getEndurance(), Player.getVehicle());
         artificialInteligence.AIBehavior();
-        //artificialInteligence.updateBotsText();
+        
+        if (Player.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()){
+            Player.getVehicle().accelerate(0);
+        }
     }
     
     @Override
@@ -197,7 +205,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         if((player.getEndurance() <= 0) && !player.isGameOver()){
             pAnimations.setOnFire((Node) Player.getVehicleNode().getChild("Engine"));
             player.setGameOver(true);
-            Player.getVehicle().brake(player.getBrakeForce());
+            Player.getVehicle().accelerate(0);
         }
         
         artificialInteligence.checkCollision(event);
@@ -224,7 +232,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                     Player.getVehicle().steer(player.getSteeringValue());
                     
                 } else if (name.equals("Ups")) {
-                    if (keyPressed) {
+                    if (keyPressed && (!(Player.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()))) {
                         player.modfAccelerationValue(player.getAccelerationForce());
                     } else {
                         player.modfAccelerationValue(- (player.getAccelerationForce()));

@@ -5,6 +5,7 @@
  */
 package userInterface;
 
+import Entidades.Player;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.font.BitmapFont;
@@ -64,6 +65,7 @@ public class GUI {
             guiLife.setColor(ColorRGBA.Red);
         }
         
-        guiSpeed.setText("Speed: " +(int) vehicle.getCurrentVehicleSpeedKmHour());
+        guiSpeed.setText(vehicle.getPhysicsLocation().getX() + " / " + vehicle.getPhysicsLocation().getY() + " / " + vehicle.getPhysicsLocation().getZ());
+        //guiSpeed.setText("Speed: " +(int) vehicle.getCurrentVehicleSpeedKmHour());
     }
 }

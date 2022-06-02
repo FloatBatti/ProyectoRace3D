@@ -10,11 +10,11 @@ import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.input.ChaseCamera;
 import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import main.Engine;
-import statics.Constant;
 
 /**
  *
@@ -25,6 +25,7 @@ public class Player {
     private static  Node vehicleNode = new Node("vehicleNode");
     private double endurance = 200;
     private static VehicleControl vehicle;
+    private float maximumSpeed = 242.0f;
     private float accelerationForce = 500.0f;
     private float deaccelerationForce = 100.0f;
     private float brakeForce = 100.0f;
@@ -34,7 +35,8 @@ public class Player {
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
     private ChaseCamera chaseCam;
     private boolean gameOver = false;
-   
+    static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
+    
     public Player(){
         
         
@@ -96,6 +98,10 @@ public class Player {
         return gameOver;
     }
 
+    public float getMaximumSpeed() {
+        return maximumSpeed;
+    }
+    
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
@@ -138,7 +144,8 @@ public class Player {
         attachWeels(vehicleNode);
         
         //start up position
-        vehicle.setPhysicsLocation(new Vector3f(146, -100, 1));
+        vehicle.setPhysicsLocation(new Vector3f(-60, 0, 50));
+        vehicle.setPhysicsRotation(ROTATE_RIGHT);
         Engine.getRootNode().attachChild(vehicleNode);
 
         //i add this object to the physics enviroment
@@ -161,6 +168,7 @@ public class Player {
         vehicle.setSuspensionDamping(dampValue * 2.0f * FastMath.sqrt(stiffness));
         vehicle.setSuspensionStiffness(stiffness);
         vehicle.setMaxSuspensionForce(10000.0f);
+        
         
         //Create four wheels and add them at their locations
         Vector3f wheelDirection = new Vector3f(0, -1, 0); // was 0, -1, 0
@@ -196,6 +204,7 @@ public class Player {
         weelShape3.rotate(0, FastMath.HALF_PI, 0);
         vehicle.addWheel(node3, new Vector3f(-xOff, yOff, -zOff),
                          wheelDirection, wheelAxle, restLength, radius, false);
+        
 
         Node node4 = new Node("wheel 4 node");
         Node weelShape4 = (Node) Engine.getLocalRootNode().getChild("Weel4");
@@ -204,6 +213,11 @@ public class Player {
         vehicle.addWheel(node4, new Vector3f(xOff, yOff, -zOff),
                          wheelDirection, wheelAxle, restLength, radius, false);
 
+        vehicle.setFrictionSlip(0, 2f);
+        vehicle.setFrictionSlip(1, 2f);
+        vehicle.setFrictionSlip(2, 1.5f);
+        vehicle.setFrictionSlip(3, 1.5f);
+        
         vehicleNode.attachChild(node1);
         vehicleNode.attachChild(node2);
         vehicleNode.attachChild(node3);
