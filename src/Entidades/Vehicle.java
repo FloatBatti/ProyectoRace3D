@@ -5,26 +5,25 @@
  */
 package Entidades;
 
-import animations.particleAnimations;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.input.ChaseCamera;
-import com.jme3.input.FlyByCamera;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
-import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import main.Engine;
+import statics.Constant;
 
 /**
  *
  * @author AgusGonza
  */
-public class Player {
+public class Vehicle{
     
     private static  Node vehicleNode = new Node("vehicleNode");
+    private int fuel;
     private double endurance = 200;
     private static VehicleControl vehicle;
     private float accelerationForce = 500.0f;
@@ -35,8 +34,11 @@ public class Player {
     private float deaccelerationValue = 0;
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
     private ChaseCamera chaseCam;
+    private boolean gameOver = false;
    
-    public Player(){
+    public Vehicle(){
+        
+        
         
     }
 
@@ -91,6 +93,14 @@ public class Player {
         this.steeringValue += steeringValue;
     }
 
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+    
     public void modfDeaccelerationValue(float deaccelerationForce) {
         this.deaccelerationValue += deaccelerationForce;
     }
@@ -103,7 +113,7 @@ public class Player {
         this.endurance += endurance;
     }
     
-    
+  
     public void buildPlayer() {
         
         //load the visible part of the cart
@@ -115,7 +125,7 @@ public class Player {
         //create a compound shape and attach the BoxCollisionShape for the car body at 0,1,0
         //this shifts the effective center of mass of the BoxCollisionShape to 0,-1,0
         CompoundCollisionShape compoundShape = new CompoundCollisionShape();
-        BoxCollisionShape box = new BoxCollisionShape(new Vector3f(1.2f, 0.5f, 2.8f));
+        BoxCollisionShape box = new BoxCollisionShape(new Vector3f(1.1f, 0.8f, 2.8f));
         compoundShape.addChildShape(box, new Vector3f(0, 1, 0));
 
         //create vehicle node
@@ -145,7 +155,7 @@ public class Player {
     private void attachWeels(Node vehicleNode){
         //setting suspension values for wheels, this can be a bit tricky
         //see also https://docs.google.com/Doc?docid=0AXVUZ5xw6XpKZGNuZG56a3FfMzU0Z2NyZnF4Zmo&hl=en
-        float stiffness = 10.0f;//200=f1 car
+        float stiffness = 15.0f;//200=f1 car
         float compValue = .3f; //(should be lower than damp)
         float dampValue = .4f;
         vehicle.setSuspensionCompression(compValue * 2.0f * FastMath.sqrt(stiffness));
