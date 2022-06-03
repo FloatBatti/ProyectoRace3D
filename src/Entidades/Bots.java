@@ -8,7 +8,9 @@ package Entidades;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.VehicleControl;
-import com.jme3.input.ChaseCamera;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
@@ -20,40 +22,45 @@ import main.Engine;
  *
  * @author AgusGonza
  */
-public class Player {
+public class Bots {
     
-    private static  Node vehicleNode = new Node("vehicleNode");
+    private static int bIndex = 0;
+    private int personalIndex = 0;
+    private Node vehicleNode;
     private double endurance = 200;
-    private static VehicleControl vehicle;
-    private float maximumSpeed = 242.0f;
+    private VehicleControl vehicle;
     private float accelerationForce = 500.0f;
     private float deaccelerationForce = 100.0f;
     private float brakeForce = 100.0f;
     private float steeringValue = 0;
     private float accelerationValue = 0;
     private float deaccelerationValue = 0;
+    private boolean destroyed = false;
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
-    private ChaseCamera chaseCam;
-    private boolean gameOver = false;
     static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
     
-    public Player(){
+    public Bots(){
         
-        
-        
+        bIndex++;
+        personalIndex = bIndex;
+        vehicleNode = new Node("vehicleNode" + personalIndex);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters">
-    public static Node getVehicleNode() {
+    public VehicleControl getVehicle() {    
+        return vehicle;
+    }
+
+    public int getPersonalIndex() {
+        return personalIndex;
+    }
+
+    public Node getVehicleNode() {
         return vehicleNode;
     }
-
+    
     public double getEndurance() {
         return endurance;
-    }
-
-    public static VehicleControl getVehicle() {
-        return vehicle;
     }
 
     public float getAccelerationForce() {
@@ -84,9 +91,6 @@ public class Player {
         return jumpForce;
     }
 
-    public ChaseCamera getChaseCam() {
-        return chaseCam;
-    }
     
      //</editor-fold>
 
@@ -94,18 +98,14 @@ public class Player {
         this.steeringValue += steeringValue;
     }
 
-    public boolean isGameOver() {
-        return gameOver;
+    public boolean isDestroyed() {
+        return destroyed;
     }
 
-    public float getMaximumSpeed() {
-        return maximumSpeed;
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
     }
-    
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
-    }
-    
+
     public void modfDeaccelerationValue(float deaccelerationForce) {
         this.deaccelerationValue += deaccelerationForce;
     }
@@ -118,11 +118,11 @@ public class Player {
         this.endurance += endurance;
     }
     
-  
-    public void buildPlayer() {
+    
+    public void buildBot() {
         
         //load the visible part of the cart
-        Spatial carsito = Engine.getAssetManager().loadModel("Models/Autito.j3o");
+        Spatial carsito = Engine.getAssetManager().loadModel("Models/Police.j3o");
         Engine.getLocalRootNode().attachChild(carsito);
         Node carNode = (Node) Engine.getLocalRootNode().getChild("AutoRojo");
         vehicleNode.attachChild(carNode);
@@ -143,19 +143,21 @@ public class Player {
         //making weels
         attachWeels(vehicleNode);
         
+        BitmapFont guiFont = Engine.getAssetManager().loadFont("Interface/fonts/DejaVuSansLight.fnt");
+        BitmapText ch = new BitmapText(guiFont, false);
+        ch.setSize(30);
+        ch.setText(vehicleNode.getName() + " / " + endurance); // crosshairs
+        ch.setColor(new ColorRGBA(1f,0.8f,0.3f,0.8f));
+        ch.setName("text" + personalIndex);
         //start up position
-        vehicle.setPhysicsLocation(new Vector3f(-60, 0, 50));
+        int zOffset;
+        if(personalIndex % 2 == 0) {zOffset = 10;}else{zOffset = 0;}
+        vehicle.setPhysicsLocation(new Vector3f(-70 - (personalIndex * 10), 0, 50 + zOffset));
         vehicle.setPhysicsRotation(ROTATE_RIGHT);
         Engine.getRootNode().attachChild(vehicleNode);
-
+        
         //i add this object to the physics enviroment
         Engine.getBulletAppState().getPhysicsSpace().add(vehicle);
-        
-        //set up the camera to the just created player
-        Engine.getFlyByCamera().setEnabled(false);
-        chaseCam = new ChaseCamera(Engine.getCamera(), vehicleNode, Engine.getInputManager());
-        chaseCam.setInvertVerticalAxis(true);
-        chaseCam.setDragToRotate(false);
     }
     
     private void attachWeels(Node vehicleNode){
@@ -168,7 +170,6 @@ public class Player {
         vehicle.setSuspensionDamping(dampValue * 2.0f * FastMath.sqrt(stiffness));
         vehicle.setSuspensionStiffness(stiffness);
         vehicle.setMaxSuspensionForce(10000.0f);
-        
         
         //Create four wheels and add them at their locations
         Vector3f wheelDirection = new Vector3f(0, -1, 0); // was 0, -1, 0
@@ -204,7 +205,6 @@ public class Player {
         weelShape3.rotate(0, FastMath.HALF_PI, 0);
         vehicle.addWheel(node3, new Vector3f(-xOff, yOff, -zOff),
                          wheelDirection, wheelAxle, restLength, radius, false);
-        
 
         Node node4 = new Node("wheel 4 node");
         Node weelShape4 = (Node) Engine.getLocalRootNode().getChild("Weel4");
@@ -213,11 +213,6 @@ public class Player {
         vehicle.addWheel(node4, new Vector3f(xOff, yOff, -zOff),
                          wheelDirection, wheelAxle, restLength, radius, false);
 
-        vehicle.setFrictionSlip(0, 2f);
-        vehicle.setFrictionSlip(1, 2f);
-        vehicle.setFrictionSlip(2, 1.5f);
-        vehicle.setFrictionSlip(3, 1.5f);
-        
         vehicleNode.attachChild(node1);
         vehicleNode.attachChild(node2);
         vehicleNode.attachChild(node3);

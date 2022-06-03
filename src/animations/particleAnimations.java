@@ -39,7 +39,7 @@ public class particleAnimations {
         fireEffect.setGravity(0f,0f,0f);
         fireEffect.setLowLife(0.5f);
         fireEffect.setHighLife(3f);
-        fireEffect.setNumParticles(600);
+        fireEffect.setNumParticles(100);
         fireEffect.getParticleInfluencer().setVelocityVariation(0.3f);
         target.attachChild(fireEffect);            
     }
