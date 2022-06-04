@@ -24,6 +24,7 @@ public class Vehicle {
     
     private static  Node vehicleNode = new Node("vehicleNode");
     private double endurance = 200;
+    private int fuel;
     private static VehicleControl vehicle;
     private float maximumSpeed = 242.0f;
     private float accelerationForce = 500.0f;
