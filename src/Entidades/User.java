@@ -20,7 +20,7 @@ public class User implements Serializable{
     private int userId;
     private int coins = 0;
     private Workshop stats = new Workshop();
-    private Integer[] vehicles = new Integer[]{1,0,0,0,0,};
+    private List<Vehicle> listVehicles = new ArrayList();
     private int lastLaps = 0;
     private transient Persistence <User> dataControl = new Persistence();
 
