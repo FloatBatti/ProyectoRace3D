@@ -98,7 +98,7 @@ public class AI{
 
                 float anglemult = 1;//FastMath.PI / 4.0f;
                 float speedmult = 0.3f;//0.3f;
-
+                
                 if (angle > FastMath.QUARTER_PI) {
                     angle = FastMath.QUARTER_PI;
                 }
