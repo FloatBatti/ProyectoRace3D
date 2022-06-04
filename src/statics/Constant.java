@@ -5,6 +5,8 @@
  */
 package statics;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  *
  * @author Fran
@@ -15,4 +17,5 @@ public class Constant {
     public static final int SP_Y = -100;
     public static final int SP_Z = 1;
     public static final int BOT_COUNT = 9;
+    public static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 }

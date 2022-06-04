@@ -17,16 +17,16 @@ import java.util.List;
 public class Interface {
     
     List<User> userList = new ArrayList();
-    Persistence <List> dataListControl = new Persistence();
+    Persistence <User> dataListControl = new Persistence();
     
     public void loadUsers(String rute){
              
-        dataListControl.load(userList, rute);
+       dataListControl.loadList(rute, User.class);
     }
     
     public void saveUser(String rute){
         
-       dataListControl.save(userList, rute);
+       dataListControl.saveList(userList, rute);
     }
     
     public void createUser(String userName, String password, int lastIDplus){

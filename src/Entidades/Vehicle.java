@@ -27,7 +27,7 @@ public class Vehicle{
     private double endurance = 200;
     private static VehicleControl vehicle;
     private float accelerationForce = 500.0f;
-    private float deaccelerationForce = 100.0f;
+    private float deaccelerationForce = 250.0f;
     private float brakeForce = 100.0f;
     private float steeringValue = 0;
     private float accelerationValue = 0;
