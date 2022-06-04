@@ -6,7 +6,7 @@
 package main;
 
 import Entidades.Bots;
-import Entidades.Player;
+import Entidades.Vehicle;
 import Entidades.Scenario;
 import Entidades.Terreno;
 import animations.particleAnimations;
@@ -60,7 +60,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     private AI artificialInteligence = new AI();
     
     Terreno terrPrincipal;
-    Player player = new Player();
+    Vehicle player = new Vehicle();
     
     
     public Engine(SimpleApplication app) {
@@ -149,7 +149,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         
        GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 300, 0, 30);
        //GUInterface.drawSpeed(ColorRGBA.blue, "Speed: " + (int)Player.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
-       GUInterface.drawSpeed(ColorRGBA.Blue, Player.getVehicle().getPhysicsLocation().getX() + " / " + Player.getVehicle().getPhysicsLocation().getY() + " / " + Player.getVehicle().getPhysicsLocation().getY() , 500, 0, 30);
+       GUInterface.drawSpeed(ColorRGBA.Blue, Vehicle.getVehicle().getPhysicsLocation().getX() + " / " + Vehicle.getVehicle().getPhysicsLocation().getY() + " / " + Vehicle.getVehicle().getPhysicsLocation().getY() , 500, 0, 30);
     }
     
     @Override
@@ -184,11 +184,11 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     @Override
     public void update(float tpf) {
-        GUInterface.UpdateHUD(player.getEndurance(), Player.getVehicle());
+        GUInterface.UpdateHUD(player.getEndurance(), Vehicle.getVehicle());
         artificialInteligence.AIBehavior();
         
-        if (Player.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()){
-            Player.getVehicle().accelerate(0);
+        if (Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()){
+            Vehicle.getVehicle().accelerate(0);
         }
     }
     
@@ -203,9 +203,9 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         }
         
         if((player.getEndurance() <= 0) && !player.isGameOver()){
-            pAnimations.setOnFire((Node) Player.getVehicleNode().getChild("Engine"));
+            pAnimations.setOnFire((Node) Vehicle.getVehicleNode().getChild("Engine"));
             player.setGameOver(true);
-            Player.getVehicle().accelerate(0);
+            Vehicle.getVehicle().accelerate(0);
         }
         
         artificialInteligence.checkCollision(event);
@@ -221,7 +221,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                     } else {
                         player.modfSteeringValue(-.5f);
                     }
-                    Player.getVehicle().steer(player.getSteeringValue());
+                    Vehicle.getVehicle().steer(player.getSteeringValue());
                     
                 } else if (name.equals("Rights")) {
                     if (keyPressed) {
@@ -229,22 +229,22 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                     } else {
                         player.modfSteeringValue(.5f);
                     }
-                    Player.getVehicle().steer(player.getSteeringValue());
+                    Vehicle.getVehicle().steer(player.getSteeringValue());
                     
                 } else if (name.equals("Ups")) {
-                    if (keyPressed && (!(Player.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()))) {
+                    if (keyPressed && (!(Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()))) {
                         player.modfAccelerationValue(player.getAccelerationForce());
                     } else {
                         player.modfAccelerationValue(- (player.getAccelerationForce()));
                     }
-                    Player.getVehicle().accelerate(player.getAccelerationValue());
+                    Vehicle.getVehicle().accelerate(player.getAccelerationValue());
                     
                 } else if (name.equals("Downs")) {
                     if (keyPressed) {
-                        Player.getVehicle().brake(player.getBrakeForce());
-                        if (Player.getVehicle().getCurrentVehicleSpeedKmHour() > 1) {audio.playBrakes();}
+                        Vehicle.getVehicle().brake(player.getBrakeForce());
+                        if (Vehicle.getVehicle().getCurrentVehicleSpeedKmHour() > 1) {audio.playBrakes();}
                     } else {
-                        Player.getVehicle().brake(0f);
+                        Vehicle.getVehicle().brake(0f);
                         audio.stopBrakes();
                     }
                 } else if (name.equals("Reverse")) {
@@ -253,7 +253,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                     } else {
                         player.modfDeaccelerationValue(player.getDeaccelerationForce());
                     }
-                    Player.getVehicle().accelerate(player.getDeaccelerationValue());
+                    Vehicle.getVehicle().accelerate(player.getDeaccelerationValue());
                     
                 } else if (name.equals("Horn")) {
                     if (keyPressed) {
@@ -262,17 +262,17 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
    
                 } else if (name.equals("Space")) {
                     if (keyPressed) {
-                        Player.getVehicle().applyImpulse(player.getJumpForce(), Vector3f.ZERO);
+                        Vehicle.getVehicle().applyImpulse(player.getJumpForce(), Vector3f.ZERO);
                     }
                 } else if (name.equals("Reset")) {
                     if (keyPressed) {
                         System.out.println("Reset");
 
-                        Player.getVehicle().setPhysicsLocation(new Vector3f(Constant.SP_X, Constant.SP_Y, Constant.SP_Z));
-                        Player.getVehicle().setPhysicsRotation(new Matrix3f());
-                        Player.getVehicle().setLinearVelocity(Vector3f.ZERO);
-                        Player.getVehicle().setAngularVelocity(Vector3f.ZERO);
-                        Player.getVehicle().resetSuspension();
+                        Vehicle.getVehicle().setPhysicsLocation(new Vector3f(Constant.SP_X, Constant.SP_Y, Constant.SP_Z));
+                        Vehicle.getVehicle().setPhysicsRotation(new Matrix3f());
+                        Vehicle.getVehicle().setLinearVelocity(Vector3f.ZERO);
+                        Vehicle.getVehicle().setAngularVelocity(Vector3f.ZERO);
+                        Vehicle.getVehicle().resetSuspension();
                     } else {
                 }
             }

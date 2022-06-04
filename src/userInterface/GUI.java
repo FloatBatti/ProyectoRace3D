@@ -5,7 +5,7 @@
  */
 package userInterface;
 
-import Entidades.Player;
+import Entidades.Vehicle;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.font.BitmapFont;

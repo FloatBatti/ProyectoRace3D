@@ -6,7 +6,7 @@
 package main;
 
 import Entidades.Bots;
-import Entidades.Player;
+import Entidades.Vehicle;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.font.BitmapText;
 import com.jme3.math.FastMath;
@@ -84,14 +84,14 @@ public class AI{
         for(Bots aux : AIEntity) {
             if(!aux.isDestroyed()){
                 vector1.set(aux.getVehicle().getPhysicsLocation());
-                vector2.set(Player.getVehicle().getPhysicsLocation());
+                vector2.set(Vehicle.getVehicle().getPhysicsLocation());
                 vector2.subtractLocal(vector1);
                 vector2.normalizeLocal();
 
                 aux.getVehicle().getForwardVector(vector3).normalizeLocal();
                 vector4.set(vector3);
                 ROTATE_RIGHT.multLocal(vector4);
-                plane.setOriginNormal(Player.getVehicleNode().getWorldTranslation(), vector4);
+                plane.setOriginNormal(Vehicle.getVehicleNode().getWorldTranslation(), vector4);
 
                 float dot = 1 - vector3.dot(vector2);
                 float angle = vector3.angleBetween(vector2);
@@ -104,7 +104,7 @@ public class AI{
                 }
                 
                 //left or right
-                if (plane.whichSide(Player.getVehicle().getPhysicsLocation()) == Plane.Side.Negative) {
+                if (plane.whichSide(Vehicle.getVehicle().getPhysicsLocation()) == Plane.Side.Negative) {
                     anglemult *= -1;
                 }
                 

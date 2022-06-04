@@ -20,7 +20,7 @@ import main.Engine;
  *
  * @author AgusGonza
  */
-public class Player {
+public class Vehicle {
     
     private static  Node vehicleNode = new Node("vehicleNode");
     private double endurance = 200;
@@ -37,7 +37,7 @@ public class Player {
     private boolean gameOver = false;
     static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
     
-    public Player(){
+    public Vehicle(){
         
         
         
