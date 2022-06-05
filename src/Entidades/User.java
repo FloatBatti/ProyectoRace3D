@@ -15,24 +15,50 @@ import java.util.List;
  */
 public class User implements Serializable{
     
-    private String userName;
-    private String password;
-    private int userId;
-    private int coins = 0;
-    private Workshop stats = new Workshop();
-    private Integer[] vehicles = new Integer[]{1,0,0,0,0,};
-    private int lastLaps = 0;
-    private transient Persistence <User> dataControl = new Persistence();
+    protected String nickName;
+    protected String password;
+    protected int id;
+    protected int permission;
+    
+    
+    //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
+    public String getUserName() {
+        return nickName;
+    }
 
-    public User(String userName, String password, int lastIDplus) {
-        this.userName = userName;
+    public void setUserName(String userName) {
+        this.nickName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
-        this.userId = lastIDplus;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
+
+    public void setId(int Id) {
+        this.id = Id;
+    }
+
+    public int getPermission() {
+        return permission;
+    }
+
+    public void setPermission(int permission) {
+        this.permission = permission;
+    }
+    
+    //</editor-fold>
+
+    
+
+
     
     
 }

@@ -88,6 +88,8 @@ public class Vehicle{
     }
     
      //</editor-fold>
+    
+    
 
     public void modfSteeringValue(float steeringValue) {
         this.steeringValue += steeringValue;
