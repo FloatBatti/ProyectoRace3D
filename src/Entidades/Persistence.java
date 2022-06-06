@@ -1,3 +1,4 @@
+
 package Entidades;
 
 import com.google.gson.Gson;
@@ -138,6 +139,5 @@ public class Persistence <T> {
         return list;
     }
 
-
-
 }
+
