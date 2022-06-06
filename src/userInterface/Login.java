@@ -45,7 +45,7 @@ public class Login extends javax.swing.JFrame {
         title = new javax.swing.JLabel();
         separatorTitle = new javax.swing.JSeparator();
         picture = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         btnRegister = new javax.swing.JButton();
@@ -95,7 +95,7 @@ public class Login extends javax.swing.JFrame {
         title.setBackground(new java.awt.Color(255, 255, 255));
         title.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 36)); // NOI18N
         title.setForeground(new java.awt.Color(0, 0, 0));
-        title.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/storm.png"))); // NOI18N
+        title.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/rueda.png"))); // NOI18N
         title.setText("Riders On The Storm");
         mainPanel.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 460, -1));
 
@@ -106,11 +106,11 @@ public class Login extends javax.swing.JFrame {
         picture.setBackground(new java.awt.Color(255, 255, 255));
         picture.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/carscop.png"))); // NOI18N
-        picture.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/carscop.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        picture.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 530, -1));
 
-        mainPanel.add(picture, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 560, 560));
+        mainPanel.add(picture, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, 560, 560));
 
         btnLogin.setBackground(new java.awt.Color(204, 204, 255));
         btnLogin.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
@@ -259,7 +259,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegister;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lPassword;
     private javax.swing.JLabel lUserName;
     private javax.swing.JPanel mainPanel;

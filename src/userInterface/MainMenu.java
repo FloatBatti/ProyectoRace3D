@@ -36,11 +36,11 @@ public class MainMenu extends javax.swing.JFrame {
         lpoints = new javax.swing.JLabel();
         showAF = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        displayUsername2 = new javax.swing.JLabel();
+        Drift = new javax.swing.JLabel();
         displayUsername3 = new javax.swing.JLabel();
         displayUsername4 = new javax.swing.JLabel();
-        showFuel = new javax.swing.JLabel();
-        displayUsername5 = new javax.swing.JLabel();
+        showLife = new javax.swing.JLabel();
+        MaximunLife = new javax.swing.JLabel();
         showCarmodel = new javax.swing.JLabel();
         lPassword2 = new javax.swing.JLabel();
         showUpgradepoints = new javax.swing.JLabel();
@@ -50,6 +50,7 @@ public class MainMenu extends javax.swing.JFrame {
         btnPlay = new javax.swing.JButton();
         btnChangecar = new javax.swing.JButton();
         btnUpgradecar = new javax.swing.JButton();
+        displayUsername5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -68,20 +69,20 @@ public class MainMenu extends javax.swing.JFrame {
         lpoints.setForeground(new java.awt.Color(0, 0, 0));
         lpoints.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         lpoints.setText("Upgrade Points");
-        jPanel1.add(lpoints, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 250, -1));
+        jPanel1.add(lpoints, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 170, -1));
 
         showAF.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         showAF.setForeground(new java.awt.Color(0, 0, 0));
         showAF.setText("showAF");
-        jPanel1.add(showAF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 80, -1));
+        jPanel1.add(showAF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 80, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 210, 10));
 
-        displayUsername2.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        displayUsername2.setForeground(new java.awt.Color(0, 0, 0));
-        displayUsername2.setText("Acceleration Force");
-        jPanel1.add(displayUsername2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 170, -1));
+        Drift.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
+        Drift.setForeground(new java.awt.Color(0, 0, 0));
+        Drift.setText("Drift");
+        jPanel1.add(Drift, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 170, -1));
 
         displayUsername3.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         displayUsername3.setForeground(new java.awt.Color(0, 0, 0));
@@ -91,22 +92,22 @@ public class MainMenu extends javax.swing.JFrame {
         displayUsername4.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         displayUsername4.setForeground(new java.awt.Color(0, 0, 0));
         displayUsername4.setText("Car Model");
-        jPanel1.add(displayUsername4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 170, -1));
+        jPanel1.add(displayUsername4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 170, -1));
 
-        showFuel.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        showFuel.setForeground(new java.awt.Color(0, 0, 0));
-        showFuel.setText("Showfuel");
-        jPanel1.add(showFuel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 80, -1));
+        showLife.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
+        showLife.setForeground(new java.awt.Color(0, 0, 0));
+        showLife.setText("showLife");
+        jPanel1.add(showLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 80, -1));
 
-        displayUsername5.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        displayUsername5.setForeground(new java.awt.Color(0, 0, 0));
-        displayUsername5.setText("Fuel");
-        jPanel1.add(displayUsername5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 70, -1));
+        MaximunLife.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
+        MaximunLife.setForeground(new java.awt.Color(0, 0, 0));
+        MaximunLife.setText("Maximun Life");
+        jPanel1.add(MaximunLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 140, -1));
 
         showCarmodel.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         showCarmodel.setForeground(new java.awt.Color(0, 0, 0));
         showCarmodel.setText("showCarmodel");
-        jPanel1.add(showCarmodel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 170, -1));
+        jPanel1.add(showCarmodel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 170, -1));
 
         lPassword2.setBackground(new java.awt.Color(0, 0, 0));
         lPassword2.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 26)); // NOI18N
@@ -116,25 +117,25 @@ public class MainMenu extends javax.swing.JFrame {
 
         showUpgradepoints.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         showUpgradepoints.setForeground(new java.awt.Color(0, 0, 0));
-        showUpgradepoints.setText("showCoins");
-        jPanel1.add(showUpgradepoints, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 90, 20));
+        showUpgradepoints.setText("showPoints");
+        jPanel1.add(showUpgradepoints, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 90, 20));
 
         lPassword3.setBackground(new java.awt.Color(0, 0, 0));
         lPassword3.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         lPassword3.setForeground(new java.awt.Color(0, 0, 0));
-        lPassword3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/dollar.png"))); // NOI18N
+        lPassword3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/coin.png"))); // NOI18N
         lPassword3.setText(" Coins");
-        jPanel1.add(lPassword3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 120, -1));
+        jPanel1.add(lPassword3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 120, -1));
 
         showCoins1.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         showCoins1.setForeground(new java.awt.Color(0, 0, 0));
         showCoins1.setText("showCoins");
-        jPanel1.add(showCoins1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 90, 20));
+        jPanel1.add(showCoins1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 140, 30));
 
         btnBuycard.setBackground(new java.awt.Color(204, 204, 255));
         btnBuycard.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         btnBuycard.setForeground(new java.awt.Color(0, 0, 0));
-        btnBuycard.setText("Buy Card");
+        btnBuycard.setText("Buy Car");
         btnBuycard.setBorder(null);
         btnBuycard.setBorderPainted(false);
         btnBuycard.setContentAreaFilled(false);
@@ -178,12 +179,12 @@ public class MainMenu extends javax.swing.JFrame {
                 btnPlayActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 440, 150, 50));
+        jPanel1.add(btnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 450, 150, 50));
 
         btnChangecar.setBackground(new java.awt.Color(204, 204, 255));
         btnChangecar.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         btnChangecar.setForeground(new java.awt.Color(0, 0, 0));
-        btnChangecar.setText("Change Card");
+        btnChangecar.setText("Change Car");
         btnChangecar.setBorder(null);
         btnChangecar.setBorderPainted(false);
         btnChangecar.setContentAreaFilled(false);
@@ -223,6 +224,11 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnUpgradecar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 150, 50));
+
+        displayUsername5.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
+        displayUsername5.setForeground(new java.awt.Color(0, 0, 0));
+        displayUsername5.setText("Acceleration Force");
+        jPanel1.add(displayUsername5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 170, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 972, 652));
 
@@ -303,11 +309,12 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Drift;
+    private javax.swing.JLabel MaximunLife;
     private javax.swing.JButton btnBuycard;
     private javax.swing.JButton btnChangecar;
     private javax.swing.JButton btnPlay;
     private javax.swing.JButton btnUpgradecar;
-    private javax.swing.JLabel displayUsername2;
     private javax.swing.JLabel displayUsername3;
     private javax.swing.JLabel displayUsername4;
     private javax.swing.JLabel displayUsername5;
@@ -320,7 +327,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel showAF;
     private javax.swing.JLabel showCarmodel;
     private javax.swing.JLabel showCoins1;
-    private javax.swing.JLabel showFuel;
+    private javax.swing.JLabel showLife;
     private javax.swing.JLabel showUpgradepoints;
     // End of variables declaration//GEN-END:variables
 }
