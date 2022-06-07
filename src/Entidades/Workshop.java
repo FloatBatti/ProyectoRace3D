@@ -13,19 +13,40 @@ import java.io.Serializable;
  */
 public class Workshop implements Serializable{
     
-    private Integer[] fuelStats = new Integer[]{0,0,0,0,0};
-    private Integer[] healtStats = new Integer[]{0,0,0,0,0};
-    private Integer[] forceStats = new Integer[]{0,0,0,0,0};
+    private Integer[] driftStats;
+    private Integer[] healtStats;
+    private Integer[] forceStats;
     
-    public void incremetFuel(){
+    public Workshop(){
         
-        for (int i=0; i < fuelStats.length ; i++){
+        driftStats = new Integer[]{0,0,0,0,0};
+        healtStats = new Integer[]{0,0,0,0,0};
+        forceStats = new Integer[]{0,0,0,0,0};
+        
+    }
+    
+    public void incremetDrift(){
+        
+        for (int i=0; i < driftStats.length ; i++){
             
-            if(fuelStats[i] == 0 ){
+            if(driftStats[i] == 0 ){
                 
-                fuelStats[i] = 1;
+                driftStats[i] = 1;
+                break;
             }
         }
+    }
+    
+    public int getDriftValues(){
+        
+        int value = 0;
+        
+        for (int i=0; driftStats[i] == 1 ; i++){
+            
+            value += 20;
+        }
+        
+        return value;
     }
     
     public void incremetHealt(){
@@ -35,8 +56,21 @@ public class Workshop implements Serializable{
             if(healtStats[i] == 0 ){
                 
                 healtStats[i] = 1;
+                break;
             }
         }
+    }
+    
+    public int getHealtValues(){
+        
+        int value = 0;
+        
+        for (int i=0; healtStats[i] == 1 ; i++){
+            
+            value += 20;
+        }
+        
+        return value;
     }
         
     public void incremetForce(){
@@ -46,8 +80,27 @@ public class Workshop implements Serializable{
             if(forceStats[i] == 0 ){
                 
                 forceStats[i] = 1;
+                break;
             }
         }
     }
+    
+    public int getForceValues(){
+        
+        int value = 0;
+        
+        for (int i=0; forceStats[i] == 1 ; i++){
+            
+            value += 20;
+        }
+        
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return "Workshop{" + "driffStats=" + driftStats.toString() + ", healtStats=" + healtStats.toString() + ", forceStats=" + forceStats.toString() + '}';
+    }
+    
     
 }
