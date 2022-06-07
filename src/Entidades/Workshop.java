@@ -13,17 +13,17 @@ import java.io.Serializable;
  */
 public class Workshop implements Serializable{
     
-    private Integer[] fuelStats = new Integer[]{0,0,0,0,0};
+    private Integer[] driffStats = new Integer[]{0,0,0,0,0};
     private Integer[] healtStats = new Integer[]{0,0,0,0,0};
     private Integer[] forceStats = new Integer[]{0,0,0,0,0};
     
     public void incremetFuel(){
         
-        for (int i=0; i < fuelStats.length ; i++){
+        for (int i=0; i < driffStats.length ; i++){
             
-            if(fuelStats[i] == 0 ){
+            if(driffStats[i] == 0 ){
                 
-                fuelStats[i] = 1;
+                driffStats[i] = 1;
             }
         }
     }

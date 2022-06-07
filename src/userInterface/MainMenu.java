@@ -5,21 +5,32 @@
  */
 package userInterface;
 
+import Entidades.Player;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import main.Main;
 
 /**
  *
- * @author Juanjo
+ * @author Juanjo y Agus
  */
 public class MainMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainMenu
-     */
+    private static Player actualUser = null;
+    
+    public static void setActualUser(Player actualUser){
+        
+        MainMenu.actualUser = actualUser;
+        ActualUserTxt.setText("Usuario actual: " + actualUser.getUserName());
+        actualUser.setCoins(100);
+        TxtCoins.setText(actualUser.getCoins().toString());
+       
+    }
+    
     public MainMenu() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -33,48 +44,38 @@ public class MainMenu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         lPassword = new javax.swing.JLabel();
-        lpoints = new javax.swing.JLabel();
-        showAF = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         Drift = new javax.swing.JLabel();
-        displayUsername3 = new javax.swing.JLabel();
         displayUsername4 = new javax.swing.JLabel();
-        showLife = new javax.swing.JLabel();
         MaximunLife = new javax.swing.JLabel();
-        showCarmodel = new javax.swing.JLabel();
-        lPassword2 = new javax.swing.JLabel();
-        showUpgradepoints = new javax.swing.JLabel();
-        lPassword3 = new javax.swing.JLabel();
-        showCoins1 = new javax.swing.JLabel();
+        ActualUserTxt = new javax.swing.JLabel();
+        TxtCoins = new javax.swing.JLabel();
         btnBuycard = new javax.swing.JButton();
         btnPlay = new javax.swing.JButton();
-        btnChangecar = new javax.swing.JButton();
-        btnUpgradecar = new javax.swing.JButton();
         displayUsername5 = new javax.swing.JLabel();
+        DriftProgress = new javax.swing.JProgressBar();
+        LifeProgress = new javax.swing.JProgressBar();
+        AFProgress = new javax.swing.JProgressBar();
+        BtnAddDriff = new javax.swing.JLabel();
+        BtnAddLife = new javax.swing.JLabel();
+        BtnAddAF = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        DriftCost = new javax.swing.JLabel();
+        LifeCost = new javax.swing.JLabel();
+        AFCost = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(900, 570));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lPassword.setBackground(new java.awt.Color(0, 0, 0));
         lPassword.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 26)); // NOI18N
         lPassword.setForeground(new java.awt.Color(0, 0, 0));
         lPassword.setText("Selected Car");
-        jPanel1.add(lPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
-
-        lpoints.setBackground(new java.awt.Color(0, 0, 0));
-        lpoints.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        lpoints.setForeground(new java.awt.Color(0, 0, 0));
-        lpoints.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
-        lpoints.setText("Upgrade Points");
-        jPanel1.add(lpoints, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 170, -1));
-
-        showAF.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        showAF.setForeground(new java.awt.Color(0, 0, 0));
-        showAF.setText("showAF");
-        jPanel1.add(showAF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 80, -1));
+        jPanel1.add(lPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 210, 10));
@@ -82,62 +83,36 @@ public class MainMenu extends javax.swing.JFrame {
         Drift.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         Drift.setForeground(new java.awt.Color(0, 0, 0));
         Drift.setText("Drift");
-        jPanel1.add(Drift, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 170, -1));
-
-        displayUsername3.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        displayUsername3.setForeground(new java.awt.Color(0, 0, 0));
-        displayUsername3.setText("displayUsername");
-        jPanel1.add(displayUsername3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 170, 20));
+        jPanel1.add(Drift, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 170, -1));
 
         displayUsername4.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         displayUsername4.setForeground(new java.awt.Color(0, 0, 0));
-        displayUsername4.setText("Car Model");
-        jPanel1.add(displayUsername4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 170, -1));
-
-        showLife.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        showLife.setForeground(new java.awt.Color(0, 0, 0));
-        showLife.setText("showLife");
-        jPanel1.add(showLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 80, -1));
+        displayUsername4.setText("Car Model: \"Nombre del auto\"");
+        jPanel1.add(displayUsername4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 270, -1));
 
         MaximunLife.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         MaximunLife.setForeground(new java.awt.Color(0, 0, 0));
         MaximunLife.setText("Maximun Life");
-        jPanel1.add(MaximunLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 140, -1));
+        jPanel1.add(MaximunLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 140, -1));
 
-        showCarmodel.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        showCarmodel.setForeground(new java.awt.Color(0, 0, 0));
-        showCarmodel.setText("showCarmodel");
-        jPanel1.add(showCarmodel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 170, -1));
+        ActualUserTxt.setBackground(new java.awt.Color(0, 0, 0));
+        ActualUserTxt.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 26)); // NOI18N
+        ActualUserTxt.setForeground(new java.awt.Color(0, 0, 0));
+        ActualUserTxt.setText("User Name");
+        jPanel1.add(ActualUserTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        lPassword2.setBackground(new java.awt.Color(0, 0, 0));
-        lPassword2.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 26)); // NOI18N
-        lPassword2.setForeground(new java.awt.Color(0, 0, 0));
-        lPassword2.setText("User Name");
-        jPanel1.add(lPassword2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
-
-        showUpgradepoints.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        showUpgradepoints.setForeground(new java.awt.Color(0, 0, 0));
-        showUpgradepoints.setText("showPoints");
-        jPanel1.add(showUpgradepoints, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 90, 20));
-
-        lPassword3.setBackground(new java.awt.Color(0, 0, 0));
-        lPassword3.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        lPassword3.setForeground(new java.awt.Color(0, 0, 0));
-        lPassword3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/coin.png"))); // NOI18N
-        lPassword3.setText(" Coins");
-        jPanel1.add(lPassword3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 120, -1));
-
-        showCoins1.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        showCoins1.setForeground(new java.awt.Color(0, 0, 0));
-        showCoins1.setText("showCoins");
-        jPanel1.add(showCoins1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 140, 30));
+        TxtCoins.setBackground(new java.awt.Color(0, 0, 0));
+        TxtCoins.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
+        TxtCoins.setForeground(new java.awt.Color(0, 0, 0));
+        TxtCoins.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/coin.png"))); // NOI18N
+        TxtCoins.setText("Coins");
+        jPanel1.add(TxtCoins, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 100, -1));
 
         btnBuycard.setBackground(new java.awt.Color(204, 204, 255));
         btnBuycard.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         btnBuycard.setForeground(new java.awt.Color(0, 0, 0));
-        btnBuycard.setText("Buy Car");
-        btnBuycard.setBorder(null);
-        btnBuycard.setBorderPainted(false);
+        btnBuycard.setText("Next");
+        btnBuycard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnBuycard.setContentAreaFilled(false);
         btnBuycard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuycard.setFocusPainted(false);
@@ -152,14 +127,18 @@ public class MainMenu extends javax.swing.JFrame {
                 btnBuycardMouseExited(evt);
             }
         });
-        jPanel1.add(btnBuycard, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 150, 50));
+        btnBuycard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuycardActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuycard, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 410, 150, 50));
 
         btnPlay.setBackground(new java.awt.Color(204, 204, 255));
         btnPlay.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         btnPlay.setForeground(new java.awt.Color(0, 0, 0));
         btnPlay.setText("Play");
-        btnPlay.setBorder(null);
-        btnPlay.setBorderPainted(false);
+        btnPlay.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnPlay.setContentAreaFilled(false);
         btnPlay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPlay.setFocusPainted(false);
@@ -179,58 +158,77 @@ public class MainMenu extends javax.swing.JFrame {
                 btnPlayActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 450, 150, 50));
-
-        btnChangecar.setBackground(new java.awt.Color(204, 204, 255));
-        btnChangecar.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        btnChangecar.setForeground(new java.awt.Color(0, 0, 0));
-        btnChangecar.setText("Change Car");
-        btnChangecar.setBorder(null);
-        btnChangecar.setBorderPainted(false);
-        btnChangecar.setContentAreaFilled(false);
-        btnChangecar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnChangecar.setFocusPainted(false);
-        btnChangecar.setFocusable(false);
-        btnChangecar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnChangecar.setOpaque(true);
-        btnChangecar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnChangecarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnChangecarMouseExited(evt);
-            }
-        });
-        jPanel1.add(btnChangecar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 150, 50));
-
-        btnUpgradecar.setBackground(new java.awt.Color(204, 204, 255));
-        btnUpgradecar.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        btnUpgradecar.setForeground(new java.awt.Color(0, 0, 0));
-        btnUpgradecar.setText("Upgrade Car");
-        btnUpgradecar.setBorder(null);
-        btnUpgradecar.setBorderPainted(false);
-        btnUpgradecar.setContentAreaFilled(false);
-        btnUpgradecar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnUpgradecar.setFocusPainted(false);
-        btnUpgradecar.setFocusable(false);
-        btnUpgradecar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnUpgradecar.setOpaque(true);
-        btnUpgradecar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnUpgradecarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnUpgradecarMouseExited(evt);
-            }
-        });
-        jPanel1.add(btnUpgradecar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 150, 50));
+        jPanel1.add(btnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 150, 50));
 
         displayUsername5.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         displayUsername5.setForeground(new java.awt.Color(0, 0, 0));
         displayUsername5.setText("Acceleration Force");
-        jPanel1.add(displayUsername5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 170, -1));
+        jPanel1.add(displayUsername5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 170, -1));
+        jPanel1.add(DriftProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, 20));
+        jPanel1.add(LifeProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, 20));
+        jPanel1.add(AFProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, -1, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 972, 652));
+        BtnAddDriff.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        BtnAddDriff.setForeground(new java.awt.Color(0, 0, 0));
+        BtnAddDriff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        BtnAddDriff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/addPoint.png"))); // NOI18N
+        BtnAddDriff.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnAddDriff.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        BtnAddDriff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnAddDriffMouseClicked(evt);
+            }
+        });
+        jPanel1.add(BtnAddDriff, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, 30, 20));
+
+        BtnAddLife.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        BtnAddLife.setForeground(new java.awt.Color(0, 0, 0));
+        BtnAddLife.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        BtnAddLife.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/addPoint.png"))); // NOI18N
+        BtnAddLife.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnAddLife.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        BtnAddLife.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnAddLifeMouseClicked(evt);
+            }
+        });
+        jPanel1.add(BtnAddLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 30, 20));
+
+        BtnAddAF.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        BtnAddAF.setForeground(new java.awt.Color(0, 0, 0));
+        BtnAddAF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        BtnAddAF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/addPoint.png"))); // NOI18N
+        BtnAddAF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnAddAF.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        BtnAddAF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnAddAFMouseClicked(evt);
+            }
+        });
+        jPanel1.add(BtnAddAF, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, 30, 20));
+
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Foto del auto");
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 370, 310));
+
+        DriftCost.setForeground(new java.awt.Color(0, 0, 0));
+        DriftCost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buyStats.png"))); // NOI18N
+        DriftCost.setText("10");
+        jPanel1.add(DriftCost, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, -1, 20));
+
+        LifeCost.setForeground(new java.awt.Color(0, 0, 0));
+        LifeCost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buyStats.png"))); // NOI18N
+        LifeCost.setText("10");
+        jPanel1.add(LifeCost, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, -1, 20));
+
+        AFCost.setForeground(new java.awt.Color(0, 0, 0));
+        AFCost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buyStats.png"))); // NOI18N
+        AFCost.setText("10");
+        jPanel1.add(AFCost, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, 20));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -252,26 +250,85 @@ public class MainMenu extends javax.swing.JFrame {
         btnBuycard.setBackground (Color.red);
     }//GEN-LAST:event_btnBuycardMouseEntered
 
-    private void btnChangecarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangecarMouseEntered
-        btnChangecar.setBackground (Color.red);
-    }//GEN-LAST:event_btnChangecarMouseEntered
-
-    private void btnChangecarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangecarMouseExited
-        
-         btnChangecar.setBackground(new Color (204,204,255));
-    }//GEN-LAST:event_btnChangecarMouseExited
-
-    private void btnUpgradecarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpgradecarMouseEntered
-        btnUpgradecar.setBackground(Color.red);
-    }//GEN-LAST:event_btnUpgradecarMouseEntered
-
-    private void btnUpgradecarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpgradecarMouseExited
-        btnUpgradecar.setBackground(new Color (204,204,255));
-    }//GEN-LAST:event_btnUpgradecarMouseExited
-
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
        
     }//GEN-LAST:event_btnPlayActionPerformed
+
+    private void btnBuycardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuycardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuycardActionPerformed
+
+    private void BtnAddLifeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAddLifeMouseClicked
+        
+        if (Integer.parseInt(TxtCoins.getText()) > LifeProgress.getValue() && LifeProgress.getValue()!= 100){
+            
+            Integer lifeCost = Integer.parseInt(LifeCost.getText());
+            LifeProgress.setValue(LifeProgress.getValue() + 20);
+            actualUser.setCoins(actualUser.getCoins() - lifeCost);
+            TxtCoins.setText(actualUser.getCoins().toString());
+            lifeCost += 10;
+            LifeCost.setText(lifeCost.toString());
+        }
+        else if (LifeProgress.getValue() == 100){
+            
+            JOptionPane.showMessageDialog(null, "Ya tiene el maximo de Stats");
+            LifeCost.setText("MAX.");
+            LifeCost.setIcon(null);
+        }
+        else{
+            
+            JOptionPane.showMessageDialog(null, "No tiene los puntos suficientes");
+        }
+        
+    }//GEN-LAST:event_BtnAddLifeMouseClicked
+
+    private void BtnAddAFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAddAFMouseClicked
+       
+        if (Integer.parseInt(TxtCoins.getText()) > AFProgress.getValue() && AFProgress.getValue()!= 100){
+            
+            Integer AFCost = Integer.parseInt(this.AFCost.getText());
+            AFProgress.setValue(AFProgress.getValue() + 20);
+            actualUser.setCoins(actualUser.getCoins() - AFCost);
+            TxtCoins.setText(actualUser.getCoins().toString());
+            AFCost += 10;
+            this.AFCost.setText(AFCost.toString());
+        }
+        else if (AFProgress.getValue() == 100){
+            
+            JOptionPane.showMessageDialog(null, "Ya tiene el maximo de Stats");
+            AFCost.setText("MAX.");
+            AFCost.setIcon(null);
+        }
+        else{
+            
+            JOptionPane.showMessageDialog(null, "No tiene los puntos suficientes");
+        }
+        
+    }//GEN-LAST:event_BtnAddAFMouseClicked
+
+    private void BtnAddDriffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAddDriffMouseClicked
+        
+        if (Integer.parseInt(TxtCoins.getText()) > DriftProgress.getValue() && DriftProgress.getValue()!= 100){
+            
+            Integer driftCost = Integer.parseInt(this.DriftCost.getText());
+            DriftProgress.setValue(DriftProgress.getValue() + 20);
+            actualUser.setCoins(actualUser.getCoins() - driftCost);
+            TxtCoins.setText(actualUser.getCoins().toString());
+            driftCost += 10;
+            DriftCost.setText(driftCost.toString());
+        }
+        else if (DriftProgress.getValue() == 100){
+            
+            JOptionPane.showMessageDialog(null, "Ya tiene el maximo de Stats");
+            DriftCost.setText("MAX.");
+            DriftCost.setIcon(null);
+        }
+        else{
+            
+            JOptionPane.showMessageDialog(null, "No tiene los puntos suficientes");
+        }
+        
+    }//GEN-LAST:event_BtnAddDriffMouseClicked
 
     /**
      * @param args the command line arguments
@@ -303,31 +360,33 @@ public class MainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+               
                 new MainMenu().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AFCost;
+    private javax.swing.JProgressBar AFProgress;
+    private static javax.swing.JLabel ActualUserTxt;
+    private javax.swing.JLabel BtnAddAF;
+    private javax.swing.JLabel BtnAddDriff;
+    private javax.swing.JLabel BtnAddLife;
     private javax.swing.JLabel Drift;
+    private javax.swing.JLabel DriftCost;
+    private javax.swing.JProgressBar DriftProgress;
+    private javax.swing.JLabel LifeCost;
+    private javax.swing.JProgressBar LifeProgress;
     private javax.swing.JLabel MaximunLife;
+    private static javax.swing.JLabel TxtCoins;
     private javax.swing.JButton btnBuycard;
-    private javax.swing.JButton btnChangecar;
     private javax.swing.JButton btnPlay;
-    private javax.swing.JButton btnUpgradecar;
-    private javax.swing.JLabel displayUsername3;
     private javax.swing.JLabel displayUsername4;
     private javax.swing.JLabel displayUsername5;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lPassword;
-    private javax.swing.JLabel lPassword2;
-    private javax.swing.JLabel lPassword3;
-    private javax.swing.JLabel lpoints;
-    private javax.swing.JLabel showAF;
-    private javax.swing.JLabel showCarmodel;
-    private javax.swing.JLabel showCoins1;
-    private javax.swing.JLabel showLife;
-    private javax.swing.JLabel showUpgradepoints;
     // End of variables declaration//GEN-END:variables
 }
