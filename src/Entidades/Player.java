@@ -37,9 +37,50 @@ public class Player extends User implements Serializable{
     
     public static void savePlayer (Player player) {
         
-        List<Player> listPlayer = new ArrayList();
-        listPlayer.add(player);
+        List<Player> listPlayer = getListPlayer();
+        
+        for (Player aux : listPlayer){
+            
+            if (aux.getId() == player.getId()){
+                
+                aux.setCoins(player.getCoins());
+                aux.setStats(player.getStats());
+                aux.setLastLaps(player.getLastLaps());
+
+                break;
+            }
+        }
+        
         dataControl.saveList(listPlayer, "src/data/userData.json");
+    }
+    
+    public static void loadPlayer (Player player) {
+        
+        List<Player> listPlayer = getListPlayer();
+        
+        for (Player aux : listPlayer){
+            
+            if (aux.getId() == player.getId()){
+                
+                player.setCoins(aux.getCoins());
+                player.setStats(aux.getStats());
+                player.setLastLaps(aux.getLastLaps());
+
+                break;
+            }
+        }
+        
+    }
+    
+    public static void createPlayer (String userName, String password){
+        
+        Player newPlayer = new Player(userName, password);
+        List<Player> listPlayer = getListPlayer();
+        
+        listPlayer.add(newPlayer);
+        
+        dataControl.saveList(listPlayer, "src/data/userData.json");
+        
     }
 
     private int getLastIDplus(){
@@ -82,6 +123,8 @@ public class Player extends User implements Serializable{
     public void setLastLaps(int lastLaps) {
         this.lastLaps = lastLaps;
     }
+    
+    
     
     //</editor-fold>
 

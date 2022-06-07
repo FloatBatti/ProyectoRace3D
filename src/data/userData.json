@@ -1,26 +1,26 @@
 [
   {
-    "coins": 0,
+    "coins": 500,
     "stats": {
-      "fuelStats": [
-        0,
-        0,
+      "driftStats": [
+        1,
+        1,
         0,
         0,
         0
       ],
       "healtStats": [
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
         0,
         0
       ],
       "forceStats": [
-        0,
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
+        1,
         0
       ]
     },
@@ -28,6 +28,68 @@
     "nickName": "Agus",
     "password": "123",
     "id": 1,
+    "permission": 1
+  },
+  {
+    "coins": 370,
+    "stats": {
+      "driftStats": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "healtStats": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "forceStats": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "lastLaps": 0,
+    "nickName": "Fran",
+    "password": "456",
+    "id": 2,
+    "permission": 1
+  },
+  {
+    "coins": 190,
+    "stats": {
+      "driftStats": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "healtStats": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "forceStats": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    "lastLaps": 0,
+    "nickName": "Juan",
+    "password": "789",
+    "id": 3,
     "permission": 1
   }
 ]

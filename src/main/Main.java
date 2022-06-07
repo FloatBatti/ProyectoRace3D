@@ -21,8 +21,8 @@ public class Main extends SimpleApplication {
         
        Login login = new Login();
        login.setVisible(true);
-        //Main app = new Main();
-        //app.start();
+       //Main app = new Main();
+       //app.start();
     }
 
     @Override

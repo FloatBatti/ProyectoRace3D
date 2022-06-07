@@ -7,6 +7,7 @@ package userInterface;
 
 import Entidades.Player;
 import java.awt.Color;
+import java.util.HashSet;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -131,6 +132,9 @@ public class Login extends javax.swing.JFrame {
         BtnRegister.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnRegister.setOpaque(true);
         BtnRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnRegisterMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BtnRegisterMouseEntered(evt);
             }
@@ -226,7 +230,6 @@ public class Login extends javax.swing.JFrame {
             
             if (actualPlayer != null) {
                 
-                JOptionPane.showMessageDialog(null, "Se abre MainMenu");
                 MainMenu mainMenu = new MainMenu();
                 mainMenu.setVisible(true);
                 MainMenu.setActualUser(actualPlayer);
@@ -239,6 +242,13 @@ public class Login extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_BtnLoginMouseClicked
+
+    private void BtnRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegisterMouseClicked
+        
+        CreateUser register = new CreateUser();
+        register.setVisible(true);
+        
+    }//GEN-LAST:event_BtnRegisterMouseClicked
 
     /**
      * @param args the command line arguments
