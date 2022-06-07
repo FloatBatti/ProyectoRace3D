@@ -56,7 +56,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     private static particleAnimations pAnimations;
     
     //GUI VARIABLES
-    private GUI GUInterface;
+    private static GUI GUInterface;
     
     private AI artificialInteligence = new AI();
     
@@ -81,6 +81,10 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         return assetManager;
     }
 
+    public static GUI getGUInterface() {
+        return GUInterface;
+    }
+    
     static public boolean isStart() {
         return start;
     }
@@ -155,9 +159,8 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     }
     
     private void initializeHud(){
-        
        GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 300, 0, 30);
-       //GUInterface.drawSpeed(ColorRGBA.blue, "Speed: " + (int)Player.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
+       GUInterface.drawSpeed(ColorRGBA.Blue, "Speed: " + (int)Vehicle.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
        GUInterface.drawSpeed(ColorRGBA.Blue, Vehicle.getVehicle().getPhysicsLocation().getX() + " / " + Vehicle.getVehicle().getPhysicsLocation().getY() + " / " + Vehicle.getVehicle().getPhysicsLocation().getY() , 500, 0, 30);
     }
     
