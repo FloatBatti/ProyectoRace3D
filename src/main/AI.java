@@ -23,7 +23,7 @@ import statics.Constant;
  */
 public class AI{
     
-    private float speed = 800f;
+    private float speed = 1500f;
     private Vector3f vector1 = new Vector3f();
     private Vector3f vector2 = new Vector3f();
     private Vector3f vector3 = new Vector3f();
@@ -108,11 +108,11 @@ public class AI{
                     anglemult *= -1;
                 }
                 
-                //backwards
-                if (dot > 1) {
-                    speedmult *= -1;
-                    anglemult *= -1;
-                }
+//                //backwards
+//                if (dot > 1) {
+//                    speedmult *= -1;
+//                    anglemult *= -1;
+//                }
                 
                 aux.getVehicle().steer(angle * anglemult);
                 aux.getVehicle().accelerate(speed * speedmult);

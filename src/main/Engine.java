@@ -48,6 +48,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     private static Camera camera;
     private static InputManager inputManager;    
     private static BulletAppState bulletAppState = new BulletAppState();
+    static public boolean start = false;
     
     private final Audio3D audio;
     
@@ -78,6 +79,14 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     static public AssetManager getAssetManager(){
         
         return assetManager;
+    }
+
+    static public boolean isStart() {
+        return start;
+    }
+
+    static public void setStart(boolean start) {
+        Engine.start = start;
     }
     
     static public Node getLocalRootNode(){
@@ -178,6 +187,9 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         setUpLight();
         setupKeys();
         initializeHud();
+        
+        countDown p = new countDown(143);
+        p.start();
             
     }
     
@@ -196,10 +208,15 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     public void collision(PhysicsCollisionEvent event) {
         if ( event.getNodeA().getName().equals("vehicleNode") ) {
             double impactDamage = event.getAppliedImpulse() / 100;
+            if(impactDamage>30){
+                player.modfEndurance(-impactDamage);
+            }
             player.modfEndurance(-impactDamage);
         } else if ( event.getNodeB().getName().equals("vehicleNode") ) {
             double impactDamage = event.getAppliedImpulse()  / 100;
-            player.modfEndurance(-impactDamage);
+            if(impactDamage>30){
+                player.modfEndurance(-impactDamage);
+            }
         }
         
         if((player.getEndurance() <= 0) && !player.isGameOver()){
@@ -214,7 +231,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
         
-        if(!player.isGameOver()){
+        if(!player.isGameOver() && start==true){
             if (name.equals("Lefts")) {
                 if (keyPressed) {
                         player.modfSteeringValue(.5f);
