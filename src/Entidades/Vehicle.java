@@ -15,6 +15,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import main.Engine;
+import statics.Constant;
 
 /**
  *
@@ -23,7 +24,7 @@ import main.Engine;
 public class Vehicle {
     
     private static  Node vehicleNode = new Node("vehicleNode");
-    private double endurance = 200;
+    private double endurance = 9900;
     private int fuel;
     private static VehicleControl vehicle;
     private float maximumSpeed = 242.0f;
@@ -145,7 +146,7 @@ public class Vehicle {
         attachWeels(vehicleNode);
         
         //start up position
-        vehicle.setPhysicsLocation(new Vector3f(-40, 0, 50));
+        vehicle.setPhysicsLocation(new Vector3f(Constant.SP_X, Constant.SP_Y, Constant.SP_Z));
         vehicle.setPhysicsRotation(ROTATE_RIGHT);
         Engine.getRootNode().attachChild(vehicleNode);
 
