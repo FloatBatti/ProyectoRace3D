@@ -1,0 +1,33 @@
+[
+  {
+    "coins": 0,
+    "stats": {
+      "fuelStats": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "healtStats": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "forceStats": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "lastLaps": 0,
+    "nickName": "Agus",
+    "password": "123",
+    "id": 1,
+    "permission": 1
+  }
+]
