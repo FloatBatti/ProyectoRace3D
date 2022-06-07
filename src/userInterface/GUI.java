@@ -24,8 +24,15 @@ public class GUI {
     private BitmapFont myFont;
     private BitmapText guiLife;
     private BitmapText guiSpeed;
+    private BitmapText guiCountDown;
     private final AssetManager assetManager;
-            
+
+    public BitmapText getGuiCountDown() {
+        return guiCountDown;
+    }
+        
+    
+    
     public GUI(Node guiNode, AssetManager asset){
         GUInterface = guiNode;
         assetManager = asset;
@@ -38,6 +45,7 @@ public class GUI {
         
         guiLife = new BitmapText(myFont, false);
         guiSpeed = new BitmapText(myFont, false);
+        guiCountDown = new BitmapText(myFont, false);
     }
     
     public void drawLife(ColorRGBA color, String text, int X, int Y, int size){
@@ -48,11 +56,19 @@ public class GUI {
         GUInterface.attachChild(guiLife);
     }
     
+    public void drawCountDown(ColorRGBA color, String text, int X, int Y, int size){
+        guiCountDown.setSize(size);
+        guiCountDown.setColor(color);                                        // font color
+        guiCountDown.setText(text);                                          // the text
+        guiCountDown.setLocalTranslation(X, guiCountDown.getLineHeight(), Y);     // position
+        GUInterface.attachChild(guiCountDown);
+    }
+    
     public void drawSpeed(ColorRGBA color, String text, int X, int Y, int size){
         guiSpeed.setSize(size);
         guiSpeed.setColor(color);                                        // font color
         guiSpeed.setText(text);                                          // the text
-        guiSpeed.setLocalTranslation(X, guiSpeed.getLineHeight(), Y);     // position
+        guiSpeed.setLocalTranslation(X, Y, guiSpeed.getLineHeight());     // position
         GUInterface.attachChild(guiSpeed);
     }
     
@@ -65,7 +81,6 @@ public class GUI {
             guiLife.setColor(ColorRGBA.Red);
         }
         
-        guiSpeed.setText(vehicle.getPhysicsLocation().getX() + " / " + vehicle.getPhysicsLocation().getY() + " / " + vehicle.getPhysicsLocation().getZ());
-        //guiSpeed.setText("Speed: " +(int) vehicle.getCurrentVehicleSpeedKmHour());
+        guiSpeed.setText("Speed: " +(int) vehicle.getCurrentVehicleSpeedKmHour());
     }
 }

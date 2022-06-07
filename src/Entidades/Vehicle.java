@@ -145,7 +145,7 @@ public class Vehicle {
         attachWeels(vehicleNode);
         
         //start up position
-        vehicle.setPhysicsLocation(new Vector3f(-60, 0, 50));
+        vehicle.setPhysicsLocation(new Vector3f(-40, 0, 50));
         vehicle.setPhysicsRotation(ROTATE_RIGHT);
         Engine.getRootNode().attachChild(vehicleNode);
 
