@@ -1,0 +1,8 @@
+Material Police : Common/MatDefs/Misc/Unshaded.j3md {
+     MaterialParameters {
+        ColorMap : Flip Repeat "Textures/policeBarricade.png"
+     }
+    AdditionalRenderState {
+      Blend Alpha
+    }
+}

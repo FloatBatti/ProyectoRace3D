@@ -124,7 +124,7 @@ public class Vehicle {
     public void buildPlayer() {
         
         //load the visible part of the cart
-        Spatial carsito = Engine.getAssetManager().loadModel("Models/Autito.j3o");
+        Spatial carsito = Engine.getAssetManager().loadModel("Models/AutitoBusiness.j3o");
         Engine.getLocalRootNode().attachChild(carsito);
         Node carNode = (Node) Engine.getLocalRootNode().getChild("AutoRojo");
         vehicleNode.attachChild(carNode);
