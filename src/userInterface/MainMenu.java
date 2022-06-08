@@ -25,6 +25,7 @@ public class MainMenu extends javax.swing.JFrame {
         Player.loadPlayer(actualUser);
         TxtCoins.setText(actualUser.getCoins().toString());
         initStats();
+        initShopCars();
        
         
     }
@@ -52,7 +53,6 @@ public class MainMenu extends javax.swing.JFrame {
         MaximunLife = new javax.swing.JLabel();
         ActualUserTxt = new javax.swing.JLabel();
         TxtCoins = new javax.swing.JLabel();
-        BtnNext = new javax.swing.JButton();
         BtnPlay = new javax.swing.JButton();
         displayUsername5 = new javax.swing.JLabel();
         DriftProgress = new javax.swing.JProgressBar();
@@ -61,13 +61,17 @@ public class MainMenu extends javax.swing.JFrame {
         BtnAddDriff = new javax.swing.JLabel();
         BtnAddLife = new javax.swing.JLabel();
         BtnAddAF = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         DriftCost = new javax.swing.JLabel();
         LifeCost = new javax.swing.JLabel();
         AFCost = new javax.swing.JLabel();
         displayUsername6 = new javax.swing.JLabel();
+        AutoDefault = new javax.swing.JLabel();
+        AutoTurro = new javax.swing.JLabel();
+        AutoBussines = new javax.swing.JLabel();
+        AutoPolicia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -110,32 +114,6 @@ public class MainMenu extends javax.swing.JFrame {
         TxtCoins.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/coin.png"))); // NOI18N
         TxtCoins.setText("Coins");
         jPanel1.add(TxtCoins, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 100, -1));
-
-        BtnNext.setBackground(new java.awt.Color(255, 255, 255));
-        BtnNext.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        BtnNext.setForeground(new java.awt.Color(0, 0, 0));
-        BtnNext.setText("Next");
-        BtnNext.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        BtnNext.setContentAreaFilled(false);
-        BtnNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnNext.setFocusPainted(false);
-        BtnNext.setFocusable(false);
-        BtnNext.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        BtnNext.setOpaque(true);
-        BtnNext.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                BtnNextMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                BtnNextMouseExited(evt);
-            }
-        });
-        BtnNext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnNextActionPerformed(evt);
-            }
-        });
-        jPanel1.add(BtnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 410, 150, 50));
 
         BtnPlay.setBackground(new java.awt.Color(255, 255, 255));
         BtnPlay.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
@@ -213,12 +191,6 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(BtnAddAF, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, 30, 20));
 
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Foto del auto");
-        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 370, 310));
-
         DriftCost.setForeground(new java.awt.Color(0, 0, 0));
         DriftCost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buyStats.png"))); // NOI18N
         DriftCost.setText("10");
@@ -239,11 +211,94 @@ public class MainMenu extends javax.swing.JFrame {
         displayUsername6.setText("Model: \"Nombre del auto\"");
         jPanel1.add(displayUsername6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 270, -1));
 
+        AutoDefault.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        AutoDefault.setForeground(new java.awt.Color(0, 0, 0));
+        AutoDefault.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AutoDefault.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AutoDefault.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AutoDefault.setPreferredSize(new java.awt.Dimension(160, 150));
+        AutoDefault.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AutoDefaultMouseClicked(evt);
+            }
+        });
+        jPanel1.add(AutoDefault, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, -1, -1));
+
+        AutoTurro.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        AutoTurro.setForeground(new java.awt.Color(0, 0, 0));
+        AutoTurro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AutoTurro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AutoTurro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AutoTurro.setPreferredSize(new java.awt.Dimension(160, 150));
+        AutoTurro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AutoTurroMouseClicked(evt);
+            }
+        });
+        jPanel1.add(AutoTurro, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 130, -1, -1));
+
+        AutoBussines.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        AutoBussines.setForeground(new java.awt.Color(0, 0, 0));
+        AutoBussines.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AutoBussines.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AutoBussines.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AutoBussines.setPreferredSize(new java.awt.Dimension(160, 150));
+        AutoBussines.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AutoBussinesMouseClicked(evt);
+            }
+        });
+        jPanel1.add(AutoBussines, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 300, -1, -1));
+
+        AutoPolicia.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        AutoPolicia.setForeground(new java.awt.Color(0, 0, 0));
+        AutoPolicia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AutoPolicia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AutoPolicia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AutoPolicia.setPreferredSize(new java.awt.Dimension(160, 150));
+        AutoPolicia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AutoPoliciaMouseClicked(evt);
+            }
+        });
+        jPanel1.add(AutoPolicia, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 300, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    private static void initShopCars(){
+        
+        Integer shopCarsValue = actualUser.getStats().getsCarsValue();
+        
+        System.out.println(shopCarsValue);
+        
+        if (shopCarsValue == 25){
+            
+            AutoBussines.setText("$100");
+            AutoPolicia.setText("$200");
+            AutoTurro.setText("$300");
+            
+        }else if (shopCarsValue == 50){
+            
+            AutoBussines.setText("");
+            AutoPolicia.setText("$200");
+            AutoTurro.setText("$300");
+            
+        }else if(shopCarsValue == 75){
+            
+            AutoBussines.setText("");
+            AutoPolicia.setText("");
+            AutoTurro.setText("$300");
+            
+        }else if(shopCarsValue == 100){
+            
+            AutoBussines.setText("");
+            AutoPolicia.setText("");
+            AutoTurro.setText("");
+        }
+    }
     private static void initStats (){
         
         Integer lifeValue = actualUser.getStats().getHealtValues();
@@ -271,6 +326,7 @@ public class MainMenu extends javax.swing.JFrame {
             DriftCost.setText(cost.toString());
         }
  
+        
     }
     
     private void BtnPlayMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnPlayMouseExited
@@ -285,25 +341,9 @@ public class MainMenu extends javax.swing.JFrame {
         BtnPlay.setForeground(new Color (255,204,51));
     }//GEN-LAST:event_BtnPlayMouseEntered
 
-    private void BtnNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnNextMouseExited
-        
-        BtnNext.setBackground(Color.WHITE);
-        BtnNext.setForeground(new Color (0,0,0));
-    }//GEN-LAST:event_BtnNextMouseExited
-
-    private void BtnNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnNextMouseEntered
-        
-        BtnNext.setBackground (new Color (153,0,0));
-        BtnNext.setForeground(new Color (255,204,51));
-    }//GEN-LAST:event_BtnNextMouseEntered
-
     private void BtnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPlayActionPerformed
        
     }//GEN-LAST:event_BtnPlayActionPerformed
-
-    private void BtnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnNextActionPerformed
 
     private void BtnAddLifeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAddLifeMouseClicked
         
@@ -423,6 +463,26 @@ public class MainMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_BtnPlayMouseClicked
 
+    private void AutoTurroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutoTurroMouseClicked
+        
+        if(AutoTurro.getText().equals("Lock")){
+            
+            
+        }
+    }//GEN-LAST:event_AutoTurroMouseClicked
+
+    private void AutoBussinesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutoBussinesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AutoBussinesMouseClicked
+
+    private void AutoPoliciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutoPoliciaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AutoPoliciaMouseClicked
+
+    private void AutoDefaultMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutoDefaultMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AutoDefaultMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -463,10 +523,13 @@ public class MainMenu extends javax.swing.JFrame {
     private static javax.swing.JLabel AFCost;
     private static javax.swing.JProgressBar AFProgress;
     private static javax.swing.JLabel ActualUserTxt;
+    private static javax.swing.JLabel AutoBussines;
+    private static javax.swing.JLabel AutoDefault;
+    private static javax.swing.JLabel AutoPolicia;
+    private static javax.swing.JLabel AutoTurro;
     private javax.swing.JLabel BtnAddAF;
     private javax.swing.JLabel BtnAddDriff;
     private javax.swing.JLabel BtnAddLife;
-    private javax.swing.JButton BtnNext;
     private javax.swing.JButton BtnPlay;
     private javax.swing.JLabel Drift;
     private static javax.swing.JLabel DriftCost;
@@ -478,7 +541,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel displayUsername4;
     private javax.swing.JLabel displayUsername5;
     private javax.swing.JLabel displayUsername6;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lPassword;

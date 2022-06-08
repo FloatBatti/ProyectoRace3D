@@ -16,15 +16,42 @@ public class Workshop implements Serializable{
     private Integer[] driftStats;
     private Integer[] healtStats;
     private Integer[] forceStats;
+    private Integer[] cantVehicle;
     
     public Workshop(){
         
         driftStats = new Integer[]{0,0,0,0,0};
         healtStats = new Integer[]{0,0,0,0,0};
         forceStats = new Integer[]{0,0,0,0,0};
+        cantVehicle = new Integer[]{1,0,0,0};
         
     }
     
+    public void buyCar(){
+        
+        for (int i=0; i < cantVehicle.length ; i++){
+            
+            if(cantVehicle[i] == 0 ){
+                
+                cantVehicle[i] = 1;
+                break;
+            }
+        }
+    }
+    
+    public int getsCarsValue(){
+        
+        int value = 0;
+        
+        for (int i=0; cantVehicle[i] == 1 ; i++){
+            
+            value += 25 ;
+        }
+        
+        return value;
+        
+    }
+        
     public void incremetDrift(){
         
         for (int i=0; i < driftStats.length ; i++){

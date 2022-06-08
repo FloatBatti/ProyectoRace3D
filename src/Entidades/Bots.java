@@ -44,6 +44,7 @@ public class Bots {
         bIndex++;
         personalIndex = bIndex;
         vehicleNode = new Node("vehicleNode" + personalIndex);
+       
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters">
