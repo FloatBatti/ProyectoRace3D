@@ -179,7 +179,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     }
     
     private void initializeHud(){
-       GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 300, 0, 30);
+       GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 280, 120, 30);
        GUInterface.drawSpeed(ColorRGBA.Blue, "Speed: " + (int)Vehicle.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
        speedoMeter.createSpeedoGeom();
        lifebar.buildLifeBar();

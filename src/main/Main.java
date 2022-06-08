@@ -19,10 +19,12 @@ public class Main extends SimpleApplication {
 
     public static void main(String[] args) {
         
-       Login login = new Login();
-       login.setVisible(true);
-       //Main app = new Main();
-       //app.start();
+       //Login login = new Login();
+       //login.setVisible(true);
+       Main app = new Main();
+       
+  
+       app.start();
     }
 
     @Override

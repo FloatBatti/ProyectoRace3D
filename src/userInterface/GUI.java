@@ -52,7 +52,8 @@ public class GUI {
         guiLife.setSize(size);
         guiLife.setColor(color);                                        // font color
         guiLife.setText(text);                                          // the text
-        guiLife.setLocalTranslation(X, guiLife.getLineHeight(), Y);     // position
+        //guiLife.setLocalTranslation(X, guiLife.getLineHeight(), Y);     // position
+        guiLife.setLocalTranslation(X,Y,0);
         GUInterface.attachChild(guiLife);
     }
     
