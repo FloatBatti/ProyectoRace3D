@@ -41,7 +41,7 @@ public class crashCount {
         crashGeom.getMaterial().setTexture("ColorMap", crashTexture);
         crashGeom.getMaterial().getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 
-        crashGeom.setLocalTranslation(1200, 250, 0);
+        crashGeom.setLocalTranslation(1650, 250, 0);
         crashNode.attachChild(crashGeom);
 
         Engine.getLocalGuiNode().attachChild(crashNode);

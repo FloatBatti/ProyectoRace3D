@@ -35,7 +35,7 @@ public class LifeBar {
      lifebar.setMaterial(mat);
      
      nodeLifeBar.attachChild(lifebar);
-     lifebar.setLocalTranslation(250, 35, 0);  
+     lifebar.setLocalTranslation(250, 45, 0);  
      Engine.getLocalGuiNode().attachChild(nodeLifeBar);
      
 

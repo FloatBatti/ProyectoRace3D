@@ -68,9 +68,9 @@ public class SpeedoMeter {
         Node auxliarArrow = new Node ("auxiliar");
         Node AuxliarCenter = new Node ("auxCenter");
 
-        speedoBgGeom.setLocalTranslation(1150, 10, 0);
-        arrowMid.setLocalTranslation(1275, 95, 0);
-        center.setLocalTranslation(1246, 70, 0);
+        speedoBgGeom.setLocalTranslation(1600, 10, 0);
+        arrowMid.setLocalTranslation(1725, 95, 0);
+        center.setLocalTranslation(1696, 70, 0);
         
         node.attachChild(speedoBgGeom);
         auxliarArrow.attachChild(arrowMid);
