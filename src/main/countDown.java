@@ -24,18 +24,18 @@ class countDown extends Thread {
          @Override
          public void run() {
              try {
-                 Vehicle.getVehicle().accelerate(250.0f);
+                 Vehicle.getVehicle().accelerate(500.0f);
                  Engine.getGUInterface().drawCountDown(ColorRGBA.Blue, "3!", 500, 600, 140);
                  for(int i = 0; i <= 3; i++){
                      TimeUnit.SECONDS.sleep(1);
                      Engine.getGUInterface().getGuiCountDown().setText((3 - i) + "!");
                  }
-                 Engine.getGUInterface().getGuiCountDown().setText("YA!");
+                 Engine.getGUInterface().getGuiCountDown().setText("");
              } catch (InterruptedException ex) {
                  Logger.getLogger(countDown.class.getName()).log(Level.SEVERE, null, ex);
              }
              
              Engine.setStart(true);
-             Vehicle.getVehicle().accelerate(500.0f);
+             Vehicle.getVehicle().accelerate(-500.0f);
          }
 }

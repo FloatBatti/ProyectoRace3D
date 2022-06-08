@@ -22,6 +22,7 @@ import com.jme3.terrain.geomipmap.lodcalc.DistanceLodCalculator;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
 import com.jme3.terrain.heightmap.ImageBasedHeightMap;
 import com.jme3.texture.Texture;
+import com.jme3.texture.Texture.WrapMode;
 import com.jme3.util.SkyFactory;
 import main.Engine;
 
@@ -52,7 +53,9 @@ public class Scenario {
         // We load the scene from the zip file and adjust its size.
         Spatial sceneModel = Engine.getAssetManager().loadModel("Scenes/town/main.j3o");
         sceneModel.setLocalScale(2f);
-
+        Node tempNode = new Node();
+        tempNode.attachChild(sceneModel);
+        
         // We set up collision detection for the scene by creating a
         // compound collision shape and a static RigidBodyControl with mass zero.
         CollisionShape sceneShape =
@@ -62,7 +65,6 @@ public class Scenario {
         
         //create sky
         Engine.getRootNode().attachChild(SkyFactory.createSky(Engine.getAssetManager(), "Textures/BrightSky.dds", SkyFactory.EnvMapType.CubeMap));
-        
         
         /**
          * We set up collision detection for the player by creating

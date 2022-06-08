@@ -15,6 +15,8 @@ import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import statics.Constant;
 
 /**
@@ -33,14 +35,26 @@ public class AI{
     private Vector3f dir = new Vector3f();
     private Vector3f targetPos = new Vector3f();
     private Plane plane = new Plane();
+    private static boolean behavioring = false;
+    private int pendingBotsLine = 0;
     private Plane plane2 = new Plane();
     static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
     
-    ArrayList<Bots> AIEntity = new ArrayList<>();
+    public static List<Bots> AIEntity = new ArrayList();
 
+    public static boolean isBehavioring() {
+        return behavioring;
+    }
+
+    public static void setBehavioring(boolean behavioring) {
+        AI.behavioring = behavioring;
+    }
+    
+    
     public void attachBot(Bots entity){
         AIEntity.add(entity);
     }
+
     
     public void checkCollision(PhysicsCollisionEvent event){
         
@@ -56,16 +70,11 @@ public class AI{
             if((aux.getEndurance() <= 0) && !aux.isDestroyed()){
                 Engine.getpAnimations().setOnFire((Node) aux.getVehicleNode().getChild("Engine"));
                 aux.setDestroyed(true);
+                
                 aux.getVehicle().accelerate(0);
+                pendingBotsLine += 2;
             }
 
-        }
-    }
-    
-    public void updateBotsText(){
-        for(Bots aux : AIEntity) {
-            BitmapText ch = (BitmapText) aux.getVehicleNode().getChild("text" + aux.getPersonalIndex());
-            ch.setText(aux.getVehicleNode().getName() + " / " + (int)((aux.getEndurance() * 100) / Constant.MAX_LIFE));
         }
     }
     
@@ -81,43 +90,49 @@ public class AI{
     }
 
     public void AIBehavior(){
-        for(Bots aux : AIEntity) {
-            if(!aux.isDestroyed()){
-                vector1.set(aux.getVehicle().getPhysicsLocation());
-                vector2.set(Vehicle.getVehicle().getPhysicsLocation());
-                vector2.subtractLocal(vector1);
-                vector2.normalizeLocal();
+        if(behavioring==false){
+            behavioring=true;
+            for(Bots aux : AIEntity) {
+                if(!aux.isDestroyed()){
+                    vector1.set(aux.getVehicle().getPhysicsLocation());
+                    vector2.set(Vehicle.getVehicle().getPhysicsLocation());
+                    vector2.subtractLocal(vector1);
+                    vector2.normalizeLocal();
 
-                aux.getVehicle().getForwardVector(vector3).normalizeLocal();
-                vector4.set(vector3);
-                ROTATE_RIGHT.multLocal(vector4);
-                plane.setOriginNormal(Vehicle.getVehicleNode().getWorldTranslation(), vector4);
+                    aux.getVehicle().getForwardVector(vector3).normalizeLocal();
+                    vector4.set(vector3);
+                    ROTATE_RIGHT.multLocal(vector4);
+                    plane.setOriginNormal(Vehicle.getVehicleNode().getWorldTranslation(), vector4);
 
-                float dot = 1 - vector3.dot(vector2);
-                float angle = vector3.angleBetween(vector2);
+                    float dot = 1 - vector3.dot(vector2);
+                    float angle = vector3.angleBetween(vector2);
 
-                float anglemult = 1;//FastMath.PI / 4.0f;
-                float speedmult = 0.3f;//0.3f;
-                
-                if (angle > FastMath.QUARTER_PI) {
-                    angle = FastMath.QUARTER_PI;
+                    float anglemult = 1;//FastMath.PI / 4.0f;
+                    float speedmult = 0.3f;//0.3f;
+
+                    if (angle > FastMath.QUARTER_PI) {
+                        angle = FastMath.QUARTER_PI;
+                    }
+
+                    //left or right
+                    if (plane.whichSide(Vehicle.getVehicle().getPhysicsLocation()) == Plane.Side.Negative) {
+                        anglemult *= -1;
+                    }
+
+                    aux.getVehicle().steer(angle * anglemult);
+                    aux.getVehicle().accelerate(speed * speedmult);
+                    aux.getVehicle().brake(0);
                 }
-                
-                //left or right
-                if (plane.whichSide(Vehicle.getVehicle().getPhysicsLocation()) == Plane.Side.Negative) {
-                    anglemult *= -1;
-                }
-                
-//                //backwards
-//                if (dot > 1) {
-//                    speedmult *= -1;
-//                    anglemult *= -1;
-//                }
-                
-                aux.getVehicle().steer(angle * anglemult);
-                aux.getVehicle().accelerate(speed * speedmult);
-                aux.getVehicle().brake(0);
             }
+            
+            while(pendingBotsLine>0){
+                Bots temp = new Bots();
+                temp.buildBot();
+                attachBot(temp);
+                pendingBotsLine--;
+            }
+            
+            behavioring=false;
         }
     }
 

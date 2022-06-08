@@ -11,8 +11,8 @@ package statics;
  */
 public class Constant {
     public static final int MAX_LIFE = 200;
-    public static final int SP_X = 146;
-    public static final int SP_Y = -100;
-    public static final int SP_Z = 1;
+    public static final int SP_X = -40;
+    public static final int SP_Y = 0;
+    public static final int SP_Z = 50;
     public static final int BOT_COUNT = 9;
 }

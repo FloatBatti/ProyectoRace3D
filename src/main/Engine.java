@@ -58,7 +58,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     //GUI VARIABLES
     private static GUI GUInterface;
     
-    private AI artificialInteligence = new AI();
+    private static AI artificialInteligence = new AI();
     
     Terreno terrPrincipal;
     Vehicle player = new Vehicle();
@@ -115,7 +115,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         
         return inputManager;
     }
-
+    
     public static BulletAppState getBulletAppState() {
         return bulletAppState;
     }
@@ -125,6 +125,14 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     }
     
      //</editor-fold>
+    
+    public static void createBots(int cant){
+        for(int i = 0; i < cant; i++){
+            Bots temp = new Bots();
+            temp.buildBot();
+            artificialInteligence.attachBot(temp);
+        }
+    }
     
     private void setUpLight() {
         //creating 2 lights, one ambient one directional
@@ -161,7 +169,6 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     private void initializeHud(){
        GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 300, 0, 30);
        GUInterface.drawSpeed(ColorRGBA.Blue, "Speed: " + (int)Vehicle.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
-       GUInterface.drawSpeed(ColorRGBA.Blue, Vehicle.getVehicle().getPhysicsLocation().getX() + " / " + Vehicle.getVehicle().getPhysicsLocation().getY() + " / " + Vehicle.getVehicle().getPhysicsLocation().getY() , 500, 0, 30);
     }
     
     @Override
@@ -181,11 +188,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         
         player.buildPlayer();
         
-        for(int i = 0; i < Constant.BOT_COUNT; i++){
-            Bots temp = new Bots();
-            temp.buildBot();
-            artificialInteligence.attachBot(temp);
-        }
+        createBots(Constant.BOT_COUNT);
         
         setUpLight();
         setupKeys();
@@ -195,7 +198,6 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         p.start();
             
     }
-    
     
     @Override
     public void update(float tpf) {
