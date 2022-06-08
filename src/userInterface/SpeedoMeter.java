@@ -22,8 +22,6 @@ public class SpeedoMeter {
     
     private  Node node = new Node("speedo");
     private Node Nodeaguja ;
-    private Vehicle player ;
-    private float speedVehicle;
 
    public SpeedoMeter (){
    
@@ -93,7 +91,7 @@ public class SpeedoMeter {
        
 
         float speed = player.getVehicle().getCurrentVehicleSpeedKmHour();
-        System.out.println(speed);
+
         float speedUnit = speed / 240;
 
         float rot = startStopAngle - ((startStopAngle * 2 ) * speedUnit);

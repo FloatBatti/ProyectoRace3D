@@ -18,7 +18,7 @@ public class Player extends User implements Serializable{
     
     private Integer coins = 0;
     private Workshop stats = new Workshop();
-    private Integer lastLaps = 0;
+    private Integer maxExplosions = 0;
     private static transient Persistence <Player> dataControl = new Persistence();
 
     public Player(String nickName, String password) {
@@ -45,7 +45,7 @@ public class Player extends User implements Serializable{
                 
                 aux.setCoins(player.getCoins());
                 aux.setStats(player.getStats());
-                aux.setLastLaps(player.getLastLaps());
+                aux.setMaxExplosions(player.getMaxExplosions());
 
                 break;
             }
@@ -64,7 +64,7 @@ public class Player extends User implements Serializable{
                 
                 player.setCoins(aux.getCoins());
                 player.setStats(aux.getStats());
-                player.setLastLaps(aux.getLastLaps());
+                player.setMaxExplosions(aux.getMaxExplosions());
 
                 break;
             }
@@ -116,12 +116,12 @@ public class Player extends User implements Serializable{
         this.stats = stats;
     }
 
-    public int getLastLaps() {
-        return lastLaps;
+    public int getMaxExplosions() {
+        return maxExplosions;
     }
 
-    public void setLastLaps(int lastLaps) {
-        this.lastLaps = lastLaps;
+    public void setMaxExplosions(int lastLaps) {
+        this.maxExplosions = lastLaps;
     }
     
     
@@ -130,7 +130,7 @@ public class Player extends User implements Serializable{
 
     @Override
     public String toString() {
-        return "Player{" + "coins=" + coins + ", stats=" + stats + ", lastLaps=" + lastLaps + '}';
+        return "Player{" + "coins=" + coins + ", stats=" + stats + ", maxExplosions=" + maxExplosions + '}';
     }
    
     

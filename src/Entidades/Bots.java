@@ -17,6 +17,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import main.Engine;
+import sounds.Audio3D;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Bots {
     private static int bIndex = 0;
     private int personalIndex = 0;
     private Node vehicleNode;
-    private double endurance = 200;
+    private double endurance = 100;
     private VehicleControl vehicle;
     private float accelerationForce = 500.0f;
     private float deaccelerationForce = 100.0f;
@@ -39,12 +40,14 @@ public class Bots {
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
     static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
     
+
+    
     public Bots(){
         
         bIndex++;
         personalIndex = bIndex;
         vehicleNode = new Node("vehicleNode" + personalIndex);
-       
+          
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters">
