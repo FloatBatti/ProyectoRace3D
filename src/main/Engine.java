@@ -34,6 +34,9 @@ import com.jme3.scene.Node;
 import sounds.Audio3D;
 import statics.Constant;
 import userInterface.GUI;
+import userInterface.LifeBar;
+import userInterface.SpeedoMeter;
+import userInterface.crashCount;
 
 /**
  *
@@ -57,6 +60,10 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     //GUI VARIABLES
     private static GUI GUInterface;
+    private static Node localGuiNode = new Node ("interface");
+    private SpeedoMeter speedoMeter = new SpeedoMeter();
+    private LifeBar lifebar = new LifeBar();
+    private crashCount crash = new crashCount();
     
     private static AI artificialInteligence = new AI();
     
@@ -73,6 +80,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         audio = new Audio3D(rootNode, assetManager);
         pAnimations = new particleAnimations(assetManager);
         GUInterface = new GUI(app.getGuiNode(), assetManager);
+        localGuiNode = app.getGuiNode();
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters">
@@ -123,6 +131,10 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     public static particleAnimations getpAnimations() {
         return pAnimations;
     }
+
+    public static Node getLocalGuiNode() {
+        return localGuiNode;
+    }
     
      //</editor-fold>
     
@@ -169,6 +181,9 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     private void initializeHud(){
        GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 300, 0, 30);
        GUInterface.drawSpeed(ColorRGBA.Blue, "Speed: " + (int)Vehicle.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
+       speedoMeter.createSpeedoGeom();
+       lifebar.buildLifeBar();
+       crash.createCrashTexture();
     }
     
     @Override
@@ -203,6 +218,8 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     public void update(float tpf) {
         GUInterface.UpdateHUD(player.getEndurance(), Vehicle.getVehicle());
         artificialInteligence.AIBehavior();
+        speedoMeter.updateArrow(player.getEndurance(), player);
+        lifebar.updateLife((float) (Constant.MAX_LIFE-player.getEndurance()), player);
         
         if (Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()){
             Vehicle.getVehicle().accelerate(0);
