@@ -16,6 +16,7 @@ import com.jme3.scene.Node;
  */
 public class Audio3D {
     private AudioNode audio_brakes;
+    private AudioNode audio_explosion;
     private AudioNode audio_nature;
     private AudioNode audio_engineGurgle;
     private AudioNode audio_horn;
@@ -23,6 +24,7 @@ public class Audio3D {
     private final AssetManager assetManager;
     
     public Audio3D(Node root, AssetManager asset){
+        
         rootNode = root;
         assetManager = asset;
         
@@ -31,12 +33,17 @@ public class Audio3D {
     
     private void initAudio(){
         /** We create two audio nodes. */
-        /* gun shot sound is to be triggered by a mouse click. */
         audio_brakes = new AudioNode(assetManager, "Sounds/brakes.wav", AudioData.DataType.Buffer);
         audio_brakes.setPositional(false);
         audio_brakes.setLooping(false);
         audio_brakes.setVolume(2);
         rootNode.attachChild(audio_brakes);
+        
+        audio_explosion = new AudioNode(assetManager, "Sounds/Explosion.wav", AudioData.DataType.Buffer);
+        audio_explosion.setPositional(false);
+        audio_explosion.setLooping(false);
+        audio_explosion.setVolume(2);
+        rootNode.attachChild(audio_explosion);
         
         audio_horn = new AudioNode(assetManager, "Sounds/sf_horn_21.wav", AudioData.DataType.Buffer);
         audio_horn.setPositional(false);
@@ -69,11 +76,23 @@ public class Audio3D {
         audio_brakes.stop();
     }
     
+    public void playExplosion(){
+        audio_explosion.play();
+    }
+    
+    public void stopExplosion(){
+        audio_explosion.stop();
+    }
+        
     public void playHorn(){
         audio_horn.play();
     }
     
     public void stopHorn(){
         audio_horn.stop();
+    }
+    
+    public void stopEngineGurgle(){
+        audio_engineGurgle.stop();
     }
 }

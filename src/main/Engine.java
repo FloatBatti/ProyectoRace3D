@@ -31,6 +31,9 @@ import com.jme3.math.Matrix3f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sounds.Audio3D;
 import statics.Constant;
 import userInterface.GUI;
@@ -42,7 +45,7 @@ import userInterface.crashCount;
  *
  * @author AgusGonza
  */
-public class Engine extends AbstractAppState implements ActionListener, PhysicsCollisionListener   {
+public class Engine extends AbstractAppState implements ActionListener, PhysicsCollisionListener, Runnable {
 
     private static AssetManager assetManager;
     private static Node rootNode;
@@ -53,7 +56,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     private static BulletAppState bulletAppState = new BulletAppState();
     static public boolean start = false;
     
-    private final Audio3D audio;
+    private static  Audio3D audio;
     
     //Particle variables
     private static particleAnimations pAnimations;
@@ -62,13 +65,14 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     private static GUI GUInterface;
     private static Node localGuiNode = new Node ("interface");
     private SpeedoMeter speedoMeter = new SpeedoMeter();
-    private LifeBar lifebar = new LifeBar();
+    
     private crashCount crash = new crashCount();
     
     private static AI artificialInteligence = new AI();
     
     Terreno terrPrincipal;
     Vehicle player = new Vehicle();
+    private LifeBar lifebar = new LifeBar(player.getEndurance());
     
     
     public Engine(SimpleApplication app) {
@@ -138,6 +142,20 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
      //</editor-fold>
     
+    public static Audio3D getAudio3D(){
+        
+        return audio;
+    }
+    
+    public static void pauseOneSecond(){
+        
+         try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static void createBots(int cant){
         for(int i = 0; i < cant; i++){
             Bots temp = new Bots();
@@ -180,7 +198,8 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     private void initializeHud(){
        GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 280, 120, 30);
-       GUInterface.drawSpeed(ColorRGBA.Blue, "Speed: " + (int)Vehicle.getVehicle().getCurrentVehicleSpeedKmHour(), 500, 0, 30);
+       GUInterface.drawSpeed(ColorRGBA.Black, "0" + (int)Vehicle.getVehicle().getCurrentVehicleSpeedKmHour(), 1699, 174, 30);
+       GUInterface.drawkmh(ColorRGBA.Black, "km/h", 1702, 60, 30);
        speedoMeter.createSpeedoGeom();
        lifebar.buildLifeBar();
        crash.createCrashTexture();
@@ -196,7 +215,9 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         getPhysicsSpace().addCollisionListener(this);
         
         Scenario scenarioCity = new Scenario(bulletAppState);
-                 scenarioCity.CargarEscenario();
+        scenarioCity.CargarEscenario();
+        
+        //Mapa viejo
 //        terrPrincipal = new Terreno(bulletAppState, camera);
 //        terrPrincipal.CrearTerreno();
 
@@ -209,8 +230,11 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         setupKeys();
         initializeHud();
         
-        countDown p = new countDown(143);
-        p.start();
+
+        pauseOneSecond();
+        Thread countDown = new Thread(this);
+        countDown.start(); 
+        
             
     }
     
@@ -317,4 +341,29 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
             }
         }
     }   
+
+
+    
+    @Override
+    public void run() {
+        
+      Vehicle.getVehicle().accelerate(500.0f);
+      Engine.getGUInterface().drawCountDown(ColorRGBA.Black, "3!", 500, 600, 140);
+
+      for(int i = 0; i <= 3; i++){
+          try {
+              TimeUnit.SECONDS.sleep(1);
+          } catch (InterruptedException ex) {
+              Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+          }
+          
+             Engine.getGUInterface().getGuiCountDown().setText((3 - i) + "!");
+         }
+      
+      
+        Engine.getGUInterface().getGuiCountDown().setText("");
+
+        Engine.setStart(true);
+        Vehicle.getVehicle().accelerate(-500.0f);
+    }
 }

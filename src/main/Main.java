@@ -9,6 +9,7 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import userInterface.Login;
+import userInterface.Music;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -21,6 +22,10 @@ public class Main extends SimpleApplication {
         
        //Login login = new Login();
        //login.setVisible(true);
+       
+       Music music = new Music();
+       music.setVisible(true);
+       
        Main app = new Main();
        
   

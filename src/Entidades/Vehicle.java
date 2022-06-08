@@ -24,12 +24,12 @@ import statics.Constant;
 public class Vehicle {
     
     private static  Node vehicleNode = new Node("vehicleNode");
-    private double endurance = 2000;
+    private double endurance = 200;
     private int fuel;
     private static VehicleControl vehicle;
     private float maximumSpeed = 242.0f;
-    private float accelerationForce = 500.0f;
-    private float deaccelerationForce = 300.0f;
+    private float accelerationForce = 700.0f;
+    private float deaccelerationForce = 500.0f;
     private float brakeForce = 100.0f;
     private float steeringValue = 0;
     private float accelerationValue = 0;

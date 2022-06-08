@@ -16,17 +16,19 @@ import statics.Constant;
  */
 public class LifeBar {
     
-        private Node nodeLifeBar = new Node ("life") ;
+    private Node nodeLifeBar = new Node ("life") ;
+    private double endurance;
   
 
-    public LifeBar (){
+    public LifeBar (double endurance){
         
+        this.endurance = endurance;
    
     }
     
     
     public void buildLifeBar (){
-     Quad quad = new Quad (Constant.MAX_LIFE , 40);
+     Quad quad = new Quad ((float) endurance , 40);
      Geometry lifebar = new Geometry("lifebar", quad);
  
      Material mat = new Material(Engine.getAssetManager(), 

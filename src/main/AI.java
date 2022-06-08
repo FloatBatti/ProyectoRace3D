@@ -39,6 +39,7 @@ public class AI{
     private int pendingBotsLine = 0;
     private Plane plane2 = new Plane();
     static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
+    private int explosionCount = 0;
     
     public static List<Bots> AIEntity = new ArrayList();
 
@@ -68,10 +69,13 @@ public class AI{
             }
 
             if((aux.getEndurance() <= 0) && !aux.isDestroyed()){
+                
                 Engine.getpAnimations().setOnFire((Node) aux.getVehicleNode().getChild("Engine"));
                 aux.setDestroyed(true);
-                
+       
                 aux.getVehicle().accelerate(0);
+                
+                fakeThreadExplosion();
                 pendingBotsLine += 2;
             }
 
@@ -125,7 +129,7 @@ public class AI{
                 }
             }
             
-            while(pendingBotsLine>0){
+            while(pendingBotsLine > 0){
                 Bots temp = new Bots();
                 temp.buildBot();
                 attachBot(temp);
@@ -136,5 +140,19 @@ public class AI{
         }
     }
 
-    
+    private void fakeThreadExplosion(){
+        
+         if (explosionCount < 2500){
+               
+                Engine.getAudio3D().playExplosion();
+                explosionCount++;
+            }
+            
+            if (explosionCount >= 2500){
+               
+                Engine.getAudio3D().stopExplosion();
+                explosionCount = 0;     
+            }
+    }
+        
 }
