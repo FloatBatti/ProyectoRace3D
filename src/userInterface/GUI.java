@@ -5,6 +5,7 @@
  */
 package userInterface;
 
+import Entidades.Player;
 import Entidades.Vehicle;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.control.VehicleControl;
@@ -90,7 +91,7 @@ public class GUI{
         if(endurance >= 0){
             guiLife.setText("LIFE: " + (int)((endurance * 100) / Constant.MAX_LIFE) + "%");
         }else{
-            
+           
             fakeThreadExplosion();
             Engine.getAudio3D().stopEngineGurgle();
             
@@ -107,6 +108,8 @@ public class GUI{
            guiSpeed.setText("" +(int) vehicle.getCurrentVehicleSpeedKmHour()); 
         }
     }
+    
+    
     
     private void fakeThreadExplosion(){
         

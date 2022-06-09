@@ -43,9 +43,13 @@ public class Workshop implements Serializable{
         
         int value = 0;
         
-        for (int i=0; cantVehicle[i] == 1 ; i++){
+        for (int i=0; i < cantVehicle.length ; i++){
             
-            value += 25 ;
+            if(cantVehicle[i] == 1){
+                
+                value += 25 ;
+            }
+   
         }
         
         return value;
@@ -59,6 +63,7 @@ public class Workshop implements Serializable{
             if(driftStats[i] == 0 ){
                 
                 driftStats[i] = 1;
+                
                 break;
             }
         }
@@ -68,9 +73,13 @@ public class Workshop implements Serializable{
         
         int value = 0;
         
-        for (int i=0; driftStats[i] == 1 ; i++){
+        for (int i=0; i < driftStats.length ; i++){
             
-            value += 20;
+            if(driftStats[i] == 1 ){
+                
+                value += 20;
+            }
+            
         }
         
         return value;
@@ -80,21 +89,28 @@ public class Workshop implements Serializable{
         
         for (int i=0; i < healtStats.length ; i++){
             
-            if(healtStats[i] == 0 ){
+            
+            if(healtStats[i] == 0){
                 
                 healtStats[i] = 1;
+                
                 break;
             }
+            
         }
     }
     
     public int getHealtValues(){
-        
+          
         int value = 0;
         
-        for (int i=0; healtStats[i] == 1 ; i++){
+        for (int i=0; i < healtStats.length ; i++){
             
-            value += 20;
+           if (healtStats[i] == 1){
+               
+               value += 20;
+           } 
+            
         }
         
         return value;
@@ -116,9 +132,13 @@ public class Workshop implements Serializable{
         
         int value = 0;
         
-        for (int i=0; forceStats[i] == 1 ; i++){
+        for (int i=0; i < forceStats.length ; i++){
             
-            value += 20;
+            if(forceStats[i] == 1){
+                
+                value += 20;
+            }
+            
         }
         
         return value;

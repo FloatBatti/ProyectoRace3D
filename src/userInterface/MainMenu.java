@@ -6,8 +6,11 @@
 package userInterface;
 
 import Entidades.Player;
+import Entidades.Vehicle;
 import java.awt.Color;
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
+import main.Engine;
 import main.Main;
 
 /**
@@ -18,16 +21,17 @@ public class MainMenu extends javax.swing.JFrame {
 
     private static Player actualUser = null;
     
+    
+    private static Icon IAutitoTurro= new javax.swing.ImageIcon(MainMenu.class.getResource("/imagenes/AutitoTurro.jpg"));
+    private static Icon IAutitoBussines= new javax.swing.ImageIcon(MainMenu.class.getResource("/imagenes/AutitoBussines.jpg"));
+    private static Icon IAutitoPolice= new javax.swing.ImageIcon(MainMenu.class.getResource("/imagenes/AutitoPolice.jpg"));
+   
+  
     public static void setActualUser(Player actualUser){
         
         MainMenu.actualUser = actualUser;
-        ActualUserTxt.setText("Usuario actual: " + actualUser.getUserName());
-        Player.loadPlayer(actualUser);
-        TxtCoins.setText(actualUser.getCoins().toString());
-        initStats();
-        initShopCars();
-       
-        
+        initAll();
+    
     }
     
     public MainMenu() {
@@ -49,7 +53,7 @@ public class MainMenu extends javax.swing.JFrame {
         lPassword = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         Drift = new javax.swing.JLabel();
-        displayUsername4 = new javax.swing.JLabel();
+        MaxExplosionsTxt = new javax.swing.JLabel();
         MaximunLife = new javax.swing.JLabel();
         ActualUserTxt = new javax.swing.JLabel();
         TxtCoins = new javax.swing.JLabel();
@@ -64,11 +68,13 @@ public class MainMenu extends javax.swing.JFrame {
         DriftCost = new javax.swing.JLabel();
         LifeCost = new javax.swing.JLabel();
         AFCost = new javax.swing.JLabel();
-        displayUsername6 = new javax.swing.JLabel();
+        SelectedCar = new javax.swing.JLabel();
         AutoDefault = new javax.swing.JLabel();
         AutoTurro = new javax.swing.JLabel();
         AutoBussines = new javax.swing.JLabel();
-        AutoPolicia = new javax.swing.JLabel();
+        AutoPolice = new javax.swing.JLabel();
+        WorkShopTitle = new javax.swing.JLabel();
+        VehicleModelTxt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -92,10 +98,10 @@ public class MainMenu extends javax.swing.JFrame {
         Drift.setText("Drift");
         jPanel1.add(Drift, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 170, -1));
 
-        displayUsername4.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 18)); // NOI18N
-        displayUsername4.setForeground(new java.awt.Color(0, 0, 0));
-        displayUsername4.setText("WorkShop:");
-        jPanel1.add(displayUsername4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 270, -1));
+        MaxExplosionsTxt.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 18)); // NOI18N
+        MaxExplosionsTxt.setForeground(new java.awt.Color(0, 0, 0));
+        MaxExplosionsTxt.setText("WorkShop:");
+        jPanel1.add(MaxExplosionsTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 270, -1));
 
         MaximunLife.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         MaximunLife.setForeground(new java.awt.Color(0, 0, 0));
@@ -137,12 +143,7 @@ public class MainMenu extends javax.swing.JFrame {
                 BtnPlayMouseExited(evt);
             }
         });
-        BtnPlay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnPlayActionPerformed(evt);
-            }
-        });
-        jPanel1.add(BtnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 450, 150, 50));
+        jPanel1.add(BtnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, 150, 50));
 
         displayUsername5.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         displayUsername5.setForeground(new java.awt.Color(0, 0, 0));
@@ -206,14 +207,15 @@ public class MainMenu extends javax.swing.JFrame {
         AFCost.setText("10");
         jPanel1.add(AFCost, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, -1, 20));
 
-        displayUsername6.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
-        displayUsername6.setForeground(new java.awt.Color(0, 0, 0));
-        displayUsername6.setText("Model: \"Nombre del auto\"");
-        jPanel1.add(displayUsername6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 270, -1));
+        SelectedCar.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 18)); // NOI18N
+        SelectedCar.setForeground(new java.awt.Color(0, 0, 0));
+        SelectedCar.setText("Model: ");
+        jPanel1.add(SelectedCar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 270, -1));
 
         AutoDefault.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         AutoDefault.setForeground(new java.awt.Color(0, 0, 0));
         AutoDefault.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AutoDefault.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Autito.jpg"))); // NOI18N
         AutoDefault.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         AutoDefault.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AutoDefault.setPreferredSize(new java.awt.Dimension(160, 150));
@@ -227,6 +229,8 @@ public class MainMenu extends javax.swing.JFrame {
         AutoTurro.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         AutoTurro.setForeground(new java.awt.Color(0, 0, 0));
         AutoTurro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AutoTurro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/coin.png"))); // NOI18N
+        AutoTurro.setToolTipText("");
         AutoTurro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         AutoTurro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AutoTurro.setPreferredSize(new java.awt.Dimension(160, 150));
@@ -240,6 +244,7 @@ public class MainMenu extends javax.swing.JFrame {
         AutoBussines.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         AutoBussines.setForeground(new java.awt.Color(0, 0, 0));
         AutoBussines.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AutoBussines.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/coin.png"))); // NOI18N
         AutoBussines.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         AutoBussines.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AutoBussines.setPreferredSize(new java.awt.Dimension(160, 150));
@@ -250,76 +255,141 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(AutoBussines, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 300, -1, -1));
 
-        AutoPolicia.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        AutoPolicia.setForeground(new java.awt.Color(0, 0, 0));
-        AutoPolicia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        AutoPolicia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        AutoPolicia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        AutoPolicia.setPreferredSize(new java.awt.Dimension(160, 150));
-        AutoPolicia.addMouseListener(new java.awt.event.MouseAdapter() {
+        AutoPolice.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        AutoPolice.setForeground(new java.awt.Color(0, 0, 0));
+        AutoPolice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AutoPolice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/coin.png"))); // NOI18N
+        AutoPolice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AutoPolice.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AutoPolice.setPreferredSize(new java.awt.Dimension(160, 150));
+        AutoPolice.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AutoPoliciaMouseClicked(evt);
+                AutoPoliceMouseClicked(evt);
             }
         });
-        jPanel1.add(AutoPolicia, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 300, -1, -1));
+        jPanel1.add(AutoPolice, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 300, -1, -1));
+
+        WorkShopTitle.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 18)); // NOI18N
+        WorkShopTitle.setForeground(new java.awt.Color(0, 0, 0));
+        WorkShopTitle.setText("WorkShop:");
+        jPanel1.add(WorkShopTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 270, -1));
+
+        VehicleModelTxt.setForeground(new java.awt.Color(255, 255, 255));
+        VehicleModelTxt.setText("jLabel1");
+        jPanel1.add(VehicleModelTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, 220, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    private static void initAll(){
+
+        ActualUserTxt.setText("Usuario actual: " + actualUser.getUserName());
+        TxtCoins.setText(actualUser.getCoins().toString());
+        MaxExplosionsTxt.setText("Max Explosions: " + actualUser.getMaxExplosions().toString());
+        SelectedCar.setText("Model: Normal Car");
+        VehicleModelTxt.setText("Models/Autito.j3o");
+        initStats();
+        initShopCars();
+ 
+    }
+    
+    private void refreshAll(){
+        
+        Player.savePlayer(actualUser);
+        Player.loadPlayer(actualUser);
+        
+        initAll();
+    }
+    
     private static void initShopCars(){
         
-        Integer shopCarsValue = actualUser.getStats().getsCarsValue();
-        
-        System.out.println(shopCarsValue);
+        Integer shopCarsValue = actualUser.getWorkshop().getsCarsValue();
+     
+         AutoBussines.setVisible(false);
+         AutoPolice.setVisible(false);
         
         if (shopCarsValue == 25){
             
-            AutoBussines.setText("$100");
-            AutoPolicia.setText("$200");
-            AutoTurro.setText("$300");
+            AutoTurro.setText("100");   
+        }
+        
+        if (shopCarsValue > 25 && shopCarsValue < 51){
             
-        }else if (shopCarsValue == 50){
-            
-            AutoBussines.setText("");
-            AutoPolicia.setText("$200");
-            AutoTurro.setText("$300");
-            
-        }else if(shopCarsValue == 75){
-            
-            AutoBussines.setText("");
-            AutoPolicia.setText("");
-            AutoTurro.setText("$300");
-            
-        }else if(shopCarsValue == 100){
-            
-            AutoBussines.setText("");
-            AutoPolicia.setText("");
             AutoTurro.setText("");
+            AutoTurro.setIcon(IAutitoTurro);
+            AutoBussines.setText("200");
+            AutoBussines.setVisible(true);      
+        }   
+        
+        if(shopCarsValue > 51 && shopCarsValue < 76){
+                       
+            AutoBussines.setText("");
+            AutoBussines.setIcon(IAutitoBussines);
+            AutoBussines.setVisible(true);  
+            AutoPolice.setText("300");
+            AutoPolice.setVisible(true);
+            
+        }
+        
+        if(shopCarsValue == 100){
+            
+            AutoTurro.setText("");
+            AutoTurro.setIcon(IAutitoTurro);
+            AutoBussines.setText("");
+            AutoBussines.setIcon(IAutitoBussines);
+            AutoBussines.setVisible(true);  
+            AutoPolice.setText("");
+            AutoPolice.setIcon(IAutitoPolice);
+            AutoPolice.setVisible(true);
         }
     }
-    private static void initStats (){
+    
+    private static void initStats(){
         
-        Integer lifeValue = actualUser.getStats().getHealtValues();
-        Integer afValue = actualUser.getStats().getForceValues();
-        Integer driftValue = actualUser.getStats().getDriftValues();
         
-        if (lifeValue >= 20){
+        
+        Integer lifeValue = actualUser.getWorkshop().getHealtValues();
+        Integer afValue = actualUser.getWorkshop().getForceValues();
+        Integer driftValue = actualUser.getWorkshop().getDriftValues();
+
+        if (lifeValue == 100){
+            
+            LifeProgress.setValue(lifeValue);
+            LifeCost.setText("MAX.");
+            LifeCost.setIcon(null);
+            
+        }else if (lifeValue < 100){
             
             LifeProgress.setValue(lifeValue);
             Integer cost = (lifeValue/2 + 10);
             LifeCost.setText(cost.toString());
+            
         }
         
-        if (afValue >= 20){
+        
+        if (afValue == 100){
+            
+            AFProgress.setValue(afValue);
+            AFCost.setText("MAX.");
+            AFCost.setIcon(null);
+            
+        }else if (afValue < 100){
             
             AFProgress.setValue(afValue);
             Integer cost = (afValue/2 + 10);
             AFCost.setText(cost.toString());
         }
+        
             
-        if (driftValue >= 20){
+        if (driftValue == 100){
+            
+            DriftProgress.setValue(driftValue);
+            DriftCost.setText("MAX.");
+            DriftCost.setIcon(null);
+            
+        }else if (driftValue < 100){
             
             DriftProgress.setValue(driftValue);
             Integer cost = (driftValue/2 + 10);
@@ -341,146 +411,176 @@ public class MainMenu extends javax.swing.JFrame {
         BtnPlay.setForeground(new Color (255,204,51));
     }//GEN-LAST:event_BtnPlayMouseEntered
 
-    private void BtnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPlayActionPerformed
-       
-    }//GEN-LAST:event_BtnPlayActionPerformed
-
     private void BtnAddLifeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAddLifeMouseClicked
-        
-        if (Integer.parseInt(TxtCoins.getText()) > LifeProgress.getValue() && LifeProgress.getValue() < 80){
-            
-            Integer lifeCost = Integer.parseInt(LifeCost.getText());
-            LifeProgress.setValue(LifeProgress.getValue() + 20);
-            actualUser.setCoins(actualUser.getCoins() - lifeCost);
-            TxtCoins.setText(actualUser.getCoins().toString());
-            lifeCost += 10;
-            LifeCost.setText(lifeCost.toString());
-            actualUser.getStats().incremetHealt();
-        }
-        else if (LifeProgress.getValue() == 80){
-            
-            Integer lifeCost = Integer.parseInt(LifeCost.getText());
-            LifeProgress.setValue(LifeProgress.getValue() + 20);
-            actualUser.setCoins(actualUser.getCoins() - lifeCost);
-            TxtCoins.setText(actualUser.getCoins().toString());
-            lifeCost += 10;
-            LifeCost.setText(lifeCost.toString());
-            actualUser.getStats().incremetHealt();
-            
-            LifeCost.setText("MAX.");
-            LifeCost.setIcon(null);
-            JOptionPane.showMessageDialog(null, "You already have the maximum stats");
-        }
-        else if (LifeProgress.getValue() == 100){
+         
+        if (LifeProgress.getValue() == 100){
             
             JOptionPane.showMessageDialog(null, "You already have the maximum stats");
-        }
-        else{
             
-            JOptionPane.showMessageDialog(null, "Insufficient points");
+        } 
+        else if(LifeProgress.getValue() < 100){
+            
+            Integer lifeCost =Integer.parseInt(LifeCost.getText());
+            
+            if (actualUser.getCoins() >= lifeCost){
+                
+                actualUser.getWorkshop().incremetHealt();
+                actualUser.setCoins(actualUser.getCoins() - lifeCost);
+                
+            }else{   
+                
+                JOptionPane.showMessageDialog(null, "Insufficient coins");
+            }
+       
         }
-        
+
+        refreshAll();
     }//GEN-LAST:event_BtnAddLifeMouseClicked
 
     private void BtnAddAFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAddAFMouseClicked
        
-        if (Integer.parseInt(TxtCoins.getText()) > AFProgress.getValue() && AFProgress.getValue() < 80){
-            
-            Integer AFCost = Integer.parseInt(this.AFCost.getText());
-            AFProgress.setValue(AFProgress.getValue() + 20);
-            actualUser.setCoins(actualUser.getCoins() - AFCost);
-            TxtCoins.setText(actualUser.getCoins().toString());
-            AFCost += 10;
-            this.AFCost.setText(AFCost.toString());
-            actualUser.getStats().incremetForce();
-        }
-        else if (AFProgress.getValue() == 80){
-            
-            Integer AFCost = Integer.parseInt(this.AFCost.getText());
-            AFProgress.setValue(AFProgress.getValue() + 20);
-            actualUser.setCoins(actualUser.getCoins() - AFCost);
-            TxtCoins.setText(actualUser.getCoins().toString());
-            AFCost += 10;
-            this.AFCost.setText(AFCost.toString());
-            actualUser.getStats().incremetForce();
-                       
-            this.AFCost.setText("MAX.");
-            this.AFCost.setIcon(null);
-            JOptionPane.showMessageDialog(null, "You already have the maximum stats");
-        }
-        else if (AFProgress.getValue() == 100){
+        if (AFProgress.getValue() == 100){
             
             JOptionPane.showMessageDialog(null, "You already have the maximum stats");
-        }
-        else{
             
-            JOptionPane.showMessageDialog(null, "Insufficient points");
+        } 
+        else if(AFProgress.getValue() < 100){
+            
+            Integer afCost =Integer.parseInt(AFCost.getText());
+            
+            if (actualUser.getCoins() >= afCost){
+                
+                actualUser.getWorkshop().incremetForce();
+                actualUser.setCoins(actualUser.getCoins() - afCost);
+                
+            }else{   
+                
+                JOptionPane.showMessageDialog(null, "Insufficient coins");
+            }
+       
         }
-        
+
+        refreshAll();
     }//GEN-LAST:event_BtnAddAFMouseClicked
 
     private void BtnAddDriffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAddDriffMouseClicked
         
-        if (Integer.parseInt(TxtCoins.getText()) > DriftProgress.getValue() && DriftProgress.getValue() < 80){
-            
-            Integer driftCost = Integer.parseInt(this.DriftCost.getText());
-            DriftProgress.setValue(DriftProgress.getValue() + 20);
-            actualUser.setCoins(actualUser.getCoins() - driftCost);
-            TxtCoins.setText(actualUser.getCoins().toString());
-            driftCost += 10;
-            DriftCost.setText(driftCost.toString());
-            actualUser.getStats().incremetDrift();
-        }
-        else if (DriftProgress.getValue() == 80){
-            
-            Integer driftCost = Integer.parseInt(this.DriftCost.getText());
-            DriftProgress.setValue(DriftProgress.getValue() + 20);
-            actualUser.setCoins(actualUser.getCoins() - driftCost);
-            TxtCoins.setText(actualUser.getCoins().toString());
-            driftCost += 10;
-            DriftCost.setText(driftCost.toString());
-            actualUser.getStats().incremetDrift();
-            
-            DriftCost.setText("MAX.");
-            DriftCost.setIcon(null);
-            JOptionPane.showMessageDialog(null, "You already have the maximum stats");
-        }
-        else if (DriftProgress.getValue() == 100){
+        if (DriftProgress.getValue() == 100){
             
             JOptionPane.showMessageDialog(null, "You already have the maximum stats");
-        }
-        else{
             
-            JOptionPane.showMessageDialog(null, "Insufficient points");
+        } 
+        else if(DriftProgress.getValue() < 100){
+            
+            Integer driftCost =Integer.parseInt(DriftCost.getText());
+            
+            if (actualUser.getCoins() >= driftCost){
+                
+                actualUser.getWorkshop().incremetDrift();
+                actualUser.setCoins(actualUser.getCoins() - driftCost);
+                
+            }else{   
+                
+                JOptionPane.showMessageDialog(null, "Insufficient coins");
+            }
+       
         }
-        
+
+        refreshAll();
     }//GEN-LAST:event_BtnAddDriffMouseClicked
 
     private void BtnPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnPlayMouseClicked
         
         Player.savePlayer(actualUser);
-        JOptionPane.showMessageDialog(null, "User saved");
-        
+        Vehicle vehicle = new Vehicle(2 * LifeProgress.getValue(), 3 * AFProgress.getValue(), DriftProgress.getValue(), VehicleModelTxt.getText());
+        Engine.setActualPlayer(actualUser);
+        Engine.setVehicle(vehicle);
+        Main.startEngine = 1;
+        this.dispose();
+
     }//GEN-LAST:event_BtnPlayMouseClicked
 
     private void AutoTurroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutoTurroMouseClicked
-        
-        if(AutoTurro.getText().equals("Lock")){
+         
+        if(AutoTurro.getText().equals("")){
             
+            SelectedCar.setText("Model: Turro Car");
+            VehicleModelTxt.setText("Models/AutitoTurro.j3o");
+            
+        }else{
+            
+            Integer vehicleCost = Integer.parseInt(AutoTurro.getText());
+            
+            if((!AutoTurro.getText().equals("")) && actualUser.getCoins() >= vehicleCost){
+            
+                actualUser.getWorkshop().buyCar();
+                actualUser.setCoins(actualUser.getCoins()- Integer.parseInt(AutoTurro.getText()));
+                refreshAll();
+                       
+            
+            }else if(actualUser.getCoins() < vehicleCost){
+            
+                JOptionPane.showMessageDialog(null, "Insufficient coins");
+            }   
             
         }
+          
     }//GEN-LAST:event_AutoTurroMouseClicked
 
     private void AutoBussinesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutoBussinesMouseClicked
-        // TODO add your handling code here:
+        
+        if(AutoBussines.getText().equals("")){
+            
+            SelectedCar.setText("Model: Bussines Car");
+            VehicleModelTxt.setText("Models/AutitoBusiness.j3o");
+            
+        }else{
+            
+            Integer vehicleCost = Integer.parseInt(AutoBussines.getText());
+            
+            if((!AutoBussines.getText().equals("")) && actualUser.getCoins() >= vehicleCost){
+            
+                actualUser.getWorkshop().buyCar();
+                actualUser.setCoins(actualUser.getCoins()- Integer.parseInt(AutoBussines.getText()));
+                refreshAll();
+                
+            }else if(actualUser.getCoins() < vehicleCost){
+            
+                JOptionPane.showMessageDialog(null, "Insufficient coins");
+            }   
+            
+        }
     }//GEN-LAST:event_AutoBussinesMouseClicked
 
-    private void AutoPoliciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutoPoliciaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AutoPoliciaMouseClicked
+    private void AutoPoliceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutoPoliceMouseClicked
+        
+        if(AutoPolice.getText().equals("")){
+            
+            SelectedCar.setText("Model: Police Car");
+            VehicleModelTxt.setText("Models/Police.j3o");
+            
+        }else{
+            
+            Integer vehicleCost = Integer.parseInt(AutoPolice.getText());
+            
+            if((!AutoPolice.getText().equals("")) && actualUser.getCoins() >= vehicleCost){
+            
+                actualUser.getWorkshop().buyCar();
+                actualUser.setCoins(actualUser.getCoins()- Integer.parseInt(AutoPolice.getText()));
+                refreshAll();
+                
+            }else if(actualUser.getCoins() < vehicleCost){
+            
+                JOptionPane.showMessageDialog(null, "Insufficient coins");
+            }   
+            
+        }
+    }//GEN-LAST:event_AutoPoliceMouseClicked
 
     private void AutoDefaultMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutoDefaultMouseClicked
-        // TODO add your handling code here:
+       
+        SelectedCar.setText("Model: Normal Car");
+        VehicleModelTxt.setText("Models/Autito.j3o");
     }//GEN-LAST:event_AutoDefaultMouseClicked
 
     /**
@@ -525,7 +625,7 @@ public class MainMenu extends javax.swing.JFrame {
     private static javax.swing.JLabel ActualUserTxt;
     private static javax.swing.JLabel AutoBussines;
     private static javax.swing.JLabel AutoDefault;
-    private static javax.swing.JLabel AutoPolicia;
+    private static javax.swing.JLabel AutoPolice;
     private static javax.swing.JLabel AutoTurro;
     private javax.swing.JLabel BtnAddAF;
     private javax.swing.JLabel BtnAddDriff;
@@ -536,11 +636,13 @@ public class MainMenu extends javax.swing.JFrame {
     private static javax.swing.JProgressBar DriftProgress;
     private static javax.swing.JLabel LifeCost;
     private static javax.swing.JProgressBar LifeProgress;
+    private static javax.swing.JLabel MaxExplosionsTxt;
     private javax.swing.JLabel MaximunLife;
+    private static javax.swing.JLabel SelectedCar;
     private static javax.swing.JLabel TxtCoins;
-    private javax.swing.JLabel displayUsername4;
+    private static javax.swing.JLabel VehicleModelTxt;
+    private javax.swing.JLabel WorkShopTitle;
     private javax.swing.JLabel displayUsername5;
-    private javax.swing.JLabel displayUsername6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lPassword;

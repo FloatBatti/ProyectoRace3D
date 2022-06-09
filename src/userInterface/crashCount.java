@@ -21,12 +21,13 @@ import main.Engine;
  *
  * @author Juanjo
  */
-public class crashCount {
+public class CrashCount {
     
     private Node crashNode  = new Node ("crash");
     
-    
-    public crashCount (){
+    public static int crashCount=0;
+            
+    public CrashCount (){
     
     
     }

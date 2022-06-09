@@ -1,5 +1,6 @@
 package main;
 
+import Entidades.Persistence;
 import Entidades.Player;
 import Entidades.Terreno;
 import com.jme3.app.SimpleApplication;
@@ -8,6 +9,8 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
+import java.util.ArrayList;
+import java.util.List;
 import userInterface.Login;
 import userInterface.Music;
 
@@ -17,20 +20,36 @@ import userInterface.Music;
  * @author normenhansen
  */
 public class Main extends SimpleApplication {
-
+    
+    static public int startEngine = 0;
+    
     public static void main(String[] args) {
+ 
+        Music music = new Music();
+        Main app = new Main();
         
-       //Login login = new Login();
-       //login.setVisible(true);
-       
-       Music music = new Music();
-       music.setVisible(true);
-       
-       Main app = new Main();
-       
-  
-       app.start();
+        Login login = new Login();
+        login.setVisible(true); 
+
+        while(true){
+            
+            System.out.println(startEngine);
+    
+            if (startEngine == 1){
+
+                app.start();
+                break;
+            }
+        }
+        
+
+        
+        
+
+   
     }
+    
+    
 
     @Override
     public void simpleInitApp() {
