@@ -72,7 +72,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     Terreno terrPrincipal;
     Vehicle player = new Vehicle();
-    private LifeBar lifebar = new LifeBar(player.getEndurance());
+    private LifeBar lifebar = new LifeBar(player.getMaxEndurance()*1.5);
     
     
     public Engine(SimpleApplication app) {
@@ -197,7 +197,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     }
     
     private void initializeHud(){
-       GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 280, 120, 30);
+       GUInterface.drawLife(ColorRGBA.Black, "LIFE: " + player.getEndurance(), 305, 140, 25);
        GUInterface.drawSpeed(ColorRGBA.Black, "0" + (int)Vehicle.getVehicle().getCurrentVehicleSpeedKmHour(), 1699, 174, 30);
        GUInterface.drawkmh(ColorRGBA.Black, "km/h", 1702, 60, 30);
        speedoMeter.createSpeedoGeom();
@@ -243,7 +243,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         GUInterface.UpdateHUD(player.getEndurance(), Vehicle.getVehicle());
         artificialInteligence.AIBehavior();
         speedoMeter.updateArrow(player.getEndurance(), player);
-        lifebar.updateLife((float) (Constant.MAX_LIFE-player.getEndurance()), player);
+        lifebar.updateLife((float) (player.getEndurance()), player);
         
         if (Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()){
             Vehicle.getVehicle().accelerate(0);

@@ -105,6 +105,7 @@ public class GUI{
         else {
             if (vehicle.getCurrentVehicleSpeedKmHour()>0)
            guiSpeed.setText("" +(int) vehicle.getCurrentVehicleSpeedKmHour()); 
+         
         }
     }
     

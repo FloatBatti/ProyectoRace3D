@@ -24,7 +24,8 @@ import statics.Constant;
 public class Vehicle {
     
     private static  Node vehicleNode = new Node("vehicleNode");
-    private double endurance = 200;
+    private double endurance = 300;
+    private double maxEndurance = 300 ;
     private int fuel;
     private static VehicleControl vehicle;
     private float maximumSpeed = 242.0f;
@@ -88,6 +89,10 @@ public class Vehicle {
 
     public ChaseCamera getChaseCam() {
         return chaseCam;
+    }
+
+    public double getMaxEndurance() {
+        return maxEndurance;
     }
     
      //</editor-fold>
