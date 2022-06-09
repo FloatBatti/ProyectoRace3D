@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import statics.Constant;
+import userInterface.CrashCount;
+
 
 /**
  *
@@ -74,7 +76,7 @@ public class AI{
                 aux.setDestroyed(true);
        
                 aux.getVehicle().accelerate(0);
-                
+                CrashCount.crashCount++;
                 fakeThreadExplosion();
                 pendingBotsLine += 2;
             }

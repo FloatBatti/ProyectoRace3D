@@ -50,7 +50,7 @@ public class LifeBar {
             
             if (player.getEndurance() < 200){
 
-                scale = (float)player.getEndurance()/Constant.MAX_LIFE;
+                    scale = (float)player.getEndurance()/Constant.MAX_LIFE;
                  Engine.getLocalGuiNode().getChild("lifebar").setLocalScale((float)scale, 1, 1);
             }
 

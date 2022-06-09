@@ -16,6 +16,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import main.Engine;
 import statics.Constant;
+import userInterface.MainMenu;
 
 /**
  *
@@ -24,12 +25,14 @@ import statics.Constant;
 public class Vehicle {
     
     private static  Node vehicleNode = new Node("vehicleNode");
+    private String vehicleModel;
     private double endurance = 200;
-    private int fuel;
+    private float maxEndurance = 200;
+    private int drift=0;
     private static VehicleControl vehicle;
     private float maximumSpeed = 242.0f;
-    private float accelerationForce = 700.0f;
-    private float deaccelerationForce = 500.0f;
+    private float accelerationForce = 400.0f;
+    private float deaccelerationForce = 300.0f;
     private float brakeForce = 100.0f;
     private float steeringValue = 0;
     private float accelerationValue = 0;
@@ -39,10 +42,16 @@ public class Vehicle {
     private boolean gameOver = false;
     static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
     
-    public Vehicle(){
-        
-        
-        
+    public Vehicle(){}
+    
+    public Vehicle(int endurance, float accForce, int drift, String vehicleModel){
+           
+        this.endurance += endurance;
+        maxEndurance = (float) (this.endurance);
+        accelerationForce += accForce;
+        deaccelerationForce = accelerationForce - 100;
+        //this.drift = drift;
+        this.vehicleModel = vehicleModel;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters">
@@ -124,7 +133,7 @@ public class Vehicle {
     public void buildPlayer() {
         
         //load the visible part of the cart
-        Spatial carsito = Engine.getAssetManager().loadModel("Models/AutitoBusiness.j3o");
+        Spatial carsito = Engine.getAssetManager().loadModel(vehicleModel);
         Engine.getLocalRootNode().attachChild(carsito);
         Node carNode = (Node) Engine.getLocalRootNode().getChild("AutoRojo");
         vehicleNode.attachChild(carNode);
@@ -215,6 +224,7 @@ public class Vehicle {
         vehicle.addWheel(node4, new Vector3f(xOff, yOff, -zOff),
                          wheelDirection, wheelAxle, restLength, radius, false);
 
+        //Valor Drift
         vehicle.setFrictionSlip(0, 2f);
         vehicle.setFrictionSlip(1, 2f);
         vehicle.setFrictionSlip(2, 1.5f);

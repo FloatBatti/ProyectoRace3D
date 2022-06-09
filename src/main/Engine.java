@@ -6,6 +6,7 @@
 package main;
 
 import Entidades.Bots;
+import Entidades.Player;
 import Entidades.Vehicle;
 import Entidades.Scenario;
 import Entidades.Terreno;
@@ -34,12 +35,14 @@ import com.jme3.scene.Node;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import sounds.Audio3D;
 import statics.Constant;
 import userInterface.GUI;
 import userInterface.LifeBar;
+import userInterface.Login;
 import userInterface.SpeedoMeter;
-import userInterface.crashCount;
+import userInterface.CrashCount;
 
 /**
  *
@@ -47,6 +50,7 @@ import userInterface.crashCount;
  */
 public class Engine extends AbstractAppState implements ActionListener, PhysicsCollisionListener, Runnable {
 
+    
     private static AssetManager assetManager;
     private static Node rootNode;
     private static Node localRootNode = new Node("Level 1");
@@ -66,16 +70,19 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     private static Node localGuiNode = new Node ("interface");
     private SpeedoMeter speedoMeter = new SpeedoMeter();
     
-    private crashCount crash = new crashCount();
+    private CrashCount crash = new CrashCount();
     
     private static AI artificialInteligence = new AI();
     
     Terreno terrPrincipal;
-    Vehicle player = new Vehicle();
-    private LifeBar lifebar = new LifeBar(player.getEndurance());
+    private static Vehicle playerVehicle = null;
+    private static Player actualPlayer = null;
+    boolean deadPlayer = false;
+    private LifeBar lifebar = new LifeBar(playerVehicle.getEndurance());
     
     
     public Engine(SimpleApplication app) {
+        
         assetManager = app.getAssetManager();
         rootNode = app.getRootNode();
         camera = app.getCamera();
@@ -85,6 +92,8 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         pAnimations = new particleAnimations(assetManager);
         GUInterface = new GUI(app.getGuiNode(), assetManager);
         localGuiNode = app.getGuiNode();
+        
+        
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters">
@@ -142,6 +151,21 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
      //</editor-fold>
     
+    public static void setVehicle(Vehicle player){
+        
+        Engine.playerVehicle = player;
+    }
+    
+    public static void setActualPlayer(Player actualPlayer){
+        
+        Engine.actualPlayer = actualPlayer;
+    }
+    
+    public static Player getActualPlayer(){
+        
+       return Engine.actualPlayer;
+    }
+    
     public static Audio3D getAudio3D(){
         
         return audio;
@@ -176,7 +200,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         rootNode.addLight(dl);
       }
     
-        private void setupKeys() {
+    private void setupKeys() {
         //the key mapping
         inputManager.addMapping("Lefts", new KeyTrigger(KeyInput.KEY_A));
         inputManager.addMapping("Rights", new KeyTrigger(KeyInput.KEY_D));
@@ -186,6 +210,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         inputManager.addMapping("Space", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Reset", new KeyTrigger(KeyInput.KEY_R));
         inputManager.addMapping("Horn", new KeyTrigger(KeyInput.KEY_H));
+        inputManager.addMapping("Save", new KeyTrigger(KeyInput.KEY_G));
         inputManager.addListener(this, "Lefts");
         inputManager.addListener(this, "Rights");
         inputManager.addListener(this, "Ups");
@@ -194,10 +219,11 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         inputManager.addListener(this, "Space");
         inputManager.addListener(this, "Reset");
         inputManager.addListener(this, "Horn");
+        inputManager.addListener(this, "Save");
     }
     
     private void initializeHud(){
-       GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + player.getEndurance(), 280, 120, 30);
+       GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + playerVehicle.getEndurance(), 280, 120, 30);
        GUInterface.drawSpeed(ColorRGBA.Black, "0" + (int)Vehicle.getVehicle().getCurrentVehicleSpeedKmHour(), 1699, 174, 30);
        GUInterface.drawkmh(ColorRGBA.Black, "km/h", 1702, 60, 30);
        speedoMeter.createSpeedoGeom();
@@ -220,9 +246,8 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         //Mapa viejo
 //        terrPrincipal = new Terreno(bulletAppState, camera);
 //        terrPrincipal.CrearTerreno();
-
-        
-        player.buildPlayer();
+      
+        playerVehicle.buildPlayer();
         
         createBots(Constant.BOT_COUNT);
         
@@ -240,12 +265,14 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     @Override
     public void update(float tpf) {
-        GUInterface.UpdateHUD(player.getEndurance(), Vehicle.getVehicle());
-        artificialInteligence.AIBehavior();
-        speedoMeter.updateArrow(player.getEndurance(), player);
-        lifebar.updateLife((float) (Constant.MAX_LIFE-player.getEndurance()), player);
         
-        if (Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()){
+        saveReward();
+        GUInterface.UpdateHUD(playerVehicle.getEndurance(), Vehicle.getVehicle());
+        artificialInteligence.AIBehavior();
+        speedoMeter.updateArrow(playerVehicle.getEndurance(), playerVehicle);
+        lifebar.updateLife((float) (Constant.MAX_LIFE-playerVehicle.getEndurance()), playerVehicle);
+        
+        if (Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=playerVehicle.getMaximumSpeed()){
             Vehicle.getVehicle().accelerate(0);
         }
     }
@@ -255,19 +282,19 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         if ( event.getNodeA().getName().equals("vehicleNode") ) {
             double impactDamage = event.getAppliedImpulse() / 100;
             if(impactDamage>30){
-                player.modfEndurance(-impactDamage);
+                playerVehicle.modfEndurance(-impactDamage);
             }
-            player.modfEndurance(-impactDamage);
+            playerVehicle.modfEndurance(-impactDamage);
         } else if ( event.getNodeB().getName().equals("vehicleNode") ) {
             double impactDamage = event.getAppliedImpulse()  / 100;
             if(impactDamage>30){
-                player.modfEndurance(-impactDamage);
+                playerVehicle.modfEndurance(-impactDamage);
             }
         }
         
-        if((player.getEndurance() <= 0) && !player.isGameOver()){
+        if((playerVehicle.getEndurance() <= 0) && !playerVehicle.isGameOver()){
             pAnimations.setOnFire((Node) Vehicle.getVehicleNode().getChild("Engine"));
-            player.setGameOver(true);
+            playerVehicle.setGameOver(true);
             Vehicle.getVehicle().accelerate(0);
         }
         
@@ -277,34 +304,34 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
         
-        if(!player.isGameOver() && start==true){
+        if(!playerVehicle.isGameOver() && start==true){
             if (name.equals("Lefts")) {
                 if (keyPressed) {
-                        player.modfSteeringValue(.5f);
+                        playerVehicle.modfSteeringValue(.5f);
                     } else {
-                        player.modfSteeringValue(-.5f);
+                        playerVehicle.modfSteeringValue(-.5f);
                     }
-                    Vehicle.getVehicle().steer(player.getSteeringValue());
+                    Vehicle.getVehicle().steer(playerVehicle.getSteeringValue());
                     
                 } else if (name.equals("Rights")) {
                     if (keyPressed) {
-                        player.modfSteeringValue(-.5f);
+                        playerVehicle.modfSteeringValue(-.5f);
                     } else {
-                        player.modfSteeringValue(.5f);
+                        playerVehicle.modfSteeringValue(.5f);
                     }
-                    Vehicle.getVehicle().steer(player.getSteeringValue());
+                    Vehicle.getVehicle().steer(playerVehicle.getSteeringValue());
                     
                 } else if (name.equals("Ups")) {
-                    if (keyPressed && (!(Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=player.getMaximumSpeed()))) {
-                        player.modfAccelerationValue(player.getAccelerationForce());
+                    if (keyPressed && (!(Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=playerVehicle.getMaximumSpeed()))) {
+                        playerVehicle.modfAccelerationValue(playerVehicle.getAccelerationForce());
                     } else {
-                        player.modfAccelerationValue(- (player.getAccelerationForce()));
+                        playerVehicle.modfAccelerationValue(- (playerVehicle.getAccelerationForce()));
                     }
-                    Vehicle.getVehicle().accelerate(player.getAccelerationValue());
+                    Vehicle.getVehicle().accelerate(playerVehicle.getAccelerationValue());
                     
                 } else if (name.equals("Downs")) {
                     if (keyPressed) {
-                        Vehicle.getVehicle().brake(player.getBrakeForce());
+                        Vehicle.getVehicle().brake(playerVehicle.getBrakeForce());
                         if (Vehicle.getVehicle().getCurrentVehicleSpeedKmHour() > 1) {audio.playBrakes();}
                     } else {
                         Vehicle.getVehicle().brake(0f);
@@ -312,11 +339,11 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                     }
                 } else if (name.equals("Reverse")) {
                     if (keyPressed) {
-                        player.modfDeaccelerationValue(-(player.getDeaccelerationForce()));
+                        playerVehicle.modfDeaccelerationValue(-(playerVehicle.getDeaccelerationForce()));
                     } else {
-                        player.modfDeaccelerationValue(player.getDeaccelerationForce());
+                        playerVehicle.modfDeaccelerationValue(playerVehicle.getDeaccelerationForce());
                     }
-                    Vehicle.getVehicle().accelerate(player.getDeaccelerationValue());
+                    Vehicle.getVehicle().accelerate(playerVehicle.getDeaccelerationValue());
                     
                 } else if (name.equals("Horn")) {
                     if (keyPressed) {
@@ -325,7 +352,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
    
                 } else if (name.equals("Space")) {
                     if (keyPressed) {
-                        Vehicle.getVehicle().applyImpulse(player.getJumpForce(), Vector3f.ZERO);
+                        Vehicle.getVehicle().applyImpulse(playerVehicle.getJumpForce(), Vector3f.ZERO);
                     }
                 } else if (name.equals("Reset")) {
                     if (keyPressed) {
@@ -336,12 +363,30 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                         Vehicle.getVehicle().setLinearVelocity(Vector3f.ZERO);
                         Vehicle.getVehicle().setAngularVelocity(Vector3f.ZERO);
                         Vehicle.getVehicle().resetSuspension();
-                    } else {
+                    }
                 }
-            }
         }
     }   
+    
+    private void saveReward(){
+        
+        if (playerVehicle.getEndurance() < 0 && deadPlayer == false){
+            
+            int crashes = CrashCount.crashCount;
+            int playerCoins = Engine.getActualPlayer().getCoins();
+            int earnedCoins = 10 * crashes;
+            
+          
+            Engine.getActualPlayer().setMaxExplosions(crashes);
+            Engine.getActualPlayer().setCoins(earnedCoins + playerCoins);
+        
+            Player.savePlayer(Engine.getActualPlayer());
+            
+            deadPlayer= true;
+        }
 
+        
+    }
 
     
     @Override

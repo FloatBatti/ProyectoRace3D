@@ -216,9 +216,10 @@ public class Login extends javax.swing.JFrame {
 
     private void BtnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnLoginMouseClicked
         
+        
         if (TxtUserName.getText().equals("") || TxtPassword.getText().equals("")){
             
-            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+            JOptionPane.showMessageDialog(null, "Please, complete the field");
             
         }else if (TxtUserName.getText().equals("Admin") && TxtPassword.getText().equals("40884962")){
             
@@ -233,10 +234,11 @@ public class Login extends javax.swing.JFrame {
                 MainMenu mainMenu = new MainMenu();
                 mainMenu.setVisible(true);
                 MainMenu.setActualUser(actualPlayer);
+                this.dispose();
             }
             else{
                 
-                JOptionPane.showMessageDialog(null, "El usuario no existe");
+                JOptionPane.showMessageDialog(null, "Incorrect user or password");
                 
             }
         }

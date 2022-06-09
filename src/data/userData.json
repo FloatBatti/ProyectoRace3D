@@ -1,10 +1,10 @@
 [
   {
-    "coins": 500,
-    "stats": {
+    "coins": 70,
+    "workshop": {
       "driftStats": [
         1,
-        1,
+        0,
         0,
         0,
         0
@@ -13,7 +13,7 @@
         1,
         1,
         1,
-        0,
+        1,
         0
       ],
       "forceStats": [
@@ -25,49 +25,47 @@
       ],
       "cantVehicle": [
         1,
-        0,
-        0,
+        1,
         0,
         0
       ]
     },
-    "maxExplosions": 0,
+    "maxExplosions": 4,
     "nickName": "Agus",
     "password": "123",
     "id": 1,
     "permission": 1
   },
   {
-    "coins": 9769,
-    "stats": {
+    "coins": 0,
+    "workshop": {
       "driftStats": [
-        1,
-        1,
-        1,
+        0,
+        0,
+        0,
         0,
         0
       ],
       "healtStats": [
-        1,
-        1,
-        1,
-        1,
-        1
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "forceStats": [
-        1,
-        1,
-        1,
-        1,
-        1
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "cantVehicle": [
         1,
         0,
         0,
-        0,
         0
-      ]   
+      ]
     },
     "maxExplosions": 0,
     "nickName": "Fran",
@@ -76,32 +74,31 @@
     "permission": 1
   },
   {
-    "coins": 190,
-    "stats": {
+    "coins": 0,
+    "workshop": {
       "driftStats": [
-        1,
-        1,
-        1,
-        1,
-        1
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "healtStats": [
-        1,
-        1,
-        1,
-        1,
+        0,
+        0,
+        0,
+        0,
         0
       ],
       "forceStats": [
-        1,
-        1,
-        1,
+        0,
+        0,
+        0,
         0,
         0
       ],
       "cantVehicle": [
         1,
-        0,
         0,
         0,
         0
@@ -111,6 +108,80 @@
     "nickName": "Juan",
     "password": "789",
     "id": 3,
+    "permission": 1
+  },
+  {
+    "coins": 0,
+    "workshop": {
+      "driftStats": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "healtStats": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "forceStats": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cantVehicle": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    "maxExplosions": 0,
+    "nickName": "Pedro",
+    "password": "147",
+    "id": 4,
+    "permission": 1
+  },
+  {
+    "coins": 30,
+    "workshop": {
+      "driftStats": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "healtStats": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "forceStats": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "cantVehicle": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    "maxExplosions": 2,
+    "nickName": "Massi",
+    "password": "258",
+    "id": 5,
     "permission": 1
   }
 ]
