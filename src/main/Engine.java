@@ -61,6 +61,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     static public boolean start = false;
     
     private static  Audio3D audio;
+    private int explosionCount = 0;
     
     //Particle variables
     private static particleAnimations pAnimations;
@@ -77,7 +78,6 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     Terreno terrPrincipal;
     private static Vehicle playerVehicle = null;
     private static Player actualPlayer = null;
-    boolean deadPlayer = false;
     private LifeBar lifebar = new LifeBar(playerVehicle.getEndurance());
     
     
@@ -93,6 +93,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         GUInterface = new GUI(app.getGuiNode(), assetManager);
         localGuiNode = app.getGuiNode();
         
+     
         
     }
     
@@ -201,6 +202,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
       }
     
     private void setupKeys() {
+        
         //the key mapping
         inputManager.addMapping("Lefts", new KeyTrigger(KeyInput.KEY_A));
         inputManager.addMapping("Rights", new KeyTrigger(KeyInput.KEY_D));
@@ -210,7 +212,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         inputManager.addMapping("Space", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Reset", new KeyTrigger(KeyInput.KEY_R));
         inputManager.addMapping("Horn", new KeyTrigger(KeyInput.KEY_H));
-        inputManager.addMapping("Save", new KeyTrigger(KeyInput.KEY_G));
+
         inputManager.addListener(this, "Lefts");
         inputManager.addListener(this, "Rights");
         inputManager.addListener(this, "Ups");
@@ -219,7 +221,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         inputManager.addListener(this, "Space");
         inputManager.addListener(this, "Reset");
         inputManager.addListener(this, "Horn");
-        inputManager.addListener(this, "Save");
+
     }
     
     private void initializeHud(){
@@ -266,7 +268,6 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     @Override
     public void update(float tpf) {
         
-        saveReward();
         GUInterface.UpdateHUD(playerVehicle.getEndurance(), Vehicle.getVehicle());
         artificialInteligence.AIBehavior();
         speedoMeter.updateArrow(playerVehicle.getEndurance(), playerVehicle);
@@ -279,6 +280,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     @Override
     public void collision(PhysicsCollisionEvent event) {
+        
         if ( event.getNodeA().getName().equals("vehicleNode") ) {
             double impactDamage = event.getAppliedImpulse() / 100;
             if(impactDamage>30){
@@ -292,7 +294,13 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
             }
         }
         
+        crashSound(event);
+        
         if((playerVehicle.getEndurance() <= 0) && !playerVehicle.isGameOver()){
+            Engine.getAudio3D().playExplosion();
+            Engine.getAudio3D().stopEngineGurgle();
+            Engine.getAudio3D().playWasted();
+            saveReward();
             pAnimations.setOnFire((Node) Vehicle.getVehicleNode().getChild("Engine"));
             playerVehicle.setGameOver(true);
             Vehicle.getVehicle().accelerate(0);
@@ -355,8 +363,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                         Vehicle.getVehicle().applyImpulse(playerVehicle.getJumpForce(), Vector3f.ZERO);
                     }
                 } else if (name.equals("Reset")) {
-                    if (keyPressed) {
-                        System.out.println("Reset");
+                    if (keyPressed) {                     
 
                         Vehicle.getVehicle().setPhysicsLocation(new Vector3f(Constant.SP_X, Constant.SP_Y, Constant.SP_Z));
                         Vehicle.getVehicle().setPhysicsRotation(new Matrix3f());
@@ -368,32 +375,53 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         }
     }   
     
-    private void saveReward(){
-        
-        if (playerVehicle.getEndurance() < 0 && deadPlayer == false){
-            
-            int crashes = CrashCount.crashCount;
-            int playerCoins = Engine.getActualPlayer().getCoins();
-            int earnedCoins = 10 * crashes;
-            
-          
-            Engine.getActualPlayer().setMaxExplosions(crashes);
-            Engine.getActualPlayer().setCoins(earnedCoins + playerCoins);
-        
-            Player.savePlayer(Engine.getActualPlayer());
-            
-            deadPlayer= true;
-        }
-
-        
-    }
-
     
+    private void crashSound (PhysicsCollisionEvent event){
+
+        if ( event.getNodeA().getName().equals("vehicleNode") ) {
+            
+            double impactDamage = event.getAppliedImpulse() / 100;
+        
+            if(impactDamage > 5){
+                
+                Engine.getAudio3D().playCash();
+            }
+
+    } else if ( event.getNodeB().getName().equals("vehicleNode") ) {
+       
+        double impactDamage = event.getAppliedImpulse()  / 100;
+        
+        if(impactDamage>5){
+
+            Engine.getAudio3D().playCash();
+        }
+    }
+}
+    
+    private void saveReward(){
+      
+        int crashes = CrashCount.crashCount;
+        int playerCrashes = Engine.getActualPlayer().getMaxExplosions();
+        int playerCoins = Engine.getActualPlayer().getCoins();
+        int earnedCoins = 5 * crashes;
+
+        if (crashes > playerCrashes){
+            
+            Engine.getActualPlayer().setMaxExplosions(crashes);
+        }
+        
+        Engine.getActualPlayer().setCoins(earnedCoins + playerCoins);
+
+        Player.savePlayer(Engine.getActualPlayer());
+
+    }
+    
+
     @Override
     public void run() {
         
       Vehicle.getVehicle().accelerate(500.0f);
-      Engine.getGUInterface().drawCountDown(ColorRGBA.Black, "3!", 500, 600, 140);
+      Engine.getGUInterface().drawCountDown(ColorRGBA.Black, "3!", 1000, 600, 140);
 
       for(int i = 0; i <= 3; i++){
           try {

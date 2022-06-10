@@ -1,6 +1,6 @@
 [
   {
-    "coins": 70,
+    "coins": 610,
     "workshop": {
       "driftStats": [
         1,
@@ -13,7 +13,7 @@
         1,
         1,
         1,
-        1,
+        0,
         0
       ],
       "forceStats": [
@@ -21,23 +21,24 @@
         1,
         1,
         1,
-        0
+        1
       ],
       "cantVehicle": [
         1,
         1,
-        0,
-        0
+        1,
+        1
       ]
     },
-    "maxExplosions": 4,
+    "maxExplosions": 8,
     "nickName": "Agus",
     "password": "123",
     "id": 1,
-    "permission": 1
+    "permission": 1,
+    "condition": true
   },
   {
-    "coins": 0,
+    "coins": 85,
     "workshop": {
       "driftStats": [
         0,
@@ -67,11 +68,12 @@
         0
       ]
     },
-    "maxExplosions": 0,
+    "maxExplosions": 5,
     "nickName": "Fran",
     "password": "456",
     "id": 2,
-    "permission": 1
+    "permission": 1,
+    "condition": true
   },
   {
     "coins": 0,
@@ -104,11 +106,12 @@
         0
       ]
     },
-    "maxExplosions": 0,
+    "maxExplosions": 15,
     "nickName": "Juan",
     "password": "789",
     "id": 3,
-    "permission": 1
+    "permission": 1,
+    "condition": true
   },
   {
     "coins": 0,
@@ -136,52 +139,16 @@
       ],
       "cantVehicle": [
         1,
-        0,
-        0,
-        0
+        1,
+        1,
+        1
       ]
     },
-    "maxExplosions": 0,
-    "nickName": "Pedro",
+    "maxExplosions": 40,
+    "nickName": "Massi",
     "password": "147",
     "id": 4,
-    "permission": 1
-  },
-  {
-    "coins": 30,
-    "workshop": {
-      "driftStats": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "healtStats": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "forceStats": [
-        1,
-        1,
-        1,
-        0,
-        0
-      ],
-      "cantVehicle": [
-        1,
-        0,
-        0,
-        0
-      ]
-    },
-    "maxExplosions": 2,
-    "nickName": "Massi",
-    "password": "258",
-    "id": 5,
-    "permission": 1
+    "permission": 1,
+    "condition": false
   }
 ]

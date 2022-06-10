@@ -47,7 +47,7 @@ public class Workshop implements Serializable{
             
             if(cantVehicle[i] == 1){
                 
-                value += 25 ;
+                value++;
             }
    
         }

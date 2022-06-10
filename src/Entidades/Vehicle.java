@@ -16,7 +16,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import main.Engine;
 import statics.Constant;
-import userInterface.MainMenu;
+import userInterface.UserMenu;
 
 /**
  *

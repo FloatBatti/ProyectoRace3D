@@ -178,20 +178,23 @@ public class Login extends javax.swing.JFrame {
     
     private Player checkUser(){
         
-        Player actualPlayer = null;
+        Player playerTxt = new Player(TxtUserName.getText(), TxtPassword.getText());
         List<Player> listPlayer = Player.getListPlayer();
         
-        for ( Player aux : listPlayer){
+        if (listPlayer != null){
             
-            if ( aux.getUserName().equals(TxtUserName.getText()) && aux.getPassword().equals(TxtPassword.getText())){
+            for ( Player aux : listPlayer){
+            
+                if ( aux.equals(playerTxt)){
                 
-                actualPlayer = aux;
+                    return aux;
 
-                break;
+                }
             }
+            
         }
-          
-        return actualPlayer;
+        
+        return null;
     }
             
     private void BtnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnLoginMouseEntered
@@ -223,7 +226,9 @@ public class Login extends javax.swing.JFrame {
             
         }else if (TxtUserName.getText().equals("Admin") && TxtPassword.getText().equals("40884962")){
             
-            JOptionPane.showMessageDialog(null, "Se abre el menu Admin");
+            AdminMenu adminMenu = new AdminMenu();
+            adminMenu.setVisible(true);
+            this.dispose();
          
         }else{
             
@@ -231,9 +236,9 @@ public class Login extends javax.swing.JFrame {
             
             if (actualPlayer != null) {
                 
-                MainMenu mainMenu = new MainMenu();
+                UserMenu mainMenu = new UserMenu();
                 mainMenu.setVisible(true);
-                MainMenu.setActualUser(actualPlayer);
+                UserMenu.setActualUser(actualPlayer);
                 this.dispose();
             }
             else{

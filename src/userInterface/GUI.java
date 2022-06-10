@@ -30,7 +30,7 @@ public class GUI{
     private BitmapText guiCountDown;
     private final AssetManager assetManager;
     private BitmapText kmh;
-    private int explosionCount = 0;
+    
 
     public BitmapText getGuiCountDown() {
         return guiCountDown;
@@ -92,9 +92,6 @@ public class GUI{
             guiLife.setText("LIFE: " + (int)((endurance * 100) / Constant.MAX_LIFE) + "%");
         }else{
            
-            fakeThreadExplosion();
-            Engine.getAudio3D().stopEngineGurgle();
-            
             guiLife.setText("LIFE: DEAD!");
             guiLife.setColor(ColorRGBA.Red);
             
@@ -111,19 +108,7 @@ public class GUI{
     
     
     
-    private void fakeThreadExplosion(){
-        
-         if (explosionCount < 2700){
-               
-                Engine.getAudio3D().playExplosion();
-                explosionCount++;
-            }
-            
-            if (explosionCount >= 2700){
-               
-                Engine.getAudio3D().stopExplosion();  
-            }
-    }
+   
         
 }
  
