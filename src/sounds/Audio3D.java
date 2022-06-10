@@ -20,6 +20,9 @@ public class Audio3D {
     private AudioNode audio_nature;
     private AudioNode audio_engineGurgle;
     private AudioNode audio_horn;
+    private AudioNode audio_siren;
+    private AudioNode audio_wasted;
+    private AudioNode audio_crash;
     private final Node rootNode;
     private final AssetManager assetManager;
     
@@ -50,8 +53,20 @@ public class Audio3D {
         audio_horn.setLooping(false);
         audio_horn.setVolume(2);
         rootNode.attachChild(audio_horn);
+        
+        audio_wasted = new AudioNode(assetManager, "Sounds/detenido.ogg", AudioData.DataType.Buffer);
+        audio_wasted.setPositional(false);
+        audio_wasted.setLooping(false);
+        audio_wasted.setVolume(3);
+        rootNode.attachChild(audio_wasted);
+        
+        audio_crash = new AudioNode(assetManager, "Sounds/crash.ogg", AudioData.DataType.Buffer);
+        audio_crash.setPositional(false);
+        audio_crash.setLooping(false);
+        audio_crash.setVolume(0.5f);
+        rootNode.attachChild(audio_crash);
 
-        /* nature sound - keeps playing in a loop. */
+
         audio_nature = new AudioNode(assetManager, "Sounds/forest.ogg", AudioData.DataType.Stream);
         audio_nature.setLooping(true);  // activate continuous playing
         audio_nature.setPositional(false);
@@ -59,7 +74,15 @@ public class Audio3D {
         rootNode.attachChild(audio_nature);
         audio_nature.play(); // play continuously!
         
-        /* nature sound - keeps playing in a loop. */
+
+        audio_siren = new AudioNode(assetManager, "Sounds/sirenas.ogg", AudioData.DataType.Stream);
+        audio_siren.setLooping(true);  // activate continuous playing
+        audio_siren.setPositional(false);
+        audio_siren.setVolume(1);
+        rootNode.attachChild(audio_siren);
+        audio_siren.play(); // play continuously! 
+        
+
         audio_engineGurgle = new AudioNode(assetManager, "Sounds/engine_gurgle.ogg", AudioData.DataType.Stream);
         audio_engineGurgle.setLooping(true);  // activate continuous playing
         audio_engineGurgle.setPositional(false);
@@ -91,6 +114,33 @@ public class Audio3D {
     public void stopHorn(){
         audio_horn.stop();
     }
+    
+    public void playWasted(){
+        audio_wasted.play();
+    }
+    
+    public void stopWasted(){
+        audio_wasted.stop();
+    }
+    
+    public void playCash(){
+        audio_crash.play();
+    }
+    
+    public void stopCrash(){
+        audio_crash.stop();
+    }
+    
+    
+    public void stopSiren(){
+        audio_siren.stop();
+    }
+    
+    public void playSiren(){
+        audio_siren.play();
+    }
+    
+
     
     public void stopEngineGurgle(){
         audio_engineGurgle.stop();

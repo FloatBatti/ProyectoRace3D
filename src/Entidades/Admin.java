@@ -23,6 +23,7 @@ public class Admin extends User implements Serializable{
         this.setPassword("40884962");
         this.setPermission(0);
         this.setId(0);
+        this.condition = true;
     }
     
     

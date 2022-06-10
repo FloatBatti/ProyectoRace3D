@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.locks.Condition;
 
 
 /**
@@ -16,6 +17,7 @@ public class User implements Serializable{
     protected String password;
     protected int id;
     protected int permission;
+    protected boolean condition =true;
 
     @Override
     public int hashCode() {

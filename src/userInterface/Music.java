@@ -80,7 +80,7 @@ public class Music extends javax.swing.JFrame {
         
         try {
                 
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/data/RidersOnTheStorm.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/RidersOnTheStormV2.ogg").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
