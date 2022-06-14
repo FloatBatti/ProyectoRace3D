@@ -13,6 +13,7 @@ import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Node;
+import java.awt.Font;
 import main.Engine;
 import statics.Constant;
 
@@ -25,7 +26,7 @@ public class GUI{
     private Node GUInterface;
     
     private BitmapFont myFont;
-    private BitmapText guiLife;
+    private BitmapText crashCount;
     private BitmapText guiSpeed;
     private BitmapText guiCountDown;
     private final AssetManager assetManager;
@@ -46,20 +47,21 @@ public class GUI{
     }
     
     private void  loadFonts(){
+        
         myFont = (BitmapFont) assetManager.loadFont("Interface/fonts/DejaVuSansLight.fnt");
         
-        guiLife = new BitmapText(myFont, false);
+        crashCount = new BitmapText(myFont, false);
         guiSpeed = new BitmapText(myFont, false);
         guiCountDown = new BitmapText(myFont, false);
         kmh = new BitmapText(myFont, false);
     }
     
-    public void drawLife(ColorRGBA color, String text, int X, int Y, int size){
-        guiLife.setSize(size);
-        guiLife.setColor(color);                                        // font color
-        guiLife.setText(text);                                          // the text
-        guiLife.setLocalTranslation(X,Y,0);
-        GUInterface.attachChild(guiLife);
+    public void drawCrash(ColorRGBA color, String text, int X, int Y, int size){
+        crashCount.setSize(size);
+        crashCount.setColor(color);                                        // font color
+        crashCount.setText(text);                                          // the text
+        crashCount.setLocalTranslation(X,Y,0);
+        GUInterface.attachChild(crashCount);
     }
     
     public void drawCountDown(ColorRGBA color, String text, int X, int Y, int size){
@@ -88,14 +90,8 @@ public class GUI{
     
     public void UpdateHUD(double endurance, VehicleControl vehicle){
         //GUI UPDATES
-        if(endurance >= 0){
-            guiLife.setText("LIFE: " + (int)((endurance * 100) / Constant.MAX_LIFE) + "%");
-        }else{
-           
-            guiLife.setText("LIFE: DEAD!");
-            guiLife.setColor(ColorRGBA.Red);
-            
-        }
+        
+        crashCount.setText(CrashCount.crashCount + "!");
         
         if (vehicle.getCurrentVehicleSpeedKmHour()<100 && vehicle.getCurrentVehicleSpeedKmHour()>0){
             guiSpeed.setText("0" +(int) vehicle.getCurrentVehicleSpeedKmHour()); 

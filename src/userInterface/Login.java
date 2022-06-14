@@ -224,11 +224,11 @@ public class Login extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Please, complete the field");
             
-        }else if (TxtUserName.getText().equals("Admin") && TxtPassword.getText().equals("40884962")){
+        }else if (TxtUserName.getText().equals("Admin") && TxtPassword.getText().equals("666")){
             
             AdminMenu adminMenu = new AdminMenu();
             adminMenu.setVisible(true);
-            this.dispose();
+            
          
         }else{
             

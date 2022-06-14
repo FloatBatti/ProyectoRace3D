@@ -27,6 +27,8 @@ public class Vehicle {
     private static  Node vehicleNode = new Node("vehicleNode");
     private String vehicleModel;
     private double endurance = 200;
+    private double nitroTank = 100;
+    private boolean nitro = false;
     private float maxEndurance = 200;
     private int drift=0;
     private static VehicleControl vehicle;
@@ -50,7 +52,7 @@ public class Vehicle {
         maxEndurance = (float) (this.endurance);
         accelerationForce += accForce;
         deaccelerationForce = accelerationForce - 100;
-        //this.drift = drift;
+        this.drift = drift;
         this.vehicleModel = vehicleModel;
     }
 
@@ -116,6 +118,22 @@ public class Vehicle {
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
+
+    public double getNitroTank() {
+        return nitroTank;
+    }
+
+    public void setNitroTank(double nitroTank) {
+        this.nitroTank = nitroTank;
+    }
+
+    public boolean isNitro() {
+        return nitro;
+    }
+
+    public void setNitro(boolean nitro) {
+        this.nitro = nitro;
+    }
     
     public void modfDeaccelerationValue(float deaccelerationForce) {
         this.deaccelerationValue += deaccelerationForce;
@@ -128,6 +146,16 @@ public class Vehicle {
     public void modfEndurance(double endurance) {
         this.endurance += endurance;
     }
+
+    public float getMaxEndurance() {
+        return maxEndurance;
+    }
+
+    public void setMaxEndurance(float maxEndurance) {
+        this.maxEndurance = maxEndurance;
+    }
+    
+    
     
   
     public void buildPlayer() {
@@ -225,10 +253,10 @@ public class Vehicle {
                          wheelDirection, wheelAxle, restLength, radius, false);
 
         //Valor Drift
-        vehicle.setFrictionSlip(0, 2f);
-        vehicle.setFrictionSlip(1, 2f);
-        vehicle.setFrictionSlip(2, 1.5f);
-        vehicle.setFrictionSlip(3, 1.5f);
+        vehicle.setFrictionSlip(0, 2f + (this.drift / 100));
+        vehicle.setFrictionSlip(1, 2f + (this.drift / 100));
+        vehicle.setFrictionSlip(2, 1.5f + (this.drift / 100));
+        vehicle.setFrictionSlip(3, 1.5f + (this.drift / 100));
         
         vehicleNode.attachChild(node1);
         vehicleNode.attachChild(node2);

@@ -147,12 +147,6 @@ public class Bots {
         //making weels
         attachWeels(vehicleNode);
         
-        BitmapFont guiFont = Engine.getAssetManager().loadFont("Interface/fonts/DejaVuSansLight.fnt");
-        BitmapText ch = new BitmapText(guiFont, false);
-        ch.setSize(30);
-        ch.setText(vehicleNode.getName() + " / " + endurance); // crosshairs
-        ch.setColor(new ColorRGBA(1f,0.8f,0.3f,0.8f));
-        ch.setName("text" + personalIndex);
         //start up position
         int zOffset;
         if(personalIndex % 2 == 0) {zOffset = 10;}else{zOffset = 0;}

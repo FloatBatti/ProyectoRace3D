@@ -43,6 +43,7 @@ import userInterface.LifeBar;
 import userInterface.Login;
 import userInterface.SpeedoMeter;
 import userInterface.CrashCount;
+import userInterface.NitroBar;
 
 /**
  *
@@ -78,7 +79,8 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     Terreno terrPrincipal;
     private static Vehicle playerVehicle = null;
     private static Player actualPlayer = null;
-    private LifeBar lifebar = new LifeBar(playerVehicle.getEndurance());
+    private LifeBar lifebar = new LifeBar(playerVehicle.getMaxEndurance()*1.5);
+    private NitroBar nitrobar = new NitroBar(100);
     
     
     public Engine(SimpleApplication app) {
@@ -212,6 +214,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         inputManager.addMapping("Space", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Reset", new KeyTrigger(KeyInput.KEY_R));
         inputManager.addMapping("Horn", new KeyTrigger(KeyInput.KEY_H));
+        inputManager.addMapping("Shift", new KeyTrigger(KeyInput.KEY_LSHIFT));
 
         inputManager.addListener(this, "Lefts");
         inputManager.addListener(this, "Rights");
@@ -221,15 +224,17 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         inputManager.addListener(this, "Space");
         inputManager.addListener(this, "Reset");
         inputManager.addListener(this, "Horn");
+        inputManager.addListener(this, "Shift");
 
     }
     
     private void initializeHud(){
-       GUInterface.drawLife(ColorRGBA.Blue, "LIFE: " + playerVehicle.getEndurance(), 280, 120, 30);
+       GUInterface.drawCrash(ColorRGBA.Black, CrashCount.crashCount + "!", 1730, 285, 30);
        GUInterface.drawSpeed(ColorRGBA.Black, "0" + (int)Vehicle.getVehicle().getCurrentVehicleSpeedKmHour(), 1699, 174, 30);
        GUInterface.drawkmh(ColorRGBA.Black, "km/h", 1702, 60, 30);
        speedoMeter.createSpeedoGeom();
        lifebar.buildLifeBar();
+       nitrobar.buildNitroBar();
        crash.createCrashTexture();
     }
     
@@ -271,11 +276,26 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         GUInterface.UpdateHUD(playerVehicle.getEndurance(), Vehicle.getVehicle());
         artificialInteligence.AIBehavior();
         speedoMeter.updateArrow(playerVehicle.getEndurance(), playerVehicle);
-        lifebar.updateLife((float) (Constant.MAX_LIFE-playerVehicle.getEndurance()), playerVehicle);
+        lifebar.updateLife((float) playerVehicle.getEndurance(), (float) playerVehicle.getMaxEndurance());
+        
         
         if (Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=playerVehicle.getMaximumSpeed()){
             Vehicle.getVehicle().accelerate(0);
         }
+        
+        if(playerVehicle.isNitro()) {
+            if(playerVehicle.getNitroTank() > 0){
+                playerVehicle.setNitroTank(playerVehicle.getNitroTank() - 1);
+            }else{
+                playerVehicle.setNitro(false);
+            }
+        }else{
+            if(playerVehicle.getNitroTank() < 100){
+                playerVehicle.setNitroTank(playerVehicle.getNitroTank() + 0.3);
+            }
+        }
+        
+        nitrobar.updateNitro((float) playerVehicle.getNitroTank(), (float) 100);
     }
     
     @Override
@@ -283,13 +303,13 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         
         if ( event.getNodeA().getName().equals("vehicleNode") ) {
             double impactDamage = event.getAppliedImpulse() / 100;
-            if(impactDamage>30){
+            if(impactDamage>40){
                 playerVehicle.modfEndurance(-impactDamage);
             }
             playerVehicle.modfEndurance(-impactDamage);
         } else if ( event.getNodeB().getName().equals("vehicleNode") ) {
             double impactDamage = event.getAppliedImpulse()  / 100;
-            if(impactDamage>30){
+            if(impactDamage>40){
                 playerVehicle.modfEndurance(-impactDamage);
             }
         }
@@ -335,7 +355,13 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                     } else {
                         playerVehicle.modfAccelerationValue(- (playerVehicle.getAccelerationForce()));
                     }
-                    Vehicle.getVehicle().accelerate(playerVehicle.getAccelerationValue());
+                    
+                    if(playerVehicle.isNitro()){
+                        Vehicle.getVehicle().accelerate(playerVehicle.getAccelerationValue() * 4);
+                    }else{
+                        Vehicle.getVehicle().accelerate(playerVehicle.getAccelerationValue());
+                    }
+                    
                     
                 } else if (name.equals("Downs")) {
                     if (keyPressed) {
@@ -362,6 +388,12 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                     if (keyPressed) {
                         Vehicle.getVehicle().applyImpulse(playerVehicle.getJumpForce(), Vector3f.ZERO);
                     }
+                } else if (name.equals("Shift")) {
+                    if (keyPressed) {
+                        playerVehicle.setNitro(true);
+                    }else{
+                        playerVehicle.setNitro(false);
+                    }
                 } else if (name.equals("Reset")) {
                     if (keyPressed) {                     
 
@@ -382,7 +414,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
             
             double impactDamage = event.getAppliedImpulse() / 100;
         
-            if(impactDamage > 5){
+            if(impactDamage > 40){
                 
                 Engine.getAudio3D().playCash();
             }
@@ -391,8 +423,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
        
         double impactDamage = event.getAppliedImpulse()  / 100;
         
-        if(impactDamage>5){
-
+        if(impactDamage>40){
             Engine.getAudio3D().playCash();
         }
     }
