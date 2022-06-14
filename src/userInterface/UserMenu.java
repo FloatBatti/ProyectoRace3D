@@ -316,7 +316,7 @@ public class UserMenu extends javax.swing.JFrame {
             AutoTurro.setText("100");   
         }
         
-        if (shopCarsValue > 2 && shopCarsValue < 4){
+        if (shopCarsValue >= 2 && shopCarsValue < 4){
             
             AutoTurro.setText("");
             AutoTurro.setIcon(IAutitoTurro);
@@ -324,7 +324,7 @@ public class UserMenu extends javax.swing.JFrame {
             AutoBussines.setVisible(true);      
         }   
         
-        if(shopCarsValue > 3 && shopCarsValue < 5){
+        if(shopCarsValue >= 3 && shopCarsValue < 4){
                        
             AutoTurro.setText("");
             AutoTurro.setIcon(IAutitoTurro);

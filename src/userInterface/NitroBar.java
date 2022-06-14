@@ -20,35 +20,35 @@ import statics.Constant;
  *
  * @author Juanjo
  */
-public class LifeBar {
+public class NitroBar {
     
-    private Node nodeLifeBar = new Node ("life") ;
+    private Node nodeNitroBar = new Node ("nitro") ;
     
     private double endurance;
     
-    private Node backgroundLifebar = new Node ("backGround");
-    private Node heart = new Node ("heart");
+    private Node backgroundNitrobar = new Node ("backGround");
+    private Node tank = new Node ("tank");
   
 
-    public LifeBar (double endurance){
+    public NitroBar (double endurance){
         
         this.endurance = endurance;
    
     }
     
     
-    public void buildLifeBar (){
+    public void buildNitroBar (){
      Quad quad = new Quad ((float) ((float) endurance), 39);
      
-     Geometry lifebar = new Geometry("lifebar", quad);
+     Geometry tankbar = new Geometry("nitrobar", quad);
      Material mat = new Material(Engine.getAssetManager(), 
             "Common/MatDefs/Misc/Unshaded.j3md");
      mat.setColor("Color", ColorRGBA.Green);
      
-     lifebar.setMaterial(mat);
+     tankbar.setMaterial(mat);
      
-     nodeLifeBar.attachChild(lifebar);
-     lifebar.setLocalTranslation(269, 57, 0);  
+     nodeNitroBar.attachChild(tankbar);
+     tankbar.setLocalTranslation(1469, 57, 0);  
      
      
      Texture pictureBar = Engine.getAssetManager().loadTexture("Textures/lifebar.png");
@@ -61,27 +61,27 @@ public class LifeBar {
      textureBar.setMaterial(matPictureBar);
      textureBar.getMaterial().setTexture("ColorMap", pictureBar);
      textureBar.getMaterial().getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-     textureBar.setLocalTranslation(254, 45, 0);
-     backgroundLifebar.attachChild(textureBar);
+     textureBar.setLocalTranslation(1454, 45, 0);
+     backgroundNitrobar.attachChild(textureBar);
      
  
      
-     Texture pictureheart = Engine.getAssetManager().loadTexture("Textures/corazon.png");
-     Geometry heartgeo = new Geometry("heart", new Quad (pictureheart.getImage().getWidth()
-             , pictureheart.getImage().getHeight()));
+     Texture picturetank = Engine.getAssetManager().loadTexture("Textures/nitroTank.png");
+     Geometry tankgeo = new Geometry("tank", new Quad (picturetank.getImage().getWidth()
+             , picturetank.getImage().getHeight()));
      Material matheart = new Material(Engine.getAssetManager(), 
             "Common/MatDefs/Misc/Unshaded.j3md");
-     heartgeo.setMaterial(matheart);
-     heartgeo.getMaterial().setTexture("ColorMap", pictureheart);
-     heartgeo.getMaterial().getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-     heartgeo.setLocalTranslation(240, 100, 0);
-     heart.attachChild(heartgeo);
+     tankgeo.setMaterial(matheart);
+     tankgeo.getMaterial().setTexture("ColorMap", picturetank);
+     tankgeo.getMaterial().getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+     tankgeo.setLocalTranslation(1400, 45, 0);
+     tank.attachChild(tankgeo);
      
     
      
-     Engine.getLocalGuiNode().attachChild(heart);
-     Engine.getLocalGuiNode().attachChild(backgroundLifebar);
-     Engine.getLocalGuiNode().attachChild(nodeLifeBar);
+     Engine.getLocalGuiNode().attachChild(tank);
+     Engine.getLocalGuiNode().attachChild(backgroundNitrobar);
+     Engine.getLocalGuiNode().attachChild(nodeNitroBar);
      
      
      
@@ -90,21 +90,21 @@ public class LifeBar {
     
     
     
-    public void updateLife (float endurance, float maxEndurance){
+    public void updateNitro (float endurance, float maxEndurance){
             
         float scale ;
             
             if (endurance < maxEndurance){
 
                  scale = (float) (endurance/maxEndurance);
-                 Engine.getLocalGuiNode().getChild("lifebar").setLocalScale((float)scale, 1, 1);
+                 Engine.getLocalGuiNode().getChild("nitrobar").setLocalScale((float)scale, 1, 1);
                             
                  
                     if (endurance <= (maxEndurance*0.5)){
                        Material mat = new Material(Engine.getAssetManager(), 
                        "Common/MatDefs/Misc/Unshaded.j3md");
-                       mat.setColor("Color", ColorRGBA.Yellow);
-                       Engine.getLocalGuiNode().getChild("lifebar").setMaterial(mat);
+                       mat.setColor("Color", ColorRGBA.Green);
+                       Engine.getLocalGuiNode().getChild("nitrobar").setMaterial(mat);
                        
                  }
                  
@@ -112,7 +112,7 @@ public class LifeBar {
                         Material mat = new Material(Engine.getAssetManager(), 
                         "Common/MatDefs/Misc/Unshaded.j3md");
                         mat.setColor("Color", ColorRGBA.Red);
-                        Engine.getLocalGuiNode().getChild("lifebar").setMaterial(mat);
+                        Engine.getLocalGuiNode().getChild("nitrobar").setMaterial(mat);
                        
                 }
                  
@@ -124,7 +124,7 @@ public class LifeBar {
 
 
     public Node getNodeLifeBar() {
-        return nodeLifeBar;
+        return nodeNitroBar;
     }
     
     

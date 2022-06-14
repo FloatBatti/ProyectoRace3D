@@ -92,7 +92,7 @@ public class AdminMenu extends javax.swing.JFrame {
         SortByExplosions = new javax.swing.JButton();
         ShowActives = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -241,7 +241,7 @@ public class AdminMenu extends javax.swing.JFrame {
         BtnCreate.setForeground(new java.awt.Color(255, 255, 255));
         BtnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/addUser.png"))); // NOI18N
         BtnCreate.setText("Create");
-        BtnCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         BtnCreate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnCreateMouseClicked(evt);
@@ -254,7 +254,7 @@ public class AdminMenu extends javax.swing.JFrame {
         BtnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         BtnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Actualziar.png"))); // NOI18N
         BtnUpdate.setText("Update");
-        BtnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         BtnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnUpdateMouseClicked(evt);
@@ -267,7 +267,7 @@ public class AdminMenu extends javax.swing.JFrame {
         BtnRemove.setForeground(new java.awt.Color(255, 255, 255));
         BtnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Eliminar.png"))); // NOI18N
         BtnRemove.setText("Remove");
-        BtnRemove.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnRemove.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         BtnRemove.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnRemoveMouseClicked(evt);
@@ -386,6 +386,8 @@ public class AdminMenu extends javax.swing.JFrame {
             updateTableDefault();
             
             cleanFields();
+            
+            JOptionPane.showMessageDialog(null, "Player updated!");
             
         }else if (!CheckBox.isSelected()){
 
