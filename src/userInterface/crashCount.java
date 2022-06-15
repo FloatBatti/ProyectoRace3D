@@ -6,11 +6,8 @@
  */
 package userInterface;
 
-import com.jme3.font.BitmapFont;
-import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
-import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
@@ -49,15 +46,5 @@ public class CrashCount {
 
     
     }
-    
-    
-    public void upgradeCrash (){
-        
-    
-    }
-    
-    
-    
-
     
 }

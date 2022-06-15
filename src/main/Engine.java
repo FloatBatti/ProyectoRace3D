@@ -9,8 +9,7 @@ import Entidades.Bots;
 import Entidades.Player;
 import Entidades.Vehicle;
 import Entidades.Scenario;
-import Entidades.Terreno;
-import animations.particleAnimations;
+import animations.ParticleAnimations;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
@@ -35,14 +34,14 @@ import com.jme3.scene.Node;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import sounds.Audio3D;
 import statics.Constant;
 import userInterface.GUI;
 import userInterface.LifeBar;
-import userInterface.Login;
+
 import userInterface.SpeedoMeter;
 import userInterface.CrashCount;
+import userInterface.MiniMap;
 import userInterface.NitroBar;
 
 /**
@@ -62,13 +61,13 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     static public boolean start = false;
     
     private static  Audio3D audio;
-    private int explosionCount = 0;
     
     //Particle variables
-    private static particleAnimations pAnimations;
+    private static ParticleAnimations pAnimations;
     
     //GUI VARIABLES
     private static GUI GUInterface;
+    private MiniMap miniMap = new MiniMap();
     private static Node localGuiNode = new Node ("interface");
     private SpeedoMeter speedoMeter = new SpeedoMeter();
     
@@ -76,7 +75,6 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
     
     private static AI artificialInteligence = new AI();
     
-    Terreno terrPrincipal;
     private static Vehicle playerVehicle = null;
     private static Player actualPlayer = null;
     private LifeBar lifebar = new LifeBar(playerVehicle.getMaxEndurance()*1.5);
@@ -91,15 +89,25 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         flyByCamera = app.getFlyByCamera();
         inputManager = app.getInputManager();
         audio = new Audio3D(rootNode, assetManager);
-        pAnimations = new particleAnimations(assetManager);
+        pAnimations = new ParticleAnimations(assetManager);
         GUInterface = new GUI(app.getGuiNode(), assetManager);
         localGuiNode = app.getGuiNode();
-        
+        miniMap.buildMinimap(app);
      
-        
     }
     
-    //<editor-fold defaultstate="collapsed" desc="Getters">
+    //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
+    
+    public static void setVehicle(Vehicle player){
+        
+        Engine.playerVehicle = player;
+    }
+    
+    public static void setActualPlayer(Player actualPlayer){
+        
+        Engine.actualPlayer = actualPlayer;
+    }
+    
     static public AssetManager getAssetManager(){
         
         return assetManager;
@@ -144,24 +152,12 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         return bulletAppState;
     }
 
-    public static particleAnimations getpAnimations() {
+    public static ParticleAnimations getpAnimations() {
         return pAnimations;
     }
 
     public static Node getLocalGuiNode() {
         return localGuiNode;
-    }
-    
-     //</editor-fold>
-    
-    public static void setVehicle(Vehicle player){
-        
-        Engine.playerVehicle = player;
-    }
-    
-    public static void setActualPlayer(Player actualPlayer){
-        
-        Engine.actualPlayer = actualPlayer;
     }
     
     public static Player getActualPlayer(){
@@ -173,6 +169,8 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         
         return audio;
     }
+    
+     //</editor-fold>
     
     public static void pauseOneSecond(){
         
@@ -238,6 +236,45 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
        crash.createCrashTexture();
     }
     
+    private void crashSound (PhysicsCollisionEvent event){
+
+        if ( event.getNodeA().getName().equals("vehicleNode") ) {
+            
+            double impactDamage = event.getAppliedImpulse() / 100;
+        
+            if(impactDamage > 40){
+                
+                Engine.getAudio3D().playCash();
+            }
+
+    } else if ( event.getNodeB().getName().equals("vehicleNode") ) {
+       
+        double impactDamage = event.getAppliedImpulse()  / 100;
+        
+        if(impactDamage>40){
+            Engine.getAudio3D().playCash();
+        }
+    }
+}
+    
+    private void saveReward(){
+      
+        int crashes = CrashCount.crashCount;
+        int playerCrashes = Engine.getActualPlayer().getMaxExplosions();
+        int playerCoins = Engine.getActualPlayer().getCoins();
+        int earnedCoins = 5 * crashes;
+
+        if (crashes > playerCrashes){
+            
+            Engine.getActualPlayer().setMaxExplosions(crashes);
+        }
+        
+        Engine.getActualPlayer().setCoins(earnedCoins + playerCoins);
+
+        Player.savePlayer(Engine.getActualPlayer());
+
+    }
+    
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         
@@ -254,7 +291,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
 //        terrPrincipal = new Terreno(bulletAppState, camera);
 //        terrPrincipal.CrearTerreno();
       
-        playerVehicle.buildPlayer();
+        playerVehicle.buildVehicle();
         
         createBots(Constant.BOT_COUNT);
         
@@ -278,6 +315,9 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         speedoMeter.updateArrow(playerVehicle.getEndurance(), playerVehicle);
         lifebar.updateLife((float) playerVehicle.getEndurance(), (float) playerVehicle.getMaxEndurance());
         
+        if (playerVehicle!=null){
+             miniMap.updateCam(playerVehicle);
+        }
         
         if (Vehicle.getVehicle().getCurrentVehicleSpeedKmHour()>=playerVehicle.getMaximumSpeed()){
             Vehicle.getVehicle().accelerate(0);
@@ -406,48 +446,7 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
                 }
         }
     }   
-    
-    
-    private void crashSound (PhysicsCollisionEvent event){
-
-        if ( event.getNodeA().getName().equals("vehicleNode") ) {
-            
-            double impactDamage = event.getAppliedImpulse() / 100;
-        
-            if(impactDamage > 40){
-                
-                Engine.getAudio3D().playCash();
-            }
-
-    } else if ( event.getNodeB().getName().equals("vehicleNode") ) {
-       
-        double impactDamage = event.getAppliedImpulse()  / 100;
-        
-        if(impactDamage>40){
-            Engine.getAudio3D().playCash();
-        }
-    }
-}
-    
-    private void saveReward(){
-      
-        int crashes = CrashCount.crashCount;
-        int playerCrashes = Engine.getActualPlayer().getMaxExplosions();
-        int playerCoins = Engine.getActualPlayer().getCoins();
-        int earnedCoins = 5 * crashes;
-
-        if (crashes > playerCrashes){
-            
-            Engine.getActualPlayer().setMaxExplosions(crashes);
-        }
-        
-        Engine.getActualPlayer().setCoins(earnedCoins + playerCoins);
-
-        Player.savePlayer(Engine.getActualPlayer());
-
-    }
-    
-
+         
     @Override
     public void run() {
         
@@ -470,4 +469,5 @@ public class Engine extends AbstractAppState implements ActionListener, PhysicsC
         Engine.setStart(true);
         Vehicle.getVehicle().accelerate(-500.0f);
     }
+    
 }

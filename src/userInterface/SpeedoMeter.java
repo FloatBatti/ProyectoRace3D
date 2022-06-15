@@ -1,11 +1,8 @@
 package userInterface;
 
 import Entidades.Vehicle;
-import com.jme3.font.BitmapFont;
-import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.scene.Geometry;
@@ -21,15 +18,15 @@ import main.Engine;
 public class SpeedoMeter {
     
     private  Node node = new Node("speedo");
-    private Node Nodeaguja ;
+    private Node NodeAguja;
 
-   public SpeedoMeter (){
+    public SpeedoMeter (){
    
-   }
+    }
 
 
     public Node getNodeaguja() {
-        return Nodeaguja;
+        return NodeAguja;
     }
 
     public  Node getNode() {

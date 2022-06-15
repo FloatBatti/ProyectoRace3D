@@ -1,6 +1,6 @@
 [
   {
-    "coins": 12,
+    "coins": 450,
     "workshop": {
       "driftStats": [
         1,
@@ -14,7 +14,7 @@
         1,
         1,
         1,
-        1
+        0
       ],
       "forceStats": [
         1,
@@ -30,7 +30,7 @@
         1
       ]
     },
-    "maxExplosions": 0,
+    "maxExplosions": 8,
     "nickName": "Agus",
     "password": "123",
     "id": 1,

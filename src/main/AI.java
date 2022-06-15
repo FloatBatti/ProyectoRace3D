@@ -8,7 +8,6 @@ package main;
 import Entidades.Bots;
 import Entidades.Vehicle;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
-import com.jme3.font.BitmapText;
 import com.jme3.math.FastMath;
 import com.jme3.math.Plane;
 import com.jme3.math.Quaternion;
@@ -16,8 +15,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import statics.Constant;
 import userInterface.CrashCount;
 
 
@@ -40,9 +37,8 @@ public class AI{
     private static boolean behavioring = false;
     private int pendingBotsLine = 0;
     private Plane plane2 = new Plane();
-    static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
+    static private final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
     private int explosionCount = 0;
-    
     public static List<Bots> AIEntity = new ArrayList();
 
     public static boolean isBehavioring() {
@@ -53,12 +49,10 @@ public class AI{
         AI.behavioring = behavioring;
     }
     
-    
     public void attachBot(Bots entity){
         AIEntity.add(entity);
     }
 
-    
     public void checkCollision(PhysicsCollisionEvent event){
         
         for(Bots aux : AIEntity) {
@@ -84,8 +78,7 @@ public class AI{
         }
     }
     
-    static double distance(Vector3f v1, Vector3f v2)
-    {
+    static private double distance(Vector3f v1, Vector3f v2){
 
         double d = Math.pow((Math.pow(v2.getX() - v1.getX(), 2) +
                              Math.pow(v2.getY() - v1.getY(), 2) +
@@ -96,6 +89,7 @@ public class AI{
     }
 
     public void AIBehavior(){
+        
         if(behavioring==false){
             behavioring=true;
             for(Bots aux : AIEntity) {

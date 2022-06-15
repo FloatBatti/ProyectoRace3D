@@ -7,7 +7,6 @@ package userInterface;
 
 import Entidades.Player;
 import java.awt.Color;
-import java.util.HashSet;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -15,9 +14,7 @@ import javax.swing.JOptionPane;
  *
  * @author Juanjo y Agus
  */
-public class Login extends javax.swing.JFrame {
-
-    
+public class Login extends javax.swing.JFrame {   
     
     public Login() {
         

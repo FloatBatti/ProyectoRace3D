@@ -16,7 +16,6 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import main.Engine;
 import statics.Constant;
-import userInterface.UserMenu;
 
 /**
  *
@@ -155,19 +154,13 @@ public class Vehicle {
         this.maxEndurance = maxEndurance;
     }
     
-    
-    
-  
-    public void buildPlayer() {
+    public void buildVehicle() {
         
-        //load the visible part of the cart
         Spatial carsito = Engine.getAssetManager().loadModel(vehicleModel);
         Engine.getLocalRootNode().attachChild(carsito);
         Node carNode = (Node) Engine.getLocalRootNode().getChild("AutoRojo");
         vehicleNode.attachChild(carNode);
         
-        //create a compound shape and attach the BoxCollisionShape for the car body at 0,1,0
-        //this shifts the effective center of mass of the BoxCollisionShape to 0,-1,0
         CompoundCollisionShape compoundShape = new CompoundCollisionShape();
         BoxCollisionShape box = new BoxCollisionShape(new Vector3f(1.1f, 0.8f, 2.8f));
         compoundShape.addChildShape(box, new Vector3f(0, 1, 0));
@@ -198,8 +191,7 @@ public class Vehicle {
     }
     
     private void attachWeels(Node vehicleNode){
-        //setting suspension values for wheels, this can be a bit tricky
-        //see also https://docs.google.com/Doc?docid=0AXVUZ5xw6XpKZGNuZG56a3FfMzU0Z2NyZnF4Zmo&hl=en
+       
         float stiffness = 15.0f;//200=f1 car
         float compValue = .3f; //(should be lower than damp)
         float dampValue = .4f;
@@ -207,8 +199,7 @@ public class Vehicle {
         vehicle.setSuspensionDamping(dampValue * 2.0f * FastMath.sqrt(stiffness));
         vehicle.setSuspensionStiffness(stiffness);
         vehicle.setMaxSuspensionForce(10000.0f);
-        
-        
+   
         //Create four wheels and add them at their locations
         Vector3f wheelDirection = new Vector3f(0, -1, 0); // was 0, -1, 0
         Vector3f wheelAxle = new Vector3f(-1, 0, 0); // was -1, 0, 0

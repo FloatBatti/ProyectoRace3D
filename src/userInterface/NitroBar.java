@@ -1,6 +1,5 @@
 package userInterface;
 
-import Entidades.Vehicle;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
@@ -9,12 +8,9 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
-import com.jme3.texture.Texture2D;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import main.Engine;
-import statics.Constant;
+
 
 /**
  *
@@ -36,6 +32,9 @@ public class NitroBar {
    
     }
     
+    public Node getNodeLifeBar() {
+        return nodeNitroBar;
+    }
     
     public void buildNitroBar (){
      Quad quad = new Quad ((float) ((float) endurance), 39);
@@ -86,9 +85,7 @@ public class NitroBar {
      
      
    
-    }
-    
-    
+    }  
     
     public void updateNitro (float endurance, float maxEndurance){
             
@@ -120,13 +117,5 @@ public class NitroBar {
             }
 
     }
-    
 
-
-    public Node getNodeLifeBar() {
-        return nodeNitroBar;
-    }
-    
-    
-    
 }

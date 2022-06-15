@@ -8,16 +8,12 @@ package Entidades;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.VehicleControl;
-import com.jme3.font.BitmapFont;
-import com.jme3.font.BitmapText;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import main.Engine;
-import sounds.Audio3D;
 
 /**
  *
@@ -38,7 +34,7 @@ public class Bots {
     private float deaccelerationValue = 0;
     private boolean destroyed = false;
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
-    static final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
+    static public final Quaternion ROTATE_RIGHT = new Quaternion().fromAngleAxis(FastMath.HALF_PI, Vector3f.UNIT_Y);
     
 
     
@@ -121,8 +117,7 @@ public class Bots {
     public void modfEndurance(double endurance) {
         this.endurance += endurance;
     }
-    
-    
+
     public void buildBot() {
         
         //load the visible part of the cart
@@ -159,8 +154,7 @@ public class Bots {
     }
     
     private void attachWeels(Node vehicleNode){
-        //setting suspension values for wheels, this can be a bit tricky
-        //see also https://docs.google.com/Doc?docid=0AXVUZ5xw6XpKZGNuZG56a3FfMzU0Z2NyZnF4Zmo&hl=en
+        
         float stiffness = 15.0f;//200=f1 car
         float compValue = .3f; //(should be lower than damp)
         float dampValue = .4f;

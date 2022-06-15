@@ -17,10 +17,11 @@ import com.jme3.scene.Node;
  *
  * @author Fran
  */
-public class particleAnimations {
+public class ParticleAnimations {
+    
     private final AssetManager assetManager;
     
-    public particleAnimations(AssetManager asset){
+    public ParticleAnimations(AssetManager asset){
         assetManager = asset;
     }
     

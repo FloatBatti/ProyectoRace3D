@@ -7,7 +7,6 @@ package userInterface;
 
 import Entidades.Player;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -153,6 +152,7 @@ public class CreateUser extends javax.swing.JFrame {
         
         return false;
     }
+    
     private void BtnRegisterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegisterMouseEntered
         BtnRegister.setBackground (new Color (153,0,0));
         BtnRegister.setForeground(new Color (255,204,51));

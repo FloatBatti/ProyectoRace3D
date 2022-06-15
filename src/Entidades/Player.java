@@ -167,6 +167,7 @@ public class Player extends User implements Serializable, Comparable<Player>{
         }
 
     }
+    
     private int getLastIDplus(){
         
         int lastId = 0;
@@ -245,7 +246,6 @@ public class Player extends User implements Serializable, Comparable<Player>{
         
         return result;
     }
-   
     
 }
 

@@ -24,7 +24,7 @@ public class Main extends SimpleApplication {
 
         while(true){
             
-            System.out.println(startEngine);
+            System.out.println("");
     
             if (startEngine == 1){
 
@@ -34,8 +34,6 @@ public class Main extends SimpleApplication {
         }
     }
     
-    
-
     @Override
     public void simpleInitApp() {
         stateManager.attach(new Engine(this));

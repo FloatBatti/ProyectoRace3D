@@ -350,9 +350,7 @@ public class UserMenu extends javax.swing.JFrame {
     }
     
     private static void initStats(){
-        
-        
-        
+          
         Integer lifeValue = actualUser.getWorkshop().getHealtValues();
         Integer afValue = actualUser.getWorkshop().getForceValues();
         Integer driftValue = actualUser.getWorkshop().getDriftValues();

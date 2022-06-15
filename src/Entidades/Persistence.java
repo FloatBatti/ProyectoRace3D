@@ -12,9 +12,9 @@ import java.util.List;
 
 public class Persistence <T> {
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    BufferedWriter bufferedWriter = null;
-    BufferedReader bufferedReader = null;
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private BufferedWriter bufferedWriter = null;
+    private BufferedReader bufferedReader = null;
 
     public void saveObject (T object, String rute){
 
@@ -101,7 +101,6 @@ public class Persistence <T> {
             }
         }
     }
-
 
     public List<T> loadList(String rute, Class<T> classList) {
 
