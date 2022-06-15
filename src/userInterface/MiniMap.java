@@ -40,7 +40,7 @@ public class MiniMap {
         view.setClearFlags(true, true, true);
         view.attachScene(Engine.getRootNode());
 
-        zoom(cam2, 350);
+        zoom(cam2, 320);
 
     }
 
@@ -74,7 +74,7 @@ public class MiniMap {
 
         currLocation=vectorCoords(player.getVehicle().getPhysicsLocation());
 
-        cam2.setLocation(new Vector3f(currLocation[0], 94, currLocation[1]));
+        cam2.setLocation(new Vector3f(currLocation[0], 118, currLocation[1]));
 
       }
 

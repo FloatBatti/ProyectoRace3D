@@ -410,11 +410,13 @@ public class AdminMenu extends javax.swing.JFrame {
             
             cleanFields();
             
+            JOptionPane.showMessageDialog(null, "Player has been removed!");
+            
         }else if (!CheckBox.isSelected()){
 
             JOptionPane.showMessageDialog(null, "Confirm for remove Player");
             
-        }else if (IdUserTxt.equals("")){
+        }else if (IdUserTxt.getText().equals("")){
 
             JOptionPane.showMessageDialog(null, "Chooce a Player");
             
@@ -561,9 +563,7 @@ public class AdminMenu extends javax.swing.JFrame {
             }
             
         }
-        
-        
-  
+
     }
     
     private void cleanFields(){

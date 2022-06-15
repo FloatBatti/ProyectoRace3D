@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/Entidades/Admin.java</file>
-            <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/main/Main.java</file>
+            <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/userInterface/Music.java</file>
+            <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/userInterface/SpeedoMeter.java</file>
+            <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/userInterface/NitroBar.java</file>
             <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/userInterface/AdminMenu.java</file>
-            <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/main/Engine.java</file>
             <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/userInterface/Login.java</file>
             <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/userInterface/UserMenu.java</file>
             <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/userInterface/MiniMap.java</file>
+            <file>file:/C:/Users/AgusGonza/Desktop/ProyectoRace3D/src/Entidades/Player.java</file>
         </group>
     </open-files>
 </project-private>
